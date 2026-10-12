@@ -10,8 +10,8 @@ RUN apt-get update \
         pkg-config \
         ${PHPIZE_DEPS} \
     && docker-php-ext-install intl pdo_pgsql opcache \
-    && pecl install amqp \
-    && docker-php-ext-enable amqp \
+    && pecl install amqp redis \
+    && docker-php-ext-enable amqp redis \
     && apt-get purge -y --auto-remove ${PHPIZE_DEPS} \
     && rm -rf /var/lib/apt/lists/*
 

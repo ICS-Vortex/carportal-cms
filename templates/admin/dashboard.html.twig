@@ -3,76 +3,71 @@
 {% block main %}
     <section class="cars-floor">
         <div class="cars-hero">
-            <p class="cars-kicker">Car Portal CMS</p>
-            <h1>The floor is open.</h1>
-            <p class="cars-lede">A night atelier for the catalog. Publish a car and the floor desk hears it through RabbitMQ.</p>
-            <svg class="cars-hero-car" viewBox="0 0 680 150" aria-hidden="true">
-                <path d="M30 104 H138 C160 104 172 78 198 74 H292 L332 42 H448 L492 74 H548 C578 74 596 92 608 104 H650" fill="none" stroke="currentColor" stroke-width="1.6"/>
-                <path d="M214 74 L248 74 L268 96 H196 Z" fill="none" stroke="currentColor" stroke-width="1.4"/>
-                <path d="M360 48 H430 L456 74 H332 Z" fill="none" stroke="currentColor" stroke-width="1.4"/>
-                <circle cx="196" cy="106" r="22" fill="none" stroke="currentColor" stroke-width="1.6"/>
-                <circle cx="196" cy="106" r="8" fill="currentColor"/>
-                <circle cx="548" cy="106" r="22" fill="none" stroke="currentColor" stroke-width="1.6"/>
-                <circle cx="548" cy="106" r="8" fill="currentColor"/>
-                <path d="M18 124 H662" fill="none" stroke="currentColor" stroke-width="1" opacity="0.45"/>
-            </svg>
+            <div>
+                <p class="cars-kicker">{{ 'dashboard.kicker'|trans({}, 'messages') }}</p>
+                <h1>{{ 'dashboard.title'|trans({}, 'messages') }}</h1>
+                <p class="cars-lede">{{ 'dashboard.lede'|trans({}, 'messages') }}</p>
+            </div>
+            <div class="hero-modules">
+                <div><b>{{ 'dashboard.module_diagnostics'|trans({}, 'messages') }}</b><span>{{ 'dashboard.module_catalog'|trans({}, 'messages') }}</span></div>
+                <div><b>{{ 'dashboard.module_intervals'|trans({}, 'messages') }}</b><span>{{ procedures }}</span></div>
+                <div><b>{{ 'dashboard.module_reminders'|trans({}, 'messages') }}</b><span>{{ reminders }}</span></div>
+            </div>
         </div>
 
         <div class="cars-stats">
             <article>
-                <span>On the floor</span>
-                <strong>{{ published }}</strong>
-                <em>Published cars</em>
+                <span>{{ 'dashboard.stat_garage'|trans({}, 'messages') }}</span>
+                <strong>{{ vehicles }}</strong>
+                <em>{{ 'dashboard.stat_garage_hint'|trans({}, 'messages') }}</em>
             </article>
             <article>
-                <span>In the studio</span>
-                <strong>{{ drafts }}</strong>
-                <em>Drafts waiting</em>
+                <span>{{ 'dashboard.stat_owners'|trans({}, 'messages') }}</span>
+                <strong>{{ users }}</strong>
+                <em>{{ 'dashboard.stat_owners_hint'|trans({}, 'messages') }}</em>
             </article>
             <article>
-                <span>Houses</span>
+                <span>{{ 'dashboard.stat_marques'|trans({}, 'messages') }}</span>
                 <strong>{{ brands }}</strong>
-                <em>Marques on file</em>
+                <em>{{ 'dashboard.stat_marques_hint'|trans({}, 'messages') }}</em>
             </article>
             <article>
-                <span>Floor desk</span>
-                <strong>{{ publications }}</strong>
-                <em>Messenger notes</em>
+                <span>{{ 'dashboard.stat_desk'|trans({}, 'messages') }}</span>
+                <strong>{{ openRequests }}</strong>
+                <em>{{ 'dashboard.stat_desk_hint'|trans({}, 'messages') }}</em>
             </article>
         </div>
 
         <div class="cars-board">
             <header>
-                <h2>Recent metal</h2>
-                <p>{{ stories }} stor{{ stories == 1 ? 'y' : 'ies' }} in the book.</p>
+                <h2>{{ 'dashboard.recent_vehicles'|trans({}, 'messages') }}</h2>
+                <p>{{ 'dashboard.recent_meta'|trans({'%count%': reminders, '%procedures%': procedures}, 'messages') }}</p>
             </header>
             <table>
                 <thead>
                     <tr>
-                        <th>Car</th>
-                        <th>Year</th>
-                        <th>Body</th>
-                        <th>Power</th>
-                        <th>Price</th>
-                        <th>Status</th>
+                        <th>{{ 'dashboard.table_vehicle'|trans({}, 'messages') }}</th>
+                        <th>{{ 'dashboard.table_owner'|trans({}, 'messages') }}</th>
+                        <th>{{ 'dashboard.table_year'|trans({}, 'messages') }}</th>
+                        <th>{{ 'dashboard.table_configuration'|trans({}, 'messages') }}</th>
+                        <th>{{ 'dashboard.table_mileage'|trans({}, 'messages') }}</th>
                     </tr>
                 </thead>
                 <tbody>
                     {% for vehicle in recentVehicles %}
                         <tr>
                             <td>
-                                <b>{{ vehicle.brand }} {{ vehicle.name }}</b>
-                                <small>{{ vehicle.summary }}</small>
+                                <b>{{ vehicle.generation }}</b>
+                                <small>{{ vehicle.vin ?? vehicle.licensePlate ?? ('dashboard.no_plate'|trans({}, 'messages')) }}</small>
                             </td>
-                            <td>{{ vehicle.modelYear }}</td>
-                            <td>{{ vehicle.bodyStyle.label }}</td>
-                            <td>{{ vehicle.horsepower }} hp</td>
-                            <td>${{ (vehicle.price / 100)|number_format(0, '.', ',') }}</td>
-                            <td><span class="cars-pill cars-pill-{{ vehicle.status.value }}">{{ vehicle.status.label }}</span></td>
+                            <td>{{ vehicle.user }}</td>
+                            <td>{{ vehicle.year }}</td>
+                            <td>{{ vehicle.configuration }}</td>
+                            <td>{{ vehicle.mileageKm }} km</td>
                         </tr>
                     {% else %}
                         <tr>
-                            <td colspan="6">The floor is empty. Add a vehicle to open the night.</td>
+                            <td colspan="5">{{ 'dashboard.no_vehicles'|trans({}, 'messages') }}</td>
                         </tr>
                     {% endfor %}
                 </tbody>

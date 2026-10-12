@@ -1,0 +1,77 @@
+menu:
+    overview: Overview
+    section:
+        catalog: Catalog
+        maintenance: Maintenance
+        people: People
+    brands: Brands
+    models: Models
+    generations: Generations
+    configurations: Configurations
+    vehicles: Vehicles
+    procedures: Procedures
+    templates: Templates
+    reminders: Reminders
+    plan_requests: Plan requests
+    users: Users
+
+account:
+    title: Account settings
+    profile:
+        heading: Profile
+        lede: Update how you appear in the CMS and which language you prefer.
+    password:
+        heading: Change password
+        lede: Leave blank to keep your current password.
+    save: Save changes
+    flash:
+        saved: Account settings saved.
+    field:
+        full_name: Full name
+        email: Email
+        email_help: Sign-in email is managed by an administrator.
+        language: Language
+        current_password: Current password
+        new_password: New password
+        confirm_password: Confirm new password
+    error:
+        current_password_required: Enter your current password to set a new one.
+        current_password_invalid: Current password is incorrect.
+    password_mismatch: The new passwords must match.
+
+language:
+    ukrainian: Ukrainian
+    english: English
+    interface_uk: 'Interface · UK'
+    interface_en: 'Interface · EN'
+
+dashboard:
+    kicker: 'Car Portal · Service'
+    title: Workshop desk
+    lede: 'Vehicles, service intervals, and owner reminders. This is the operating desk for the garage, not a showroom.'
+    module_diagnostics: Diagnostics
+    module_catalog: Catalog
+    module_intervals: Intervals
+    module_reminders: Reminders
+    stat_garage: Garage
+    stat_garage_hint: Active vehicles
+    stat_owners: Owners
+    stat_owners_hint: Registered users
+    stat_marques: Marques
+    stat_marques_hint: Brands on file
+    stat_desk: Desk
+    stat_desk_hint: Open plan requests
+    recent_vehicles: Recent vehicles
+    recent_meta: '%count% reminder(s) · %procedures% procedures.'
+    table_vehicle: Vehicle
+    table_owner: Owner
+    table_year: Year
+    table_configuration: Configuration
+    table_mileage: Mileage
+    no_plate: No plate yet
+    no_vehicles: No vehicles yet.
+
+entity:
+    user:
+        singular: User
+        plural: Users

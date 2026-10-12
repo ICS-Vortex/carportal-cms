@@ -1,0 +1,77 @@
+menu:
+    overview: Огляд
+    section:
+        catalog: Каталог
+        maintenance: Техобслуговування
+        people: Користувачі
+    brands: Марки
+    models: Моделі
+    generations: Покоління
+    configurations: Комплектації
+    vehicles: Автомобілі
+    procedures: Роботи
+    templates: Шаблони
+    reminders: Нагадування
+    plan_requests: Запити на план
+    users: Користувачі
+
+account:
+    title: Налаштування облікового запису
+    profile:
+        heading: Профіль
+        lede: Оновіть відображення в CMS та мову інтерфейсу.
+    password:
+        heading: Зміна пароля
+        lede: Залиште порожнім, щоб не змінювати поточний пароль.
+    save: Зберегти зміни
+    flash:
+        saved: Налаштування облікового запису збережено.
+    field:
+        full_name: Повне ім'я
+        email: Електронна пошта
+        email_help: Email для входу змінює адміністратор.
+        language: Мова
+        current_password: Поточний пароль
+        new_password: Новий пароль
+        confirm_password: Підтвердіть новий пароль
+    error:
+        current_password_required: Введіть поточний пароль, щоб встановити новий.
+        current_password_invalid: Поточний пароль неправильний.
+    password_mismatch: Нові паролі мають збігатися.
+
+language:
+    ukrainian: Українська
+    english: English
+    interface_uk: 'Інтерфейс · UK'
+    interface_en: 'Інтерфейс · EN'
+
+dashboard:
+    kicker: 'Car Portal · Сервіс'
+    title: Робочий стіл
+    lede: 'Автомобілі, інтервали ТО та нагадування власникам. Робочий стіл сервісу, а не вітрина.'
+    module_diagnostics: Діагностика
+    module_catalog: Каталог
+    module_intervals: Інтервали
+    module_reminders: Нагадування
+    stat_garage: Гараж
+    stat_garage_hint: Активні авто
+    stat_owners: Власники
+    stat_owners_hint: Зареєстровані користувачі
+    stat_marques: Марки
+    stat_marques_hint: Марки в базі
+    stat_desk: Стіл
+    stat_desk_hint: Відкриті запити
+    recent_vehicles: Останні автомобілі
+    recent_meta: '%count% нагадувань · %procedures% робіт.'
+    table_vehicle: Автомобіль
+    table_owner: Власник
+    table_year: Рік
+    table_configuration: Комплектація
+    table_mileage: Пробіг
+    no_plate: Номер не вказано
+    no_vehicles: Ще немає автомобілів.
+
+entity:
+    user:
+        singular: Користувач
+        plural: Користувачі

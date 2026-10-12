@@ -1,0 +1,49 @@
+{# @var ea \EasyCorp\Bundle\EasyAdminBundle\Provider\AdminContext #}
+{% set ea = ea() %}
+{% trans_default_domain null != ea ? ea.i18n.translationDomain : (translation_domain is defined ? translation_domain ?? 'messages') %}
+
+{% set flash_messages = app.flashes %}
+
+{% if flash_messages|length > 0 %}
+    <div id="cars-toast-stack" class="cars-toast-stack" aria-live="polite" aria-relevant="additions">
+        {% for label, messages in flash_messages %}
+            {% for message in messages %}
+                {% if message is iterable %}
+                    {% set flash_icon = message.icon ?? null %}
+                    {% set flash_title = message.title is defined ? message.title|trans : null %}
+                    {% set flash_message = (message.message ?? '')|trans({}, 'messages') %}
+                {% else %}
+                    {% set flash_icon = null %}
+                    {% set flash_title = null %}
+                    {% set flash_message = message|trans({}, 'messages') %}
+                {% endif %}
+
+                {% set toast_variant = label in ['error'] ? 'danger' : label %}
+                {% set toast_icon = flash_icon ?? ({
+                    success: 'fa-circle-check',
+                    danger: 'fa-triangle-exclamation',
+                    warning: 'fa-circle-exclamation',
+                    info: 'fa-circle-info',
+                }[toast_variant] ?? 'fa-bell') %}
+
+                <article class="cars-toast cars-toast--{{ toast_variant }}" data-cars-toast role="status">
+                    <div class="cars-toast-accent" aria-hidden="true"></div>
+                    <div class="cars-toast-icon" aria-hidden="true">
+                        <i class="fa-solid {{ toast_icon }}"></i>
+                    </div>
+                    <div class="cars-toast-content">
+                        <p class="cars-toast-kicker">{{ toast_variant|upper }}</p>
+                        {% if flash_title %}
+                            <p class="cars-toast-title">{{ flash_title }}</p>
+                        {% endif %}
+                        <p class="cars-toast-message">{{ flash_message|raw }}</p>
+                    </div>
+                    <button type="button" class="cars-toast-close" data-cars-toast-close aria-label="Dismiss">
+                        <i class="fa-solid fa-xmark"></i>
+                    </button>
+                    <span class="cars-toast-progress" aria-hidden="true"></span>
+                </article>
+            {% endfor %}
+        {% endfor %}
+    </div>
+{% endif %}

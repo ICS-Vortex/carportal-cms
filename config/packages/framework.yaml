@@ -1,12 +1,28 @@
 # see https://symfony.com/doc/current/reference/configuration/framework.html
 framework:
     secret: '%env(APP_SECRET)%'
+    default_locale: en
+    enabled_locales: ['en', 'uk']
 
     # Note that the session will be started ONLY if you read or write from it.
     session: true
 
     #esi: true
     #fragments: true
+
+when@dev:
+    framework:
+        session:
+            handler_id: '%env(REDIS_URL)%'
+            cookie_lifetime: 604800
+            gc_maxlifetime: 604800
+
+when@prod:
+    framework:
+        session:
+            handler_id: '%env(REDIS_URL)%'
+            cookie_lifetime: 604800
+            gc_maxlifetime: 604800
 
 when@test:
     framework:

@@ -1,151 +1,266 @@
-:root,
-.ea-dark-scheme {
-    --cars-gold: #d4b483;
-    --cars-gold-deep: #8a6a3b;
-    --cars-ink: #16140f;
-    --cars-paper: #f4efe6;
-    --cars-line: rgba(212, 180, 131, 0.35);
-    --font-family-base: "Outfit", sans-serif;
+:root {
+    --signal: #0f766e;
+    --ink: #12202a;
+    --muted: #5c7080;
+    --line: rgba(18, 32, 42, 0.12);
+    --panel: #ffffff;
+    --panel-soft: #f4f7f8;
+    --font-family-base: "Instrument Sans", sans-serif;
     --body-max-width: 100%;
+    --body-bg: #eef2f4;
+}
+
+.ea-dark-scheme {
+    --signal: #3ee0c5;
+    --ink: #edf3f7;
+    --muted: #8ea0b0;
+    --line: rgba(164, 196, 214, 0.16);
+    --panel: #10151d;
+    --panel-soft: rgba(7, 9, 13, 0.45);
+    --body-bg: #07090d;
 }
 
 body {
-    font-family: "Outfit", sans-serif;
+    font-family: "Instrument Sans", sans-serif;
+    background: var(--body-bg);
+    color: var(--ink);
 }
 
-.sidebar {
+.ea-dark-scheme body {
     background:
-        radial-gradient(90% 28% at 0% 0%, rgba(212, 180, 131, 0.18), transparent 55%),
-        linear-gradient(180deg, #1c1914 0%, #100e0c 100%);
-    border-right: 1px solid var(--cars-line);
+        radial-gradient(70% 40% at 100% 0%, rgba(62, 224, 197, 0.06), transparent 42%),
+        var(--body-bg);
+}
+
+.ea-dark-scheme .sidebar {
+    background: #0b1016;
+    border-right: 1px solid var(--line);
 }
 
 .sidebar .main-header {
-    border-bottom: 1px solid var(--cars-line);
+    border-bottom: 1px solid var(--line);
 }
 
 .cars-mark,
 .cars-mark-sub {
     display: block;
-    letter-spacing: 0.22em;
 }
 
 .cars-mark {
-    font-family: "Fraunces", serif;
-    font-size: 1.35rem;
+    font-size: 0.95rem;
     font-weight: 640;
-    color: var(--cars-gold);
+    letter-spacing: 0.14em;
+    color: var(--ink);
+}
+
+.ea-dark-scheme .cars-mark {
+    color: #edf3f7;
+}
+
+/*
+ * EasyAdmin layout: kill content/sidebar resizer gutters and let the main column
+ * use the full area (fixes empty band on the right, including "normal" width mode).
+ */
+body.ea {
+    --resize-handler-width: 0px;
+    --body-max-width: none;
+}
+
+html,
+body.ea {
+    width: 100%;
+    max-width: 100%;
+    overflow-x: clip;
+}
+
+body.ea .wrapper {
+    width: 100%;
+    max-width: 100%;
+}
+
+@media (min-width: 992px) {
+    body.ea .wrapper {
+        grid-template-columns: var(--sidebar-max-width) minmax(0, 1fr) !important;
+    }
+
+    body.ea .content-top {
+        padding-inline-end: var(--lg-content-padding-right) !important;
+    }
+}
+
+body.ea section.main-content {
+    width: 100%;
+    min-width: 0;
+    max-width: none;
+}
+
+body.ea .content-wrapper {
+    display: block !important;
+    grid-template-columns: none !important;
+    width: 100% !important;
+    max-width: none !important;
+    min-width: 0;
+    box-sizing: border-box;
+}
+
+body.ea:not(.ea-content-width-full) .content-wrapper {
+    max-inline-size: none !important;
+}
+
+body.ea article.content {
+    width: 100%;
+    max-width: none;
+    min-width: 0;
+}
+
+body.ea .content,
+body.ea .content-body,
+body.ea .cars-floor {
+    width: 100%;
+    max-width: none;
+    min-width: 0;
+    box-sizing: border-box;
+}
+
+body.ea #content-resizer-handler,
+body.ea #sidebar-resizer-handler,
+body.ea .resizer-handler {
+    display: none !important;
+    width: 0 !important;
+    min-width: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    overflow: hidden !important;
+    pointer-events: none !important;
 }
 
 .cars-mark-sub {
     margin-top: 0.15rem;
+    color: var(--signal);
+    font-family: "IBM Plex Mono", monospace;
     font-size: 0.68rem;
+    letter-spacing: 0.16em;
     text-transform: uppercase;
-    color: rgba(244, 239, 230, 0.62);
 }
 
 .menu-item.active {
-    box-shadow: inset 2px 0 0 var(--cars-gold);
+    box-shadow: inset 2px 0 0 var(--signal);
 }
 
 .cars-floor {
     display: grid;
-    gap: 1.5rem;
+    gap: 1rem;
+    color: var(--ink);
+}
+
+.cars-hero,
+.cars-stats article,
+.cars-board {
+    border: 1px solid var(--line);
+    background: var(--panel);
+    color: var(--ink);
 }
 
 .cars-hero {
-    position: relative;
-    overflow: hidden;
-    padding: 2.4rem 2.6rem 1.2rem;
-    border: 1px solid var(--cars-line);
-    border-radius: 1.4rem;
-    background:
-        radial-gradient(80% 120% at 100% 0%, rgba(212, 180, 131, 0.18), transparent 46%),
-        #1a1713;
-    color: var(--cars-paper);
+    display: grid;
+    grid-template-columns: 1.4fr 0.8fr;
+    gap: 1.5rem;
+    align-items: end;
+    padding: 1.6rem 1.7rem 1.4rem;
+    border-radius: 1.15rem;
+}
+
+.cars-kicker,
+.cars-stats span,
+.cars-board header p,
+.cars-board th {
+    color: var(--muted);
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
 }
 
 .cars-kicker {
-    margin: 0 0 0.8rem;
-    font-size: 0.72rem;
-    letter-spacing: 0.24em;
-    text-transform: uppercase;
-    color: var(--cars-gold);
+    margin: 0 0 0.7rem;
+    color: var(--signal);
+}
+
+.cars-hero h1,
+.cars-board h2,
+.cars-stats strong {
+    margin: 0;
+    color: var(--ink);
+    font-weight: 640;
+    letter-spacing: -0.04em;
 }
 
 .cars-hero h1 {
-    margin: 0;
-    font-family: "Fraunces", serif;
-    font-size: clamp(3rem, 6vw, 5.4rem);
-    font-weight: 520;
-    letter-spacing: -0.04em;
-    line-height: 0.92;
+    font-size: clamp(2.4rem, 4vw, 3.6rem);
+    line-height: 0.95;
 }
 
 .cars-lede {
     max-width: 36rem;
-    margin: 1rem 0 0;
-    color: rgba(244, 239, 230, 0.78);
-    font-size: 1.05rem;
+    margin: 0.8rem 0 0;
+    color: var(--muted);
+    font-size: 1.02rem;
+    line-height: 1.5;
 }
 
-.cars-hero-car {
-    display: block;
-    width: min(100%, 42rem);
-    margin-top: 1.4rem;
-    color: var(--cars-gold);
+.hero-modules {
+    display: grid;
+    gap: 0.55rem;
+}
+
+.hero-modules div {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 0.75rem 0.85rem;
+    border: 1px solid var(--line);
+    border-radius: 0.8rem;
+    background: var(--panel-soft);
+    color: var(--ink);
+    font-size: 0.92rem;
+}
+
+.hero-modules span {
+    color: var(--muted);
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 0.72rem;
 }
 
 .cars-stats {
     display: grid;
     grid-template-columns: repeat(4, minmax(0, 1fr));
-    gap: 1rem;
+    gap: 0.75rem;
+}
+
+.cars-stats article,
+.cars-board {
+    border-radius: 1rem;
 }
 
 .cars-stats article {
-    padding: 1.2rem 1.3rem 1.1rem;
-    border: 1px solid var(--cars-line);
-    border-radius: 1.1rem;
-    background: rgba(255, 252, 247, 0.55);
-}
-
-.ea-dark-scheme .cars-stats article,
-.ea-dark-scheme .cars-board {
-    background: #211e18;
-}
-
-.cars-stats span,
-.cars-board header p {
-    color: var(--cars-gold-deep);
-    font-size: 0.75rem;
-    letter-spacing: 0.16em;
-    text-transform: uppercase;
-}
-
-.ea-dark-scheme .cars-stats span,
-.ea-dark-scheme .cars-board header p {
-    color: var(--cars-gold);
+    padding: 1rem 1.05rem 0.95rem;
 }
 
 .cars-stats strong {
     display: block;
-    margin: 0.35rem 0 0.15rem;
-    font-family: "Fraunces", serif;
-    font-size: 2.6rem;
-    font-weight: 520;
+    margin: 0.45rem 0 0.2rem;
+    font-size: 2.15rem;
     line-height: 1;
 }
 
 .cars-stats em {
+    color: var(--muted);
     font-style: normal;
-    opacity: 0.7;
+    font-size: 0.92rem;
 }
 
 .cars-board {
-    padding: 1.3rem 1.4rem 0.6rem;
-    border: 1px solid var(--cars-line);
-    border-radius: 1.2rem;
-    background: rgba(255, 252, 247, 0.72);
+    padding: 1.1rem 1.15rem 0.4rem;
 }
 
 .cars-board header {
@@ -156,30 +271,24 @@ body {
 }
 
 .cars-board h2 {
-    margin: 0;
-    font-family: "Fraunces", serif;
-    font-size: 1.8rem;
-    font-weight: 520;
+    font-size: 1.35rem;
 }
 
 .cars-board table {
     width: 100%;
     border-collapse: collapse;
-    margin-top: 0.6rem;
+    margin-top: 0.35rem;
 }
 
-.cars-board th {
-    padding: 0.8rem 0.4rem;
+.cars-board th,
+.cars-board td {
+    padding: 0.85rem 0.35rem;
     text-align: left;
-    font-size: 0.72rem;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-    opacity: 0.6;
+    color: var(--ink);
 }
 
 .cars-board td {
-    padding: 0.95rem 0.4rem 1rem;
-    border-top: 1px solid var(--cars-line);
+    border-top: 1px solid var(--line);
     vertical-align: top;
 }
 
@@ -189,39 +298,427 @@ body {
 }
 
 .cars-board small {
-    max-width: 28rem;
-    margin-top: 0.2rem;
-    opacity: 0.68;
+    margin-top: 0.15rem;
+    color: var(--muted);
 }
 
-.cars-pill {
-    display: inline-flex;
-    padding: 0.2rem 0.55rem;
-    border-radius: 999px;
-    font-size: 0.75rem;
-    letter-spacing: 0.08em;
+.cars-account-form {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1.35rem;
+    width: 100%;
+    max-width: 100%;
+    align-items: stretch;
+}
+
+.cars-account-panel {
+    display: flex;
+    flex-direction: column;
+    gap: 0.15rem;
+    height: 100%;
+    padding: 1.35rem 1.4rem 1.25rem;
+    border: 1px solid var(--line);
+    border-radius: 1rem;
+    background: color-mix(in srgb, var(--panel) 96%, transparent);
+}
+
+.cars-account-panel header {
+    margin-bottom: 1.1rem;
+}
+
+.cars-account-panel h2 {
+    margin: 0;
+    font-size: 1.15rem;
+}
+
+.cars-account-panel p {
+    margin: 0.35rem 0 0;
+    color: var(--muted);
+    font-size: 0.92rem;
+}
+
+/* EasyAdmin form_row() adds flex-fill spacers (break layout in a flex row) */
+.cars-account-form .flex-fill,
+.cars-account-panel .flex-fill {
+    display: none !important;
+}
+
+.cars-account-panel > div:has(.form-group) {
+    width: 100%;
+    min-width: 0;
+}
+
+.cars-account-panel .form-group {
+    padding-block-end: 1.1rem;
+}
+
+.cars-account-panel .form-group:last-child {
+    padding-block-end: 0;
+}
+
+.cars-locale-field .cars-locale-radios {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.65rem;
+    margin-block-start: 0.15rem;
+}
+
+.cars-locale-field .form-check {
+    margin: 0;
+    padding: 0;
+    min-height: 0;
+}
+
+.cars-locale-field .form-check-input {
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+}
+
+.cars-locale-field .form-check-label {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+    margin: 0;
+    padding: 0.8rem 0.95rem 0.8rem 3rem;
+    border: 1px solid var(--line);
+    border-radius: 0.55rem;
+    background: color-mix(in srgb, var(--panel) 88%, transparent);
+    color: var(--ink);
+    font-weight: 520;
+    line-height: 1.2;
+    cursor: pointer;
+    transition:
+        border-color 0.18s ease,
+        box-shadow 0.18s ease,
+        background-color 0.18s ease,
+        transform 0.18s ease;
+}
+
+.cars-locale-field .form-check-label::before {
+    position: absolute;
+    inset-inline-start: 0.8rem;
+    top: 0.72rem;
+    font-size: 1.35rem;
+    line-height: 1;
+    filter: drop-shadow(0 1px 2px color-mix(in srgb, #000 18%, transparent));
+}
+
+.cars-locale-field .form-check:has([value="uk"]) .form-check-label::before {
+    content: "🇺🇦";
+}
+
+.cars-locale-field .form-check:has([value="en"]) .form-check-label::before {
+    content: "🇬🇧";
+}
+
+.cars-locale-field .form-check-label::after {
+    color: var(--muted);
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 0.68rem;
+    font-weight: 400;
+    letter-spacing: 0.12em;
     text-transform: uppercase;
 }
 
-.cars-pill-published {
-    background: rgba(212, 180, 131, 0.22);
-    color: var(--cars-gold-deep);
+html[lang="uk"] .cars-locale-field .form-check:has([value="uk"]) .form-check-label::after {
+    content: "Інтерфейс · UK";
 }
 
-.ea-dark-scheme .cars-pill-published {
-    color: var(--cars-gold);
+html[lang="uk"] .cars-locale-field .form-check:has([value="en"]) .form-check-label::after {
+    content: "Інтерфейс · EN";
 }
 
-.cars-pill-draft {
-    background: rgba(90, 78, 58, 0.16);
+html[lang="en"] .cars-locale-field .form-check:has([value="uk"]) .form-check-label::after {
+    content: "Interface · UK";
+}
+
+html[lang="en"] .cars-locale-field .form-check:has([value="en"]) .form-check-label::after {
+    content: "Interface · EN";
+}
+
+.cars-locale-field .form-check-input:focus-visible + .form-check-label {
+    outline: 2px solid color-mix(in srgb, var(--signal) 55%, transparent);
+    outline-offset: 2px;
+}
+
+.cars-locale-field .form-check-input:checked + .form-check-label {
+    border-color: color-mix(in srgb, var(--signal) 70%, var(--line));
+    background: color-mix(in srgb, var(--signal) 11%, var(--panel));
+    box-shadow:
+        inset 0 0 0 1px color-mix(in srgb, var(--signal) 35%, transparent),
+        0 10px 24px color-mix(in srgb, var(--signal) 12%, transparent);
+    transform: translateY(-1px);
+}
+
+.cars-locale-field .form-check-input:checked + .form-check-label::after {
+    color: color-mix(in srgb, var(--signal) 75%, var(--muted));
+}
+
+.ea-dark-scheme .cars-locale-field .form-check-label {
+    background: color-mix(in srgb, var(--panel-soft) 70%, transparent);
+}
+
+.cars-account-form .form-select {
+    border-radius: 0.55rem;
+    padding-block: 0.62rem;
+    padding-inline: 0.85rem 2.35rem;
+    border-color: var(--line);
+    background-color: color-mix(in srgb, var(--panel) 92%, transparent);
+    box-shadow: inset 0 1px 0 color-mix(in srgb, #fff 35%, transparent);
+    transition:
+        border-color 0.18s ease,
+        box-shadow 0.18s ease;
+}
+
+.cars-account-form .form-select:focus {
+    border-color: color-mix(in srgb, var(--signal) 65%, var(--line));
+    box-shadow:
+        0 0 0 3px color-mix(in srgb, var(--signal) 18%, transparent),
+        inset 0 1px 0 color-mix(in srgb, #fff 35%, transparent);
+}
+
+.cars-account-actions {
+    display: flex;
+    grid-column: 1 / -1;
+    justify-content: flex-start;
+    padding-block-start: 0.35rem;
+}
+
+/* Flash → premium toasts (replaces full-width EasyAdmin alerts) */
+#flash-messages {
+    display: none !important;
+}
+
+.cars-toast-stack {
+    position: fixed;
+    top: 4.75rem;
+    right: 1.1rem;
+    z-index: 2050;
+    display: flex;
+    flex-direction: column;
+    gap: 0.7rem;
+    width: min(22rem, calc(100vw - 2rem));
+    pointer-events: none;
+}
+
+.cars-toast {
+    position: relative;
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    gap: 0.75rem;
+    align-items: start;
+    overflow: hidden;
+    padding: 0.85rem 0.9rem 0.95rem;
+    border: 1px solid var(--line);
+    border-radius: 0.4rem;
+    background: color-mix(in srgb, var(--panel) 88%, transparent);
+    box-shadow:
+        0 18px 40px color-mix(in srgb, #000 22%, transparent),
+        inset 0 1px 0 color-mix(in srgb, #fff 12%, transparent);
+    backdrop-filter: blur(14px);
+    pointer-events: auto;
+    opacity: 0;
+    transform: translate3d(1.1rem, 0, 0) scale(0.98);
+    transition:
+        opacity 0.32s ease,
+        transform 0.32s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.cars-toast.is-visible {
+    opacity: 1;
+    transform: translate3d(0, 0, 0) scale(1);
+}
+
+.cars-toast.is-hiding {
+    opacity: 0;
+    transform: translate3d(0.65rem, 0, 0) scale(0.98);
+}
+
+.cars-toast-accent {
+    position: absolute;
+    inset-block: 0;
+    inset-inline-start: 0;
+    width: 3px;
+    background: var(--signal);
+}
+
+.cars-toast--success .cars-toast-accent {
+    background: #0d9488;
+}
+
+.cars-toast--danger .cars-toast-accent {
+    background: #e11d48;
+}
+
+.cars-toast--warning .cars-toast-accent {
+    background: #d97706;
+}
+
+.cars-toast--info .cars-toast-accent {
+    background: #0284c7;
+}
+
+.cars-toast-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 2rem;
+    height: 2rem;
+    border-radius: 0.35rem;
+    background: color-mix(in srgb, var(--signal) 14%, var(--panel));
+    color: var(--signal);
+    font-size: 0.95rem;
+}
+
+.cars-toast--success .cars-toast-icon {
+    background: color-mix(in srgb, #0d9488 18%, var(--panel));
+    color: #0d9488;
+}
+
+.cars-toast--danger .cars-toast-icon {
+    background: color-mix(in srgb, #e11d48 16%, var(--panel));
+    color: #f43f5e;
+}
+
+.cars-toast--warning .cars-toast-icon {
+    background: color-mix(in srgb, #d97706 16%, var(--panel));
+    color: #f59e0b;
+}
+
+.cars-toast--info .cars-toast-icon {
+    background: color-mix(in srgb, #0284c7 16%, var(--panel));
+    color: #38bdf8;
+}
+
+.cars-toast-kicker {
+    margin: 0 0 0.2rem;
+    color: var(--muted);
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 0.62rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+}
+
+.cars-toast-title {
+    margin: 0 0 0.15rem;
+    color: var(--ink);
+    font-size: 0.92rem;
+    font-weight: 640;
+}
+
+.cars-toast-message {
+    margin: 0;
+    color: var(--ink);
+    font-size: 0.9rem;
+    line-height: 1.45;
+}
+
+.cars-toast-close {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 1.65rem;
+    height: 1.65rem;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    border-radius: 0.3rem;
+    background: transparent;
+    color: var(--muted);
+    cursor: pointer;
+    transition:
+        background-color 0.16s ease,
+        color 0.16s ease;
+}
+
+.cars-toast-close:hover {
+    background: color-mix(in srgb, var(--line) 65%, transparent);
+    color: var(--ink);
+}
+
+.cars-toast-progress {
+    position: absolute;
+    inset-inline: 0;
+    inset-block-end: 0;
+    height: 2px;
+    transform-origin: left center;
+    background: linear-gradient(90deg, var(--signal), color-mix(in srgb, var(--signal) 35%, transparent));
+    animation: cars-toast-progress 5.2s linear forwards;
+}
+
+.cars-toast--success .cars-toast-progress {
+    background: linear-gradient(90deg, #0d9488, color-mix(in srgb, #0d9488 35%, transparent));
+}
+
+.cars-toast--danger .cars-toast-progress {
+    background: linear-gradient(90deg, #e11d48, color-mix(in srgb, #e11d48 35%, transparent));
+}
+
+@keyframes cars-toast-progress {
+    from {
+        transform: scaleX(1);
+    }
+    to {
+        transform: scaleX(0);
+    }
 }
 
 @media (max-width: 960px) {
+    .cars-toast-stack {
+        top: auto;
+        right: 0.85rem;
+        bottom: 0.85rem;
+        left: 0.85rem;
+        width: auto;
+    }
+}
+
+/* Popup menus (user menu, row actions, filters) — global EA radius is too round */
+.dropdown-menu {
+    --bs-dropdown-border-radius: 0.45rem;
+    --bs-dropdown-inner-border-radius: 0.4rem;
+    border-radius: 0.45rem;
+}
+
+.filter-content.dropdown-menu {
+    border-radius: 0.45rem;
+}
+
+/* EasyAdmin Tom Select — vertically center the clear (×) control with the caret */
+body.ea .ts-wrapper.plugin-clear_button .clear-button {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    inset-block-start: 50% !important;
+    transform: translateY(-50%);
+    line-height: 1 !important;
+    padding: 0 !important;
+}
+
+body.ea .plugin-clear_button .clear-button {
+    inset-block-start: 50% !important;
+    transform: translateY(-50%);
+}
+
+@media (max-width: 960px) {
+    .cars-hero,
+    .cars-stats {
+        grid-template-columns: 1fr;
+    }
+
     .cars-stats {
         grid-template-columns: repeat(2, minmax(0, 1fr));
     }
 
     .cars-board {
         overflow-x: auto;
+    }
+}
+
+@media (max-width: 1100px) {
+    .cars-account-form {
+        grid-template-columns: 1fr;
     }
 }

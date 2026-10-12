@@ -1,0 +1,38 @@
+{% extends '@EasyAdmin/layout.html.twig' %}
+
+{% form_theme form with '@EasyAdmin/crud/form_theme.html.twig' %}
+
+{% block body_class %}ea-edit{% endblock %}
+
+{% block content_title %}{{ 'account.title'|trans({}, 'messages') }}{% endblock %}
+
+{% block main %}
+    {{ form_start(form, { attr: { class: 'ea-form cars-account-form' } }) }}
+
+        <div class="cars-account-panel">
+            <header>
+                <h2>{{ 'account.profile.heading'|trans({}, 'messages') }}</h2>
+                <p>{{ 'account.profile.lede'|trans({}, 'messages') }}</p>
+            </header>
+            {{ form_row(form.fullName) }}
+            {{ form_row(form.email) }}
+            {{ form_row(form.locale) }}
+        </div>
+
+        <div class="cars-account-panel">
+            <header>
+                <h2>{{ 'account.password.heading'|trans({}, 'messages') }}</h2>
+                <p>{{ 'account.password.lede'|trans({}, 'messages') }}</p>
+            </header>
+            {{ form_row(form.currentPassword) }}
+            {{ form_row(form.newPassword) }}
+        </div>
+
+        <div class="cars-account-actions">
+            <button type="submit" class="btn btn-primary">
+                <span class="btn-label">{{ 'account.save'|trans({}, 'messages') }}</span>
+            </button>
+        </div>
+
+    {{ form_end(form) }}
+{% endblock %}

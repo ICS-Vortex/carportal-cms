@@ -4,214 +4,178 @@ declare(strict_types=1);
 
 namespace App\Entity;
 
-use App\Catalog\Slugs;
-use App\Enum\BodyStyle;
-use App\Enum\Drivetrain;
-use App\Enum\VehicleStatus;
+use App\Entity\Concern\Timestamps;
+use App\Entity\Concern\UuidId;
 use App\Repository\VehicleRepository;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: VehicleRepository::class)]
 #[ORM\Table(name: 'vehicles')]
-#[ORM\UniqueConstraint(name: 'uniq_vehicle_slug', columns: ['slug'])]
-#[ORM\Index(name: 'idx_vehicle_status', columns: ['status'])]
+#[ORM\Index(name: 'idx_vehicles_user_id', columns: ['user_id'])]
+#[ORM\Index(name: 'idx_vehicles_generation_id', columns: ['generation_id'])]
+#[ORM\Index(name: 'idx_vehicles_configuration_id', columns: ['configuration_id'])]
+#[ORM\Index(name: 'idx_vehicles_deleted', columns: ['user_id', 'deleted'])]
 #[ORM\HasLifecycleCallbacks]
 class Vehicle
 {
-    #[ORM\Id]
-    #[ORM\GeneratedValue]
-    #[ORM\Column]
-    private ?int $id = null;
+    use UuidId;
+    use Timestamps;
 
-    #[ORM\ManyToOne(inversedBy: 'vehicles')]
+    #[ORM\ManyToOne]
+    #[ORM\JoinColumn(nullable: false, onDelete: 'CASCADE')]
+    private ?User $user = null;
+
+    #[ORM\ManyToOne]
     #[ORM\JoinColumn(nullable: false, onDelete: 'RESTRICT')]
-    private ?Brand $brand = null;
+    private ?VehicleGeneration $generation = null;
 
-    #[ORM\Column(length: 160)]
-    private string $name = '';
-
-    #[ORM\Column(length: 180)]
-    private string $slug = '';
+    #[ORM\ManyToOne]
+    #[ORM\JoinColumn(nullable: false, onDelete: 'RESTRICT')]
+    private ?VehicleConfiguration $configuration = null;
 
     #[ORM\Column]
-    private int $modelYear = 2026;
+    private int $year = 2000;
 
-    #[ORM\Column(enumType: BodyStyle::class, length: 40)]
-    private BodyStyle $bodyStyle = BodyStyle::Coupe;
+    #[ORM\Column(type: Types::TEXT, unique: true, nullable: true)]
+    private ?string $vin = null;
 
-    #[ORM\Column(enumType: Drivetrain::class, length: 40)]
-    private Drivetrain $drivetrain = Drivetrain::RearWheel;
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
+    private ?string $licensePlate = null;
 
-    #[ORM\Column]
-    private int $horsepower = 0;
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
+    private ?string $imageUrl = null;
 
-    #[ORM\Column]
-    private int $price = 0;
+    #[ORM\Column(options: ['default' => 0])]
+    private int $mileageKm = 0;
 
-    #[ORM\Column(enumType: VehicleStatus::class, length: 20)]
-    private VehicleStatus $status = VehicleStatus::Draft;
+    #[ORM\Column(options: ['default' => false])]
+    private bool $deleted = false;
 
-    #[ORM\Column(type: 'text')]
-    private string $summary = '';
-
-    #[ORM\Column(nullable: true)]
-    private ?\DateTimeImmutable $publishedAt = null;
+    #[ORM\Column(type: Types::DATETIMETZ_IMMUTABLE, nullable: true)]
+    private ?\DateTimeImmutable $deletedAt = null;
 
     public function __toString(): string
     {
-        return trim(sprintf('%s %s', $this->brand?->getName(), $this->name));
+        return $this->vin ?? trim(sprintf('%s %d', $this->generation?->getName(), $this->year));
     }
 
-    #[ORM\PrePersist]
-    #[ORM\PreUpdate]
-    public function ensureSlug(): void
+    public function getUser(): ?User
     {
-        if ('' === $this->slug) {
-            $this->slug = Slugs::from($this->name);
-        }
+        return $this->user;
     }
 
-    #[ORM\PrePersist]
-    public function stampPublication(): void
+    public function setUser(?User $user): self
     {
-        if (VehicleStatus::Published === $this->status && null === $this->publishedAt) {
-            $this->publishedAt = new \DateTimeImmutable();
-        }
-    }
-
-    public function getId(): ?int
-    {
-        return $this->id;
-    }
-
-    public function getBrand(): ?Brand
-    {
-        return $this->brand;
-    }
-
-    public function setBrand(?Brand $brand): self
-    {
-        $this->brand = $brand;
+        $this->user = $user;
 
         return $this;
     }
 
-    public function getName(): string
+    public function getGeneration(): ?VehicleGeneration
     {
-        return $this->name;
+        return $this->generation;
     }
 
-    public function setName(string $name): self
+    public function setGeneration(?VehicleGeneration $generation): self
     {
-        $this->name = $name;
+        $this->generation = $generation;
 
         return $this;
     }
 
-    public function getSlug(): string
+    public function getConfiguration(): ?VehicleConfiguration
     {
-        return $this->slug;
+        return $this->configuration;
     }
 
-    public function setSlug(string $slug): self
+    public function setConfiguration(?VehicleConfiguration $configuration): self
     {
-        $this->slug = $slug;
+        $this->configuration = $configuration;
 
         return $this;
     }
 
-    public function getModelYear(): int
+    public function getYear(): int
     {
-        return $this->modelYear;
+        return $this->year;
     }
 
-    public function setModelYear(int $modelYear): self
+    public function setYear(int $year): self
     {
-        $this->modelYear = $modelYear;
+        $this->year = $year;
 
         return $this;
     }
 
-    public function getBodyStyle(): BodyStyle
+    public function getVin(): ?string
     {
-        return $this->bodyStyle;
+        return $this->vin;
     }
 
-    public function setBodyStyle(BodyStyle $bodyStyle): self
+    public function setVin(?string $vin): self
     {
-        $this->bodyStyle = $bodyStyle;
+        $this->vin = $vin;
 
         return $this;
     }
 
-    public function getDrivetrain(): Drivetrain
+    public function getLicensePlate(): ?string
     {
-        return $this->drivetrain;
+        return $this->licensePlate;
     }
 
-    public function setDrivetrain(Drivetrain $drivetrain): self
+    public function setLicensePlate(?string $licensePlate): self
     {
-        $this->drivetrain = $drivetrain;
+        $this->licensePlate = $licensePlate;
 
         return $this;
     }
 
-    public function getHorsepower(): int
+    public function getImageUrl(): ?string
     {
-        return $this->horsepower;
+        return $this->imageUrl;
     }
 
-    public function setHorsepower(int $horsepower): self
+    public function setImageUrl(?string $imageUrl): self
     {
-        $this->horsepower = $horsepower;
+        $this->imageUrl = $imageUrl;
 
         return $this;
     }
 
-    public function getPrice(): int
+    public function getMileageKm(): int
     {
-        return $this->price;
+        return $this->mileageKm;
     }
 
-    public function setPrice(int $price): self
+    public function setMileageKm(int $mileageKm): self
     {
-        $this->price = $price;
+        $this->mileageKm = $mileageKm;
 
         return $this;
     }
 
-    public function getStatus(): VehicleStatus
+    public function isDeleted(): bool
     {
-        return $this->status;
+        return $this->deleted;
     }
 
-    public function setStatus(VehicleStatus $status): self
+    public function setDeleted(bool $deleted): self
     {
-        $this->status = $status;
+        $this->deleted = $deleted;
 
         return $this;
     }
 
-    public function getSummary(): string
+    public function getDeletedAt(): ?\DateTimeImmutable
     {
-        return $this->summary;
+        return $this->deletedAt;
     }
 
-    public function setSummary(string $summary): self
+    public function setDeletedAt(?\DateTimeImmutable $deletedAt): self
     {
-        $this->summary = $summary;
-
-        return $this;
-    }
-
-    public function getPublishedAt(): ?\DateTimeImmutable
-    {
-        return $this->publishedAt;
-    }
-
-    public function setPublishedAt(?\DateTimeImmutable $publishedAt): self
-    {
-        $this->publishedAt = $publishedAt;
+        $this->deletedAt = $deletedAt;
 
         return $this;
     }
