@@ -19,5 +19,13 @@ services:
     App\:
         resource: '../src/'
 
+    _instanceof:
+        App\Admin\Notification\AdminNotificationProviderInterface:
+            tags: ['app.admin_notification_provider']
+
+    App\Admin\Notification\AdminNotificationHub:
+        arguments:
+            $providers: !tagged_iterator app.admin_notification_provider
+
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones

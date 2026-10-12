@@ -41,6 +41,9 @@ class VehicleMaintenancePlanItem
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $notesUk = null;
 
+    #[ORM\Column(nullable: true)]
+    private ?int $laborPriceUah = null;
+
     #[ORM\Column(options: ['default' => 0])]
     private int $sortOrder = 0;
 
@@ -153,6 +156,18 @@ class VehicleMaintenancePlanItem
     public function setNotesUk(?string $notesUk): self
     {
         $this->notesUk = $notesUk;
+
+        return $this;
+    }
+
+    public function getLaborPriceUah(): ?int
+    {
+        return $this->laborPriceUah;
+    }
+
+    public function setLaborPriceUah(?int $laborPriceUah): self
+    {
+        $this->laborPriceUah = $laborPriceUah;
 
         return $this;
     }

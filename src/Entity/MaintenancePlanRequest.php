@@ -6,10 +6,11 @@ namespace App\Entity;
 
 use App\Entity\Concern\Timestamps;
 use App\Entity\Concern\UuidId;
+use App\Repository\MaintenancePlanRequestRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity]
+#[ORM\Entity(repositoryClass: MaintenancePlanRequestRepository::class)]
 #[ORM\Table(name: 'maintenance_plan_requests')]
 #[ORM\Index(name: 'idx_maintenance_plan_requests_status_created_at', columns: ['status', 'created_at'])]
 #[ORM\HasLifecycleCallbacks]

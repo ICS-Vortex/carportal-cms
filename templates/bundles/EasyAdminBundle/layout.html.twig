@@ -1,0 +1,8 @@
+{% extends '@!EasyAdmin/layout.html.twig' %}
+
+{% block header_custom_menu_wrapper %}
+    <div class="navbar-custom-menu cars-admin-toolbar">
+        {{ include('admin/_notifications_dropdown.html.twig') }}
+        {{ parent() }}
+    </div>
+{% endblock %}

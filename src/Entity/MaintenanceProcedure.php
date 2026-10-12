@@ -36,6 +36,10 @@ class MaintenanceProcedure
     #[ORM\Column(type: Types::TEXT)]
     private string $category = '';
 
+    /** Estimated labor price in whole UAH (орієнтовна вартість робіт). */
+    #[ORM\Column(nullable: true)]
+    private ?int $laborPriceUah = null;
+
     #[ORM\Column(options: ['default' => false])]
     private bool $deleted = false;
 
@@ -115,6 +119,18 @@ class MaintenanceProcedure
     public function setCategory(string $category): self
     {
         $this->category = $category;
+
+        return $this;
+    }
+
+    public function getLaborPriceUah(): ?int
+    {
+        return $this->laborPriceUah;
+    }
+
+    public function setLaborPriceUah(?int $laborPriceUah): self
+    {
+        $this->laborPriceUah = $laborPriceUah;
 
         return $this;
     }

@@ -1,0 +1,472 @@
+{
+  "source": "HR-V.xlsx — Регламент технічного обслуговування HR-V (моделі RU1)",
+  "catalog": {
+    "brand": {
+      "slug": "honda",
+      "name": "Honda"
+    },
+    "model": {
+      "slug": "hr-v",
+      "name": "HR-V"
+    },
+    "generation": {
+      "slug": "ru1",
+      "name": "RU1",
+      "year_from": 2015,
+      "year_to": 2022,
+      "notes_uk": "Модельний ряд RU1 згідно регламенту Honda."
+    },
+    "configurations": [
+      {
+        "slug": "cvt",
+        "engine_label": "1.8 i-VTEC",
+        "transmission_label": "CVT",
+        "drivetrain_label": "2WD",
+        "template_key": "cvt"
+      },
+      {
+        "slug": "mkpp",
+        "engine_label": "1.5 VTEC Turbo",
+        "transmission_label": "МКПП",
+        "drivetrain_label": "2WD",
+        "template_key": "mkpp"
+      }
+    ]
+  },
+  "templates": {
+    "cvt": {
+      "name_uk": "HR-V RU1 — CVT (звичайні умови)",
+      "notes_uk": "* - за експлуатації автомобіля у важких умовах інтервал міжсервісного пробігу автомобіля підлягає зменшенню (згідно умов, зазначених в Інструкції з експлуатації  автомобіля)\n\n* - перше технічне обслуговування (ТО) автомобіля необхідно здійснити протягом 12 місяців або при пробігу не більше 15 000 км (залежно від того, що настане раніше) від дати продажу автомобіля, а всі наступні ТО - в період, який не повинен перевищувати12 місяців між черговими ТО або не більше 15 000 км за пробігом від дати проведення попереднього ТО (залежно від того, що настане раніше). На момент здійснення чергового ТО автомобіля пробіг або строк, що минув від дати попереднього ТО, не повинен перевищувати значення, зазначеного в \"Регламенті технічного обслуговування\" більше, ніж на 500 км або 15 діб відповідно."
+    },
+    "mkpp": {
+      "name_uk": "HR-V RU1 — МКПП (звичайні умови)",
+      "notes_uk": "* - за експлуатації автомобіля у важких умовах інтервал міжсервісного пробігу автомобіля підлягає зменшенню (згідно умов, зазначених в Інструкції з експлуатації  автомобіля)\n\n* - перше технічне обслуговування (ТО) автомобіля необхідно здійснити протягом 12 місяців або при пробігу не більше 15 000 км (залежно від того, що настане раніше) від дати продажу автомобіля, а всі наступні ТО - в період, який не повинен перевищувати12 місяців між черговими ТО або не більше 15 000 км за пробігом від дати проведення попереднього ТО (залежно від того, що настане раніше). На момент здійснення чергового ТО автомобіля пробіг або строк, що минув від дати попереднього ТО, не повинен перевищувати значення, зазначеного в \"Регламенті технічного обслуговування\" більше, ніж на 500 км або 15 діб відповідно."
+    }
+  },
+  "procedures": [
+    {
+      "code": "hrv-ru1-заміна-моторної-оливи",
+      "title_uk": "Заміна моторної оливи",
+      "category": "operations",
+      "description_uk": "без турбонаддуву: звичайні умови експлуатації",
+      "interval_km": 15000,
+      "interval_months": 12,
+      "labor_price_uah": 950,
+      "templates": {
+        "cvt": true,
+        "mkpp": true
+      }
+    },
+    {
+      "code": "hrv-ru1-заміна-фільтра-оливи-двигуна",
+      "title_uk": "Заміна фільтра оливи двигуна",
+      "category": "operations",
+      "description_uk": "без турбонаддуву:",
+      "interval_km": 15000,
+      "interval_months": 12,
+      "labor_price_uah": 480,
+      "templates": {
+        "cvt": true,
+        "mkpp": true
+      }
+    },
+    {
+      "code": "hrv-ru1-заміна-фільтруючого-елемента-повітряного-фільтра",
+      "title_uk": "Заміна фільтруючого елемента повітряного фільтра двигуна",
+      "category": "operations",
+      "description_uk": null,
+      "interval_km": 30000,
+      "interval_months": 24,
+      "labor_price_uah": 620,
+      "templates": {
+        "cvt": true,
+        "mkpp": true
+      }
+    },
+    {
+      "code": "hrv-ru1-перевірка-фільтруючого-елемента-повітряного-філь",
+      "title_uk": "Перевірка фільтруючого елемента повітряного фільтра двигуна (Замінюється в разі значного забруднення за експлуатації у важких умовах)",
+      "category": "operations",
+      "description_uk": null,
+      "interval_km": 30000,
+      "interval_months": 24,
+      "labor_price_uah": 570,
+      "templates": {
+        "cvt": true,
+        "mkpp": true
+      }
+    },
+    {
+      "code": "hrv-ru1-перевірка-зазорів-клапанів-сенсороний-метод-регу",
+      "title_uk": "Перевірка зазорів клапанів (сенсороний метод) / регулювання в разі необхідності",
+      "category": "operations",
+      "description_uk": null,
+      "interval_km": 60000,
+      "interval_months": 48,
+      "labor_price_uah": 570,
+      "templates": {
+        "cvt": true,
+        "mkpp": true
+      }
+    },
+    {
+      "code": "hrv-ru1-заміна-паливного-фільтра",
+      "title_uk": "Заміна паливного фільтра",
+      "category": "operations",
+      "description_uk": "звичайні умови експлуатації",
+      "interval_km": 90000,
+      "interval_months": 72,
+      "labor_price_uah": 1180,
+      "templates": {
+        "cvt": true,
+        "mkpp": true
+      }
+    },
+    {
+      "code": "hrv-ru1-заміна-паливного-фільтра-2",
+      "title_uk": "Заміна паливного фільтра",
+      "category": "operations",
+      "description_uk": "важкі умови експлуатації",
+      "interval_km": 45000,
+      "interval_months": 36,
+      "labor_price_uah": 1180,
+      "templates": {
+        "cvt": true,
+        "mkpp": true
+      }
+    },
+    {
+      "code": "hrv-ru1-заміна-свічок-запалювання-замінюються-кожні-120",
+      "title_uk": "Заміна свічок запалювання  (Замінюються кожні 120 000 км пробігу)",
+      "category": "operations",
+      "description_uk": null,
+      "interval_km": 105000,
+      "interval_months": 84,
+      "labor_price_uah": 2100,
+      "templates": {
+        "cvt": true,
+        "mkpp": true
+      }
+    },
+    {
+      "code": "hrv-ru1-перевірка-свічок-запалювання-заміна-за-потреби",
+      "title_uk": "Перевірка свічок запалювання (заміна за потреби)",
+      "category": "operations",
+      "description_uk": null,
+      "interval_km": 15000,
+      "interval_months": 12,
+      "labor_price_uah": 2100,
+      "templates": {
+        "cvt": true,
+        "mkpp": true
+      }
+    },
+    {
+      "code": "hrv-ru1-візуальна-перевірка-стану-приводного-пасу-та-пол",
+      "title_uk": "Візуальна перевірка стану приводного пасу та положення індикатора автонатягувача",
+      "category": "operations",
+      "description_uk": null,
+      "interval_km": 30000,
+      "interval_months": 24,
+      "labor_price_uah": 570,
+      "templates": {
+        "cvt": true,
+        "mkpp": true
+      }
+    },
+    {
+      "code": "hrv-ru1-заміна-трансмісійної-рідини-cvt-безступенева-тра",
+      "title_uk": "Заміна трансмісійної рідини CVT (Безступенева трансміссія, варіатор)",
+      "category": "operations",
+      "description_uk": null,
+      "interval_km": 45000,
+      "interval_months": 36,
+      "labor_price_uah": 3200,
+      "templates": {
+        "cvt": true,
+        "mkpp": false
+      }
+    },
+    {
+      "code": "hrv-ru1-заміна-трансмісійної-рідини-мкпп-механічна-транс",
+      "title_uk": "Заміна трансмісійної рідини МКПП (механічна трансміссія)",
+      "category": "operations",
+      "description_uk": null,
+      "interval_km": 60000,
+      "interval_months": 48,
+      "labor_price_uah": 1850,
+      "templates": {
+        "cvt": false,
+        "mkpp": true
+      }
+    },
+    {
+      "code": "hrv-ru1-заміна-рідини-заднього-диференціала-для-автомобі",
+      "title_uk": "Заміна рідини заднього диференціала (для автомобілів із системою 4WD)",
+      "category": "operations",
+      "description_uk": null,
+      "interval_km": 90000,
+      "interval_months": 72,
+      "labor_price_uah": 570,
+      "templates": {
+        "cvt": true,
+        "mkpp": true
+      }
+    },
+    {
+      "code": "hrv-ru1-перевірка-передніх-та-задніх-рбочих-та-стоянково",
+      "title_uk": "Перевірка передніх та задніх рбочих, та стоянкового гальм (товщину дисків, колодок, наявність підтіканнь, тріщин та інше згідно процедури)",
+      "category": "operations",
+      "description_uk": null,
+      "interval_km": 15000,
+      "interval_months": 12,
+      "labor_price_uah": 570,
+      "templates": {
+        "cvt": true,
+        "mkpp": true
+      }
+    },
+    {
+      "code": "hrv-ru1-заміна-гальмівної-рідини-замінюється-через-кожні",
+      "title_uk": "Заміна гальмівної рідини (Замінюється через кожні 3 роки експлуатації)",
+      "category": "operations",
+      "description_uk": null,
+      "interval_km": 45000,
+      "interval_months": 36,
+      "labor_price_uah": 1100,
+      "templates": {
+        "cvt": true,
+        "mkpp": true
+      }
+    },
+    {
+      "code": "hrv-ru1-заміна-пилового-фільтра-салону",
+      "title_uk": "Заміна пилового фільтра салону",
+      "category": "operations",
+      "description_uk": null,
+      "interval_km": 15000,
+      "interval_months": 12,
+      "labor_price_uah": 380,
+      "templates": {
+        "cvt": true,
+        "mkpp": true
+      }
+    },
+    {
+      "code": "hrv-ru1-перевірити-налаштування-фар-регулювання-в-разі-н",
+      "title_uk": "Перевірити налаштування фар (регулювання в разі необхідності)",
+      "category": "operations",
+      "description_uk": null,
+      "interval_km": 15000,
+      "interval_months": 12,
+      "labor_price_uah": 570,
+      "templates": {
+        "cvt": true,
+        "mkpp": true
+      }
+    },
+    {
+      "code": "hrv-ru1-під-єднати-hds-перевірка-наявності-помилок-робот",
+      "title_uk": "Під’єднати HDS (перевірка наявності помилок роботи бортової єлектроніки та оновлення програмного забеспечення)",
+      "category": "operations",
+      "description_uk": null,
+      "interval_km": 15000,
+      "interval_months": 12,
+      "labor_price_uah": 850,
+      "templates": {
+        "cvt": true,
+        "mkpp": true
+      }
+    },
+    {
+      "code": "hrv-ru1-ротація-коліс-перевірка-стану-шин-знос-протектор",
+      "title_uk": "Ротація коліс, перевірка стану шин (знос протектора, відсутність пошкоджень, тиск повітря, термін придатності ремкоплекту)",
+      "category": "operations",
+      "description_uk": null,
+      "interval_km": 15000,
+      "interval_months": 12,
+      "labor_price_uah": 420,
+      "templates": {
+        "cvt": true,
+        "mkpp": true
+      }
+    },
+    {
+      "code": "hrv-ru1-огляд-наконечники-кермових-тяг-кермові-рейки-пил",
+      "title_uk": "Огляд наконечники кермових тяг, кермові рейки, пильовики (кріплення, наявність тріщин, підтіканнь і т.ін)",
+      "category": "operations",
+      "description_uk": null,
+      "interval_km": 15000,
+      "interval_months": 12,
+      "labor_price_uah": 570,
+      "templates": {
+        "cvt": true,
+        "mkpp": true
+      }
+    },
+    {
+      "code": "hrv-ru1-огляд-компонентів-підвіски-кріплення-гайки-болти",
+      "title_uk": "Огляд компонентів підвіски (кріплення (гайки / болти), пильовики на пошкодження та знос)",
+      "category": "operations",
+      "description_uk": null,
+      "interval_km": 15000,
+      "interval_months": 12,
+      "labor_price_uah": 570,
+      "templates": {
+        "cvt": true,
+        "mkpp": true
+      }
+    },
+    {
+      "code": "hrv-ru1-огляд-пилників-урухомників-пошкодження-кріплення",
+      "title_uk": "Огляд пилників урухомників (пошкодження, кріплення , підтікання і т.ін.)",
+      "category": "operations",
+      "description_uk": null,
+      "interval_km": 15000,
+      "interval_months": 12,
+      "labor_price_uah": 570,
+      "templates": {
+        "cvt": true,
+        "mkpp": true
+      }
+    },
+    {
+      "code": "hrv-ru1-огляд-гальмівних-шлангів-та-трубопроводів-включн",
+      "title_uk": "Огляд гальмівних шлангів та трубопроводів (включно з лініями ABS/VSA)",
+      "category": "operations",
+      "description_uk": null,
+      "interval_km": 15000,
+      "interval_months": 12,
+      "labor_price_uah": 570,
+      "templates": {
+        "cvt": true,
+        "mkpp": true
+      }
+    },
+    {
+      "code": "hrv-ru1-переврка-рівня-стану-та-відсутності-підтіканнь-в",
+      "title_uk": "Переврка рівня, стану та відсутності підтіканнь всіх єксплуатаційних рідин (охолодження двигуна, оливи трансмісійної та  заднього моста, гальмівної рідини та зчеплення, рідини омивача скла і т.ін).",
+      "category": "operations",
+      "description_uk": null,
+      "interval_km": 15000,
+      "interval_months": 12,
+      "labor_price_uah": 1100,
+      "templates": {
+        "cvt": true,
+        "mkpp": true
+      }
+    },
+    {
+      "code": "hrv-ru1-огляд-вихлопної-системи-катілітичного-нейтраліза",
+      "title_uk": "Огляд вихлопної системи (катілітичного нейтралізатора, вихлопної труби, захисних термо екранів на предмет пошкодження)",
+      "category": "operations",
+      "description_uk": null,
+      "interval_km": 15000,
+      "interval_months": 12,
+      "labor_price_uah": 570,
+      "templates": {
+        "cvt": true,
+        "mkpp": true
+      }
+    },
+    {
+      "code": "hrv-ru1-огляд-паливопроводів-та-їх-з-єднаннь-на-наявнсть",
+      "title_uk": "Огляд паливопроводів та їх з’єднаннь (на наявнсть пошкодженнь, підтіканнь, старіння і т.ін)",
+      "category": "operations",
+      "description_uk": null,
+      "interval_km": 15000,
+      "interval_months": 12,
+      "labor_price_uah": 570,
+      "templates": {
+        "cvt": true,
+        "mkpp": true
+      }
+    },
+    {
+      "code": "hrv-ru1-перевірка-моменту-затягування-колісних-гайок",
+      "title_uk": "Перевірка моменту затягування колісних гайок",
+      "category": "control",
+      "description_uk": null,
+      "interval_km": 15000,
+      "interval_months": 12,
+      "labor_price_uah": 427,
+      "templates": {
+        "cvt": true,
+        "mkpp": true
+      }
+    },
+    {
+      "code": "hrv-ru1-тест-драйв-перевірка-роботи-вузлів-та-механізмів",
+      "title_uk": "Тест-драйв (перевірка роботи вузлів та механізмів, наявність шумів, робота панелі приладів, склоочисників і т.ін.)",
+      "category": "control",
+      "description_uk": null,
+      "interval_km": 15000,
+      "interval_months": 12,
+      "labor_price_uah": 427,
+      "templates": {
+        "cvt": true,
+        "mkpp": true
+      }
+    }
+  ],
+  "informational_notes": [
+    {
+      "title_uk": "Заміна моторної оливи",
+      "note_uk": "важкі умови експлуатації Замінюється кожні 7 500 км пробігу або 6 місяців експлуатації (в залежності що настане раніше)"
+    },
+    {
+      "title_uk": "Заміна моторної оливи",
+      "note_uk": "з турбонаддувом: Замінюється за появи повідомлення від системи контролю стану моторнорї оливи, або"
+    },
+    {
+      "title_uk": "Заміна моторної оливи",
+      "note_uk": "чрез один рік з моменту останньої заміни моторної оливи"
+    },
+    {
+      "title_uk": "Заміна фільтра оливи двигуна",
+      "note_uk": "з турбонаддувом: Замінюється за появи повідомлення від системи контролю стану моторнорї оливи, або"
+    },
+    {
+      "title_uk": "Заміна фільтра оливи двигуна",
+      "note_uk": "чрез два роки з моменту останньої заміни"
+    },
+    {
+      "title_uk": "Заміна охолоджуючої рідини двигуна",
+      "note_uk": "Замінюється після 200 000 км пробігу або 10 років експлуатації"
+    },
+    {
+      "title_uk": "Перевірка  геометричних параметрів підвіски автомобіля на стенді розвалу-сходження",
+      "note_uk": "Рекомендовано до проведення за бажанням клієнта"
+    },
+    {
+      "title_uk": "Змащування гумових ущільненнь дверей, багажника, капота",
+      "note_uk": "Виконується кожний раз перед початком зимового періоду експлуатації"
+    }
+  ],
+  "service_milestones_km": [
+    15000,
+    30000,
+    45000,
+    60000,
+    75000,
+    90000,
+    105000,
+    120000,
+    135000,
+    150000,
+    165000
+  ],
+  "service_milestones_months": [
+    12,
+    24,
+    36,
+    48,
+    60,
+    72,
+    84,
+    96,
+    108,
+    120,
+    132
+  ]
+}

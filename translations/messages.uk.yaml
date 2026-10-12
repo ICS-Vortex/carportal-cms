@@ -45,6 +45,15 @@ language:
     interface_uk: 'Інтерфейс · UK'
     interface_en: 'Інтерфейс · EN'
 
+notifications:
+    title: Сповіщення
+    empty: Нових сповіщень немає.
+    view_all_for_feed: 'Усі: %feed%'
+    feeds:
+        maintenance_plan_request:
+            title: Запити на план
+            item: '%owner% · %vehicle%'
+
 dashboard:
     kicker: 'Car Portal · Сервіс'
     title: Робочий стіл
@@ -61,6 +70,7 @@ dashboard:
     stat_marques_hint: Марки в базі
     stat_desk: Стіл
     stat_desk_hint: Відкриті запити
+    stat_notifications_hint: Потребують уваги
     recent_vehicles: Останні автомобілі
     recent_meta: '%count% нагадувань · %procedures% робіт.'
     table_vehicle: Автомобіль
@@ -72,6 +82,14 @@ dashboard:
     no_vehicles: Ще немає автомобілів.
 
 entity:
+    plan_request:
+        singular: Запит на план
+        plural: Запити на план
+        status: Статус
+        status_open: Відкритий
+        status_resolved: Опрацьований
+        note: Коментар власника
+        created_at: Створено
     user:
         singular: Користувач
         plural: Користувачі

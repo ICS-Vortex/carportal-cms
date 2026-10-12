@@ -10,6 +10,8 @@ use App\Entity\Reminder;
 use App\Entity\User;
 use App\Entity\Vehicle;
 use App\Entity\VehicleBrand;
+use App\Admin\Notification\AdminNotificationHub;
+use App\Admin\Notification\Provider\MaintenancePlanRequestNotificationProvider;
 use App\Repository\VehicleRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use EasyCorp\Bundle\EasyAdminBundle\Attribute\AdminDashboard;
@@ -29,6 +31,7 @@ final class DashboardController extends AbstractDashboardController
 {
     public function __construct(
         private VehicleRepository $vehicles,
+        private AdminNotificationHub $adminNotifications,
         private EntityManagerInterface $entityManager,
     ) {
     }
@@ -41,7 +44,8 @@ final class DashboardController extends AbstractDashboardController
             'brands' => $this->entityManager->getRepository(VehicleBrand::class)->count([]),
             'reminders' => $this->entityManager->getRepository(Reminder::class)->count([]),
             'procedures' => $this->entityManager->getRepository(MaintenanceProcedure::class)->count(['deleted' => false]),
-            'openRequests' => $this->entityManager->getRepository(MaintenancePlanRequest::class)->count(['status' => 'open']),
+            'notificationCount' => $this->adminNotifications->totalUnreadCount(),
+            'notificationFeeds' => $this->adminNotifications->feeds(5),
             'recentVehicles' => $this->vehicles->recent(),
         ]);
     }
@@ -81,7 +85,14 @@ final class DashboardController extends AbstractDashboardController
         yield MenuItem::linkTo(MaintenanceProcedureCrudController::class, t('menu.procedures'), 'fa-solid fa-screwdriver-wrench');
         yield MenuItem::linkTo(MaintenanceScheduleTemplateCrudController::class, t('menu.templates'), 'fa-solid fa-clipboard-list');
         yield MenuItem::linkTo(ReminderCrudController::class, t('menu.reminders'), 'fa-solid fa-bell');
-        yield MenuItem::linkTo(MaintenancePlanRequestCrudController::class, t('menu.plan_requests'), 'fa-solid fa-inbox');
+        $openPlanRequests = $this->adminNotifications->unreadCountForType(MaintenancePlanRequestNotificationProvider::TYPE);
+        $planRequestsItem = MenuItem::linkTo(MaintenancePlanRequestCrudController::class, t('menu.plan_requests'), 'fa-solid fa-inbox');
+
+        if ($openPlanRequests > 0) {
+            $planRequestsItem = $planRequestsItem->setBadge($openPlanRequests, 'danger');
+        }
+
+        yield $planRequestsItem;
         yield MenuItem::section(t('menu.section.people'));
         yield MenuItem::linkTo(UserCrudController::class, t('menu.users'), 'fa-solid fa-user-tie');
     }

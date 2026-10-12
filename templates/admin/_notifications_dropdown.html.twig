@@ -1,0 +1,49 @@
+{% set notification_count = admin_notification_count() %}
+{% set notification_feeds = admin_notification_feeds(8) %}
+
+<twig:ea:ActionMenu class="cars-notifications-menu">
+    <twig:ea:ActionMenu:Button class="cars-notifications-button" data-bs-offset="0,5" withoutDropdownToggleMarker aria-label="{{ 'notifications.title'|trans({}, 'messages') }}">
+        <twig:ea:Icon name="fa-solid fa-bell" />
+        {% if notification_count > 0 %}
+            <span class="cars-notifications-badge">{{ notification_count > 99 ? '99+' : notification_count }}</span>
+        {% endif %}
+    </twig:ea:ActionMenu:Button>
+    <twig:ea:ActionMenu:Overlay>
+        <twig:ea:ActionMenu:ActionList class="cars-notifications-panel">
+            <twig:ea:ActionMenu:ActionList:Header label="{{ 'notifications.title'|trans({}, 'messages') }}" />
+            {% if notification_feeds is empty %}
+                <twig:ea:ActionMenu:ActionList:Content class="cars-notifications-empty">
+                    {{ 'notifications.empty'|trans({}, 'messages') }}
+                </twig:ea:ActionMenu:ActionList:Content>
+            {% else %}
+                {% for feed in notification_feeds %}
+                    <twig:ea:ActionMenu:ActionList:Header
+                        class="cars-notifications-feed-header"
+                        label="{{ feed.title }} ({{ feed.unreadCount }})"
+                    />
+                    {% for item in feed.items %}
+                        {% set item_label = item.occurredAt
+                            ? item.label ~ ' (' ~ item.occurredAt|date('d.m.Y H:i') ~ ')'
+                            : item.label %}
+                        <twig:ea:ActionMenu:ActionList:Item
+                            url="{{ item.url }}"
+                            class="cars-notifications-item"
+                            icon="{{ feed.icon }}"
+                            label="{{ item_label }}"
+                        />
+                    {% endfor %}
+                    {% if feed.viewAllUrl %}
+                        <twig:ea:ActionMenu:ActionList:Item
+                            url="{{ feed.viewAllUrl }}"
+                            icon="{{ feed.icon }}"
+                            label="{{ 'notifications.view_all_for_feed'|trans({'%feed%': feed.title}, 'messages') }}"
+                        />
+                    {% endif %}
+                    {% if not loop.last %}
+                        <twig:ea:ActionMenu:ActionList:Divider/>
+                    {% endif %}
+                {% endfor %}
+            {% endif %}
+        </twig:ea:ActionMenu:ActionList>
+    </twig:ea:ActionMenu:Overlay>
+</twig:ea:ActionMenu>

@@ -45,6 +45,15 @@ language:
     interface_uk: 'Interface · UK'
     interface_en: 'Interface · EN'
 
+notifications:
+    title: Notifications
+    empty: No new notifications.
+    view_all_for_feed: 'View all: %feed%'
+    feeds:
+        maintenance_plan_request:
+            title: Plan requests
+            item: '%owner% · %vehicle%'
+
 dashboard:
     kicker: 'Car Portal · Service'
     title: Workshop desk
@@ -61,6 +70,7 @@ dashboard:
     stat_marques_hint: Brands on file
     stat_desk: Desk
     stat_desk_hint: Open plan requests
+    stat_notifications_hint: Needs attention
     recent_vehicles: Recent vehicles
     recent_meta: '%count% reminder(s) · %procedures% procedures.'
     table_vehicle: Vehicle
@@ -72,6 +82,14 @@ dashboard:
     no_vehicles: No vehicles yet.
 
 entity:
+    plan_request:
+        singular: Plan request
+        plural: Plan requests
+        status: Status
+        status_open: Open
+        status_resolved: Resolved
+        note: Owner note
+        created_at: Created
     user:
         singular: User
         plural: Users

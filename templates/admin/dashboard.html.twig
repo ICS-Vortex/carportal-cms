@@ -33,10 +33,43 @@
             </article>
             <article>
                 <span>{{ 'dashboard.stat_desk'|trans({}, 'messages') }}</span>
-                <strong>{{ openRequests }}</strong>
-                <em>{{ 'dashboard.stat_desk_hint'|trans({}, 'messages') }}</em>
+                <strong>{{ notificationCount }}</strong>
+                <em>{{ 'dashboard.stat_notifications_hint'|trans({}, 'messages') }}</em>
             </article>
         </div>
+
+        {% if notificationFeeds is not empty %}
+            <div class="cars-board cars-notifications-board">
+                <header>
+                    <h2>{{ 'notifications.title'|trans({}, 'messages') }}</h2>
+                    <p>{{ 'dashboard.stat_notifications_hint'|trans({}, 'messages') }} · {{ notificationCount }}</p>
+                </header>
+                {% for feed in notificationFeeds %}
+                    <div class="cars-notifications-feed-block">
+                        <h3 class="cars-notifications-feed-title">{{ feed.title }} <span>({{ feed.unreadCount }})</span></h3>
+                        <table>
+                            <tbody>
+                                {% for item in feed.items %}
+                                    <tr>
+                                        <td>
+                                            <a href="{{ item.url }}">{{ item.label }}</a>
+                                            {% if item.occurredAt %}
+                                                <small>{{ item.occurredAt|date('d.m.Y H:i') }}</small>
+                                            {% endif %}
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                        {% if feed.viewAllUrl %}
+                            <p class="cars-notifications-feed-more">
+                                <a href="{{ feed.viewAllUrl }}">{{ 'notifications.view_all_for_feed'|trans({'%feed%': feed.title}, 'messages') }}</a>
+                            </p>
+                        {% endif %}
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
 
         <div class="cars-board">
             <header>

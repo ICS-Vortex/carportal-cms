@@ -32,6 +32,7 @@ final class MaintenanceProcedureCrudController extends AbstractCrudController
         yield TextField::new('category');
         yield IntegerField::new('defaultIntervalKm')->setLabel('Interval km');
         yield IntegerField::new('defaultIntervalMonths')->setLabel('Interval months');
+        yield IntegerField::new('laborPriceUah')->setLabel('Labor price (UAH)')->setHelp('Орієнтовна вартість робіт для кабінету власника.');
         yield TextareaField::new('descriptionUk')->hideOnIndex();
         yield BooleanField::new('deleted');
     }
