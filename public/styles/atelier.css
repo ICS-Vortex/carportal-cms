@@ -1,0 +1,227 @@
+:root,
+.ea-dark-scheme {
+    --cars-gold: #d4b483;
+    --cars-gold-deep: #8a6a3b;
+    --cars-ink: #16140f;
+    --cars-paper: #f4efe6;
+    --cars-line: rgba(212, 180, 131, 0.35);
+    --font-family-base: "Outfit", sans-serif;
+    --body-max-width: 100%;
+}
+
+body {
+    font-family: "Outfit", sans-serif;
+}
+
+.sidebar {
+    background:
+        radial-gradient(90% 28% at 0% 0%, rgba(212, 180, 131, 0.18), transparent 55%),
+        linear-gradient(180deg, #1c1914 0%, #100e0c 100%);
+    border-right: 1px solid var(--cars-line);
+}
+
+.sidebar .main-header {
+    border-bottom: 1px solid var(--cars-line);
+}
+
+.cars-mark,
+.cars-mark-sub {
+    display: block;
+    letter-spacing: 0.22em;
+}
+
+.cars-mark {
+    font-family: "Fraunces", serif;
+    font-size: 1.35rem;
+    font-weight: 640;
+    color: var(--cars-gold);
+}
+
+.cars-mark-sub {
+    margin-top: 0.15rem;
+    font-size: 0.68rem;
+    text-transform: uppercase;
+    color: rgba(244, 239, 230, 0.62);
+}
+
+.menu-item.active {
+    box-shadow: inset 2px 0 0 var(--cars-gold);
+}
+
+.cars-floor {
+    display: grid;
+    gap: 1.5rem;
+}
+
+.cars-hero {
+    position: relative;
+    overflow: hidden;
+    padding: 2.4rem 2.6rem 1.2rem;
+    border: 1px solid var(--cars-line);
+    border-radius: 1.4rem;
+    background:
+        radial-gradient(80% 120% at 100% 0%, rgba(212, 180, 131, 0.18), transparent 46%),
+        #1a1713;
+    color: var(--cars-paper);
+}
+
+.cars-kicker {
+    margin: 0 0 0.8rem;
+    font-size: 0.72rem;
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+    color: var(--cars-gold);
+}
+
+.cars-hero h1 {
+    margin: 0;
+    font-family: "Fraunces", serif;
+    font-size: clamp(3rem, 6vw, 5.4rem);
+    font-weight: 520;
+    letter-spacing: -0.04em;
+    line-height: 0.92;
+}
+
+.cars-lede {
+    max-width: 36rem;
+    margin: 1rem 0 0;
+    color: rgba(244, 239, 230, 0.78);
+    font-size: 1.05rem;
+}
+
+.cars-hero-car {
+    display: block;
+    width: min(100%, 42rem);
+    margin-top: 1.4rem;
+    color: var(--cars-gold);
+}
+
+.cars-stats {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 1rem;
+}
+
+.cars-stats article {
+    padding: 1.2rem 1.3rem 1.1rem;
+    border: 1px solid var(--cars-line);
+    border-radius: 1.1rem;
+    background: rgba(255, 252, 247, 0.55);
+}
+
+.ea-dark-scheme .cars-stats article,
+.ea-dark-scheme .cars-board {
+    background: #211e18;
+}
+
+.cars-stats span,
+.cars-board header p {
+    color: var(--cars-gold-deep);
+    font-size: 0.75rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+}
+
+.ea-dark-scheme .cars-stats span,
+.ea-dark-scheme .cars-board header p {
+    color: var(--cars-gold);
+}
+
+.cars-stats strong {
+    display: block;
+    margin: 0.35rem 0 0.15rem;
+    font-family: "Fraunces", serif;
+    font-size: 2.6rem;
+    font-weight: 520;
+    line-height: 1;
+}
+
+.cars-stats em {
+    font-style: normal;
+    opacity: 0.7;
+}
+
+.cars-board {
+    padding: 1.3rem 1.4rem 0.6rem;
+    border: 1px solid var(--cars-line);
+    border-radius: 1.2rem;
+    background: rgba(255, 252, 247, 0.72);
+}
+
+.cars-board header {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    align-items: baseline;
+}
+
+.cars-board h2 {
+    margin: 0;
+    font-family: "Fraunces", serif;
+    font-size: 1.8rem;
+    font-weight: 520;
+}
+
+.cars-board table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 0.6rem;
+}
+
+.cars-board th {
+    padding: 0.8rem 0.4rem;
+    text-align: left;
+    font-size: 0.72rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    opacity: 0.6;
+}
+
+.cars-board td {
+    padding: 0.95rem 0.4rem 1rem;
+    border-top: 1px solid var(--cars-line);
+    vertical-align: top;
+}
+
+.cars-board b,
+.cars-board small {
+    display: block;
+}
+
+.cars-board small {
+    max-width: 28rem;
+    margin-top: 0.2rem;
+    opacity: 0.68;
+}
+
+.cars-pill {
+    display: inline-flex;
+    padding: 0.2rem 0.55rem;
+    border-radius: 999px;
+    font-size: 0.75rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+.cars-pill-published {
+    background: rgba(212, 180, 131, 0.22);
+    color: var(--cars-gold-deep);
+}
+
+.ea-dark-scheme .cars-pill-published {
+    color: var(--cars-gold);
+}
+
+.cars-pill-draft {
+    background: rgba(90, 78, 58, 0.16);
+}
+
+@media (max-width: 960px) {
+    .cars-stats {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .cars-board {
+        overflow-x: auto;
+    }
+}

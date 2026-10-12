@@ -1,0 +1,139 @@
+:root {
+    color-scheme: dark;
+    --gold: #d4b483;
+    --paper: #f6f1e8;
+    --ink: #14120f;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    min-height: 100vh;
+    font-family: "Outfit", sans-serif;
+    background: var(--ink);
+    color: var(--paper);
+}
+
+.gate {
+    display: grid;
+    grid-template-columns: 1.2fr 0.8fr;
+    min-height: 100vh;
+}
+
+.gate-stage {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 4rem;
+    background:
+        radial-gradient(70% 50% at 20% 80%, rgba(212, 180, 131, 0.16), transparent 60%),
+        linear-gradient(160deg, #221e18, #0d0c0a 70%);
+}
+
+.kicker {
+    margin: 0 0 0.8rem;
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+    font-size: 0.74rem;
+    color: var(--gold);
+}
+
+.gate-stage h1 {
+    margin: 0;
+    font-family: "Fraunces", serif;
+    font-size: clamp(5rem, 12vw, 9rem);
+    font-weight: 520;
+    letter-spacing: 0.08em;
+    line-height: 0.8;
+}
+
+.stage-copy {
+    max-width: 22rem;
+    margin: 1.2rem 0 2rem;
+    color: rgba(246, 241, 232, 0.74);
+}
+
+.gate-stage svg {
+    width: min(100%, 36rem);
+    color: var(--gold);
+}
+
+.gate-form {
+    display: flex;
+    align-items: center;
+    padding: 3rem;
+    background: var(--paper);
+    color: var(--ink);
+}
+
+.gate-form form {
+    width: min(100%, 24rem);
+}
+
+.gate-form h2 {
+    margin: 0 0 1.4rem;
+    font-family: "Fraunces", serif;
+    font-size: 3rem;
+    font-weight: 520;
+}
+
+label {
+    display: grid;
+    gap: 0.4rem;
+    margin-bottom: 1rem;
+    font-size: 0.78rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+}
+
+input {
+    border: 0;
+    border-bottom: 1px solid rgba(20, 18, 15, 0.28);
+    padding: 0.7rem 0;
+    font: inherit;
+    font-size: 1rem;
+    letter-spacing: 0;
+    text-transform: none;
+    background: transparent;
+    color: inherit;
+}
+
+input:focus {
+    outline: none;
+    border-bottom-color: var(--gold);
+}
+
+button {
+    margin-top: 0.8rem;
+    width: 100%;
+    border: 0;
+    border-radius: 999px;
+    padding: 0.95rem 1.2rem;
+    background: var(--ink);
+    color: var(--paper);
+    font: inherit;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    cursor: pointer;
+}
+
+.gate-error {
+    padding: 0.75rem 0.9rem;
+    border-radius: 0.8rem;
+    background: rgba(138, 64, 40, 0.12);
+    color: #7a341c;
+}
+
+@media (max-width: 860px) {
+    .gate {
+        grid-template-columns: 1fr;
+    }
+
+    .gate-stage {
+        min-height: 42vh;
+        padding: 2rem;
+    }
+}
