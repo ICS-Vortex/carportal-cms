@@ -11,6 +11,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IntegerField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextareaField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
+use function Symfony\Component\Translation\t;
 
 /** @extends AbstractCrudController<VehicleGeneration> */
 final class VehicleGenerationCrudController extends AbstractCrudController
@@ -22,16 +23,20 @@ final class VehicleGenerationCrudController extends AbstractCrudController
 
     public function configureCrud(Crud $crud): Crud
     {
-        return $crud->setDefaultSort(['name' => 'ASC'])->setSearchFields(['name', 'slug']);
+        return $crud
+            ->setEntityLabelInSingular(t('entity.generation.singular', domain: 'messages'))
+            ->setEntityLabelInPlural(t('entity.generation.plural', domain: 'messages'))
+            ->setDefaultSort(['name' => 'ASC'])
+            ->setSearchFields(['name', 'slug']);
     }
 
     public function configureFields(string $pageName): iterable
     {
-        yield AssociationField::new('model');
-        yield TextField::new('name');
-        yield TextField::new('slug');
-        yield IntegerField::new('yearFrom');
-        yield IntegerField::new('yearTo');
-        yield TextareaField::new('notesUk')->hideOnIndex();
+        yield AssociationField::new('model', t('entity.generation.model', domain: 'messages'));
+        yield TextField::new('name', t('entity.field.name', domain: 'messages'));
+        yield TextField::new('slug', t('entity.field.slug', domain: 'messages'));
+        yield IntegerField::new('yearFrom', t('entity.generation.year_from', domain: 'messages'));
+        yield IntegerField::new('yearTo', t('entity.generation.year_to', domain: 'messages'));
+        yield TextareaField::new('notesUk', t('entity.field.notes', domain: 'messages'))->hideOnIndex();
     }
 }

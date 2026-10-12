@@ -23,6 +23,7 @@ final class VehicleFixtures extends Fixture implements DependentFixtureInterface
     {
         return [
             UserFixtures::class,
+            HondaHrvRu1MaintenanceFixture::class,
             VehicleConfigurationFixtures::class,
         ];
     }
@@ -34,7 +35,12 @@ final class VehicleFixtures extends Fixture implements DependentFixtureInterface
 
     public function load(ObjectManager $manager): void
     {
-        $hrv = $this->vehicle(UserFixtures::OLENA, VehicleGenerationFixtures::RU1, VehicleConfigurationFixtures::HRV_FWD);
+        $hrv = $this->vehicle(
+            UserFixtures::OLENA,
+            HondaHrvRu1MaintenanceFixture::GENERATION,
+            HondaHrvRu1MaintenanceFixture::CONFIG_MKPP,
+        );
+        $hrv->setYear(2021);
         $corolla = $this->vehicle(UserFixtures::ANDRII, VehicleGenerationFixtures::E210, VehicleConfigurationFixtures::COROLLA_HYBRID);
         $cx5 = $this->vehicle(UserFixtures::ANDRII, VehicleGenerationFixtures::KF, VehicleConfigurationFixtures::CX5_AWD);
 

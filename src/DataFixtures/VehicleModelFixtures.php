@@ -13,7 +13,6 @@ use Doctrine\Persistence\ObjectManager;
 
 final class VehicleModelFixtures extends Fixture implements DependentFixtureInterface, FixtureGroupInterface
 {
-    public const HRV = 'model.hr-v';
     public const COROLLA = 'model.corolla';
     public const CX5 = 'model.cx-5';
 
@@ -29,16 +28,13 @@ final class VehicleModelFixtures extends Fixture implements DependentFixtureInte
 
     public function load(ObjectManager $manager): void
     {
-        $hrv = $this->model(VehicleBrandFixtures::HONDA, 'HR-V', 'hr-v');
         $corolla = $this->model(VehicleBrandFixtures::TOYOTA, 'Corolla', 'corolla');
         $cx5 = $this->model(VehicleBrandFixtures::MAZDA, 'CX-5', 'cx-5');
 
-        $manager->persist($hrv);
         $manager->persist($corolla);
         $manager->persist($cx5);
         $manager->flush();
 
-        $this->addReference(self::HRV, $hrv);
         $this->addReference(self::COROLLA, $corolla);
         $this->addReference(self::CX5, $cx5);
     }

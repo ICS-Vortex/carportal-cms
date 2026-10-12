@@ -1,0 +1,61 @@
+{% extends '@EasyAdmin/layout.html.twig' %}
+
+{% form_theme form with '@EasyAdmin/crud/form_theme.html.twig' %}
+
+{% block content_title %}Імпорт регламенту для авто{% endblock %}
+
+{% block page_actions %}
+    <a href="{{ backUrl }}" class="btn btn-secondary">
+        <i class="fa-solid fa-chevron-left"></i> Назад до запиту
+    </a>
+{% endblock %}
+
+{% block main %}
+    <div class="content-panel mb-4">
+        <p class="mb-1"><strong>Запит:</strong> {{ planRequest }}</p>
+        <p class="mb-0"><strong>Автомобіль:</strong> {{ vehicle }}</p>
+    </div>
+
+    <div class="content-panel mb-4">
+        <h2 class="h5 mb-3">Завантажити файл</h2>
+        <p class="text-muted small">
+            CSV або XLSX з колонками: <code>title_uk</code>, <code>category</code>, <code>interval_km</code>,
+            <code>interval_months</code>, <code>labor_price_uah</code>, <code>notes_uk</code>, <code>procedure_code</code> (необовʼязково).
+            Перший рядок — заголовки. Обробка через RabbitMQ (cms-worker).
+        </p>
+        {{ form_start(form, { attr: { class: 'ea-form', enctype: 'multipart/form-data' } }) }}
+            {{ form_row(form.file) }}
+            <button type="submit" class="btn btn-primary">
+                <i class="fa-solid fa-upload"></i> Завантажити та імпортувати
+            </button>
+        {{ form_end(form) }}
+    </div>
+
+    <div class="content-panel">
+        <h2 class="h5 mb-3">Журнал імпортів для цього запиту</h2>
+        {% if imports is empty %}
+            <p class="text-muted mb-0">Ще не було завантажень.</p>
+        {% else %}
+            <table class="table table-striped table-sm">
+                <thead>
+                <tr>
+                    <th>Файл</th>
+                    <th>Статус</th>
+                    <th>Рядків</th>
+                    <th>Створено</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for row in imports|sort((a, b) => b.createdAt <=> a.createdAt) %}
+                    <tr>
+                        <td>{{ row.originalFilename }}</td>
+                        <td>{{ row.statusLabel }}</td>
+                        <td>{{ row.rowsImported ?? '—' }} / {{ row.rowsTotal ?? '—' }}</td>
+                        <td>{{ row.createdAt|date('Y-m-d H:i') }}</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        {% endif %}
+    </div>
+{% endblock %}

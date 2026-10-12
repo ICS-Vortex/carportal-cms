@@ -7,9 +7,10 @@ RUN apt-get update \
         libpq-dev \
         librabbitmq-dev \
         libicu-dev \
+        libzip-dev \
         pkg-config \
         ${PHPIZE_DEPS} \
-    && docker-php-ext-install intl pdo_pgsql opcache \
+    && docker-php-ext-install intl pdo_pgsql opcache zip \
     && pecl install amqp redis \
     && docker-php-ext-enable amqp redis \
     && apt-get purge -y --auto-remove ${PHPIZE_DEPS} \

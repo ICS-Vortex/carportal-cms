@@ -12,7 +12,13 @@ php bin/console doctrine:database:create --if-not-exists --no-interaction
 php bin/console doctrine:migrations:migrate --no-interaction
 php bin/console assets:install public --no-interaction
 php bin/console app:bootstrap --no-interaction
-php bin/console cache:clear --no-interaction
+
+# Dev: clearing cache on every container start blocks php -S; nginx then returns 502 for
+# /_wdt/* and the Web Debug Toolbar stays on "Loading…".
+if [ "${CMS_CACHE_CLEAR_ON_START:-0}" = "1" ]; then
+    php bin/console cache:clear --no-interaction
+fi
+
 mkdir -p var
 touch var/cms-ready
 

@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Entity;
 
+use App\Enum\FuelType;
+use App\Enum\TransmissionType;
 use App\Entity\Concern\Timestamps;
 use App\Entity\Concern\UuidId;
 use Doctrine\DBAL\Types\Types;
@@ -29,21 +31,21 @@ class VehicleConfiguration
     #[ORM\Column(type: Types::TEXT)]
     private string $engineLabel = '';
 
-    #[ORM\Column(type: Types::TEXT)]
-    private string $transmissionLabel = '';
+    #[ORM\Column(type: Types::STRING, length: 16, enumType: TransmissionType::class)]
+    private TransmissionType $transmissionLabel = TransmissionType::Manual;
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $drivetrainLabel = null;
 
-    #[ORM\Column(type: Types::TEXT, nullable: true)]
-    private ?string $fuelType = null;
+    #[ORM\Column(type: Types::STRING, length: 16, enumType: FuelType::class, nullable: true)]
+    private ?FuelType $fuelType = null;
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $notesUk = null;
 
     public function __toString(): string
     {
-        return trim($this->engineLabel.' '.$this->transmissionLabel);
+        return trim($this->engineLabel.' '.$this->transmissionLabel->label());
     }
 
     public function getGeneration(): ?VehicleGeneration
@@ -82,12 +84,12 @@ class VehicleConfiguration
         return $this;
     }
 
-    public function getTransmissionLabel(): string
+    public function getTransmissionLabel(): TransmissionType
     {
         return $this->transmissionLabel;
     }
 
-    public function setTransmissionLabel(string $transmissionLabel): self
+    public function setTransmissionLabel(TransmissionType $transmissionLabel): self
     {
         $this->transmissionLabel = $transmissionLabel;
 
@@ -106,12 +108,12 @@ class VehicleConfiguration
         return $this;
     }
 
-    public function getFuelType(): ?string
+    public function getFuelType(): ?FuelType
     {
         return $this->fuelType;
     }
 
-    public function setFuelType(?string $fuelType): self
+    public function setFuelType(?FuelType $fuelType): self
     {
         $this->fuelType = $fuelType;
 

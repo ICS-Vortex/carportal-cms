@@ -16,7 +16,6 @@ use Doctrine\Persistence\ObjectManager;
 
 final class MaintenanceScheduleTemplateFixtures extends Fixture implements DependentFixtureInterface, FixtureGroupInterface
 {
-    public const HRV = 'template.hrv';
     public const HYBRID = 'template.hybrid';
     public const CX5 = 'template.cx5';
 
@@ -37,16 +36,9 @@ final class MaintenanceScheduleTemplateFixtures extends Fixture implements Depen
     {
         $faker = FixtureFaker::uk();
 
-        $hrv = $this->template(VehicleGenerationFixtures::RU1, VehicleConfigurationFixtures::HRV_FWD, 'HR-V 1.8 CVT FWD', $faker->sentence(8));
         $hybrid = $this->template(VehicleGenerationFixtures::E210, VehicleConfigurationFixtures::COROLLA_HYBRID, 'Corolla 1.8 Hybrid', $faker->sentence(10));
         $cx5 = $this->template(VehicleGenerationFixtures::KF, VehicleConfigurationFixtures::CX5_AWD, 'CX-5 2.5 AWD', $faker->sentence(9));
 
-        $this->items($manager, $hrv, [
-            MaintenanceProcedureFixtures::ENGINE_OIL => [10_000, 12],
-            MaintenanceProcedureFixtures::OIL_FILTER => [10_000, 12],
-            MaintenanceProcedureFixtures::CABIN_FILTER => [15_000, 12],
-            MaintenanceProcedureFixtures::BRAKE_FLUID => [null, 24],
-        ]);
         $this->items($manager, $hybrid, [
             MaintenanceProcedureFixtures::ENGINE_OIL => [15_000, 12],
             MaintenanceProcedureFixtures::CABIN_FILTER => [15_000, 12],
@@ -60,12 +52,10 @@ final class MaintenanceScheduleTemplateFixtures extends Fixture implements Depen
             MaintenanceProcedureFixtures::BRAKE_FLUID => [null, 24],
         ]);
 
-        $manager->persist($hrv);
         $manager->persist($hybrid);
         $manager->persist($cx5);
         $manager->flush();
 
-        $this->addReference(self::HRV, $hrv);
         $this->addReference(self::HYBRID, $hybrid);
         $this->addReference(self::CX5, $cx5);
     }

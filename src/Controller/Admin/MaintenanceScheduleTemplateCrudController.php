@@ -5,15 +5,27 @@ declare(strict_types=1);
 namespace App\Controller\Admin;
 
 use App\Entity\MaintenanceScheduleTemplate;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\BooleanField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\TextareaField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
+use EasyCorp\Bundle\EasyAdminBundle\Router\AdminUrlGenerator;
+use Symfony\Contracts\Translation\TranslatorInterface;
+use function Symfony\Component\Translation\t;
 
 /** @extends AbstractCrudController<MaintenanceScheduleTemplate> */
 final class MaintenanceScheduleTemplateCrudController extends AbstractCrudController
 {
+    public function __construct(
+        private readonly AdminUrlGenerator $adminUrlGenerator,
+        private readonly TranslatorInterface $translator,
+    ) {
+    }
+
     public static function getEntityFqcn(): string
     {
         return MaintenanceScheduleTemplate::class;
@@ -21,14 +33,72 @@ final class MaintenanceScheduleTemplateCrudController extends AbstractCrudContro
 
     public function configureCrud(Crud $crud): Crud
     {
-        return $crud->setSearchFields(['nameUk']);
+        return $crud
+            ->setEntityLabelInSingular(t('entity.template.singular', domain: 'messages'))
+            ->setEntityLabelInPlural(t('entity.template.plural', domain: 'messages'))
+            ->setDefaultSort(['nameUk' => 'ASC'])
+            ->setSearchFields(['nameUk'])
+            ->setDefaultRowAction(Action::DETAIL)
+            ->setHelp(Crud::PAGE_INDEX, t('entity.template.index_help', domain: 'messages'));
+    }
+
+    public function configureActions(Actions $actions): Actions
+    {
+        return $actions
+            ->add(Crud::PAGE_INDEX, Action::DETAIL)
+            ->update(Crud::PAGE_INDEX, Action::DETAIL, static fn (Action $action) => $action
+                ->setLabel(t('entity.template.view_schedule', domain: 'messages'))
+                ->setIcon('fa-solid fa-list-check')
+                ->asPrimaryAction())
+            ->reorder(Crud::PAGE_INDEX, [Action::DETAIL, Action::EDIT, Action::DELETE]);
     }
 
     public function configureFields(string $pageName): iterable
     {
-        yield TextField::new('nameUk')->setLabel('Name');
-        yield AssociationField::new('generation');
-        yield AssociationField::new('configuration');
-        yield BooleanField::new('deleted');
+        yield TextField::new('nameUk', t('entity.template.name', domain: 'messages'));
+        yield TextField::new('vehicleContextLabel', t('entity.template.vehicle', domain: 'messages'))
+            ->hideOnForm()
+            ->setHelp(t('entity.template.vehicle_help', domain: 'messages'));
+        yield TextField::new('scheduleWorksIndexLink', t('entity.template.works_count', domain: 'messages'))
+            ->onlyOnIndex()
+            ->formatValue(function (mixed $value, MaintenanceScheduleTemplate $template): string {
+                $url = $this->detailUrl($template);
+                $count = $template->getActiveScheduleItemsCount();
+                $open = $this->translator->trans('entity.template.open_schedule', domain: 'messages');
+
+                return sprintf(
+                    '<a href="%s" class="fw-semibold text-decoration-none">%d</a> <span class="text-muted">·</span> <a href="%s">%s</a>',
+                    htmlspecialchars($url, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8'),
+                    $count,
+                    htmlspecialchars($url, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8'),
+                    htmlspecialchars($open, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8'),
+                );
+            })
+            ->renderAsHtml();
+        yield AssociationField::new('generation', t('entity.template.generation', domain: 'messages'))
+            ->hideOnIndex();
+        yield AssociationField::new('configuration', t('entity.template.configuration', domain: 'messages'))
+            ->hideOnIndex();
+        yield AssociationField::new('station', t('entity.template.station', domain: 'messages'))
+            ->hideOnIndex()
+            ->setHelp(t('entity.template.station_help', domain: 'messages'));
+        yield TextareaField::new('notesUk', t('entity.template.notes', domain: 'messages'))->hideOnIndex();
+        yield TextField::new('scheduleWorksHtml', t('entity.template.works', domain: 'messages'))
+            ->onlyOnDetail()
+            ->renderAsHtml()
+            ->setHelp(t('entity.template.works_help', domain: 'messages'));
+        yield AssociationField::new('scheduleItems', t('entity.template.manage_items', domain: 'messages'))
+            ->onlyOnDetail()
+            ->setCrudController(MaintenanceScheduleItemCrudController::class);
+        yield BooleanField::new('deleted')->hideOnIndex();
+    }
+
+    private function detailUrl(MaintenanceScheduleTemplate $template): string
+    {
+        return $this->adminUrlGenerator
+            ->setController(self::class)
+            ->setAction(Action::DETAIL)
+            ->setEntityId($template->getId())
+            ->generateUrl();
     }
 }

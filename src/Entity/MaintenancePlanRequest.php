@@ -7,6 +7,8 @@ namespace App\Entity;
 use App\Entity\Concern\Timestamps;
 use App\Entity\Concern\UuidId;
 use App\Repository\MaintenancePlanRequestRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -35,6 +37,16 @@ class MaintenancePlanRequest
 
     #[ORM\Column(type: Types::DATETIMETZ_IMMUTABLE, nullable: true)]
     private ?\DateTimeImmutable $handledAt = null;
+
+    /** @var Collection<int, MaintenancePlanImport> */
+    #[ORM\OneToMany(mappedBy: 'planRequest', targetEntity: MaintenancePlanImport::class)]
+    #[ORM\OrderBy(['createdAt' => 'DESC'])]
+    private Collection $imports;
+
+    public function __construct()
+    {
+        $this->imports = new ArrayCollection();
+    }
 
     public function __toString(): string
     {
@@ -99,5 +111,11 @@ class MaintenancePlanRequest
         $this->handledAt = $handledAt;
 
         return $this;
+    }
+
+    /** @return Collection<int, MaintenancePlanImport> */
+    public function getImports(): Collection
+    {
+        return $this->imports;
     }
 }

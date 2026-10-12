@@ -13,7 +13,6 @@ use Doctrine\Persistence\ObjectManager;
 
 final class VehicleGenerationFixtures extends Fixture implements DependentFixtureInterface, FixtureGroupInterface
 {
-    public const RU1 = 'generation.ru1';
     public const E210 = 'generation.e210';
     public const KF = 'generation.kf';
 
@@ -31,16 +30,13 @@ final class VehicleGenerationFixtures extends Fixture implements DependentFixtur
     {
         $faker = FixtureFaker::uk();
 
-        $ru1 = $this->generation(VehicleModelFixtures::HRV, 'RU1', 'ru1', 2015, 2021, $faker->optional(0.7)->sentence(12));
         $e210 = $this->generation(VehicleModelFixtures::COROLLA, 'E210', 'e210', 2018, 2026, $faker->optional(0.5)->sentence(10));
         $kf = $this->generation(VehicleModelFixtures::CX5, 'KF', 'kf', 2017, 2025, $faker->optional(0.5)->sentence(10));
 
-        $manager->persist($ru1);
         $manager->persist($e210);
         $manager->persist($kf);
         $manager->flush();
 
-        $this->addReference(self::RU1, $ru1);
         $this->addReference(self::E210, $e210);
         $this->addReference(self::KF, $kf);
     }

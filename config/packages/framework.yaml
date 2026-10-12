@@ -3,6 +3,9 @@ framework:
     secret: '%env(APP_SECRET)%'
     default_locale: en
     enabled_locales: ['en', 'uk']
+    # TLS terminates at nginx; trust forwarded scheme so absolute URLs (e.g. Web Profiler) use https.
+    trusted_proxies: 'private_ranges'
+    trusted_headers: ['x-forwarded-for', 'x-forwarded-host', 'x-forwarded-proto', 'x-forwarded-port']
 
     # Note that the session will be started ONLY if you read or write from it.
     session: true

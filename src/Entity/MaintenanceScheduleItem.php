@@ -19,11 +19,11 @@ class MaintenanceScheduleItem
     use UuidId;
     use Timestamps;
 
-    #[ORM\ManyToOne]
+    #[ORM\ManyToOne(inversedBy: 'scheduleItems')]
     #[ORM\JoinColumn(nullable: false, onDelete: 'CASCADE')]
     private ?MaintenanceScheduleTemplate $template = null;
 
-    #[ORM\ManyToOne]
+    #[ORM\ManyToOne(inversedBy: 'scheduleItems')]
     #[ORM\JoinColumn(nullable: false, onDelete: 'CASCADE')]
     private ?MaintenanceProcedure $procedure = null;
 

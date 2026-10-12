@@ -21,7 +21,7 @@ final class ServiceLogFixtures extends Fixture implements DependentFixtureInterf
     {
         return [
             VehicleFixtures::class,
-            MaintenanceProcedureFixtures::class,
+            HondaHrvRu1MaintenanceFixture::class,
         ];
     }
 
@@ -50,12 +50,12 @@ final class ServiceLogFixtures extends Fixture implements DependentFixtureInterf
         $oil = new ServiceLogItem();
         $oil
             ->setServiceLog($log)
-            ->setProcedure($this->getReference(MaintenanceProcedureFixtures::ENGINE_OIL, MaintenanceProcedure::class));
+            ->setProcedure($this->getReference(HondaHrvRu1MaintenanceFixture::PROCEDURE_ENGINE_OIL, MaintenanceProcedure::class));
 
         $filter = new ServiceLogItem();
         $filter
             ->setServiceLog($log)
-            ->setProcedure($this->getReference(MaintenanceProcedureFixtures::OIL_FILTER, MaintenanceProcedure::class));
+            ->setProcedure($this->getReference(HondaHrvRu1MaintenanceFixture::PROCEDURE_OIL_FILTER, MaintenanceProcedure::class));
 
         $manager->persist($log);
         $manager->persist($oil);

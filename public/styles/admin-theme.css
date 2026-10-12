@@ -1,44 +1,57 @@
 :root {
-    --signal: #0f766e;
-    --ink: #12202a;
-    --muted: #5c7080;
-    --line: rgba(18, 32, 42, 0.12);
+    --signal: #c51b1b;
+    --signal-strong: #a31616;
+    --ink: #2b2b2b;
+    --muted: #5c5c5c;
+    --line: #e4e4e4;
     --panel: #ffffff;
-    --panel-soft: #f4f7f8;
-    --font-family-base: "Instrument Sans", sans-serif;
+    --panel-soft: #f6f6f6;
+    --font-family-base: "Rubik", sans-serif;
+    --font-display: "Oswald", sans-serif;
     --body-max-width: 100%;
-    --body-bg: #eef2f4;
+    --body-bg: #f2f2f2;
+    --sidebar-rail: #111111;
 }
 
 .ea-dark-scheme {
-    --signal: #3ee0c5;
-    --ink: #edf3f7;
-    --muted: #8ea0b0;
-    --line: rgba(164, 196, 214, 0.16);
-    --panel: #10151d;
-    --panel-soft: rgba(7, 9, 13, 0.45);
-    --body-bg: #07090d;
+    --signal: #e03a3a;
+    --signal-strong: #c51b1b;
+    --ink: #f2f2f2;
+    --muted: #a8a8a8;
+    --line: #2d3135;
+    --panel: #1e2124;
+    --panel-soft: #16181b;
+    --body-bg: #121416;
+    --sidebar-rail: #0a0a0a;
 }
 
 body {
-    font-family: "Instrument Sans", sans-serif;
+    font-family: var(--font-family-base);
     background: var(--body-bg);
     color: var(--ink);
 }
 
 .ea-dark-scheme body {
-    background:
-        radial-gradient(70% 40% at 100% 0%, rgba(62, 224, 197, 0.06), transparent 42%),
-        var(--body-bg);
+    background: var(--body-bg);
 }
 
-.ea-dark-scheme .sidebar {
-    background: #0b1016;
-    border-right: 1px solid var(--line);
-}
-
-.sidebar .main-header {
-    border-bottom: 1px solid var(--line);
+/* Match the user cabinet: dark rail in both color schemes */
+body.ea .ea-sidebar,
+body.ea .ea-sidebar-footer {
+    --sidebar-bg: var(--sidebar-rail);
+    --sidebar-border-color: rgba(255, 255, 255, 0.1);
+    --sidebar-logo-color: #ffffff;
+    --sidebar-menu-header-color: rgba(255, 255, 255, 0.45);
+    --sidebar-menu-color: rgba(255, 255, 255, 0.72);
+    --sidebar-menu-icon-color: rgba(255, 255, 255, 0.55);
+    --sidebar-menu-hover-color: #ffffff;
+    --sidebar-item-hover-bg: rgba(255, 255, 255, 0.1);
+    --sidebar-menu-active-item-bg: var(--signal);
+    --sidebar-menu-active-item-color: #ffffff;
+    --sidebar-menu-badge-bg: #ffffff;
+    --sidebar-menu-badge-color: var(--signal-strong);
+    --sidebar-menu-badge-active-bg: #ffffff;
+    --sidebar-menu-badge-active-color: var(--signal-strong);
 }
 
 .cars-mark,
@@ -46,15 +59,24 @@ body {
     display: block;
 }
 
-.cars-mark {
-    font-size: 0.95rem;
-    font-weight: 640;
-    letter-spacing: 0.14em;
-    color: var(--ink);
+.ea-sidebar-logo .cars-mark {
+    font-family: var(--font-display);
+    font-size: 1.85rem;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    line-height: 1;
+    text-transform: uppercase;
+    color: var(--signal);
 }
 
-.ea-dark-scheme .cars-mark {
-    color: #edf3f7;
+.ea-sidebar-logo .cars-mark-sub {
+    margin-top: 0.35rem;
+    color: #e7b3b3;
+    font-family: var(--font-family-base);
+    font-size: 0.68rem;
+    font-weight: 500;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
 }
 
 /*
@@ -134,17 +156,8 @@ body.ea .resizer-handler {
     pointer-events: none !important;
 }
 
-.cars-mark-sub {
-    margin-top: 0.15rem;
-    color: var(--signal);
-    font-family: "IBM Plex Mono", monospace;
-    font-size: 0.68rem;
-    letter-spacing: 0.16em;
-    text-transform: uppercase;
-}
-
-.menu-item.active {
-    box-shadow: inset 2px 0 0 var(--signal);
+.ea-sidebar-item.is-active {
+    border-radius: 0;
 }
 
 .cars-floor {
@@ -167,7 +180,7 @@ body.ea .resizer-handler {
     gap: 1.5rem;
     align-items: end;
     padding: 1.6rem 1.7rem 1.4rem;
-    border-radius: 1.15rem;
+    border-radius: 0;
 }
 
 .cars-kicker,
@@ -175,9 +188,10 @@ body.ea .resizer-handler {
 .cars-board header p,
 .cars-board th {
     color: var(--muted);
-    font-family: "IBM Plex Mono", monospace;
-    font-size: 0.7rem;
-    letter-spacing: 0.12em;
+    font-family: var(--font-family-base);
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.14em;
     text-transform: uppercase;
 }
 
@@ -191,12 +205,14 @@ body.ea .resizer-handler {
 .cars-stats strong {
     margin: 0;
     color: var(--ink);
-    font-weight: 640;
+    font-family: var(--font-display);
+    font-weight: 600;
     letter-spacing: -0.04em;
+    text-transform: uppercase;
 }
 
 .cars-hero h1 {
-    font-size: clamp(2.4rem, 4vw, 3.6rem);
+    font-size: clamp(2.2rem, 4vw, 3.25rem);
     line-height: 0.95;
 }
 
@@ -219,7 +235,7 @@ body.ea .resizer-handler {
     gap: 1rem;
     padding: 0.75rem 0.85rem;
     border: 1px solid var(--line);
-    border-radius: 0.8rem;
+    border-radius: 0;
     background: var(--panel-soft);
     color: var(--ink);
     font-size: 0.92rem;
@@ -227,8 +243,11 @@ body.ea .resizer-handler {
 
 .hero-modules span {
     color: var(--muted);
-    font-family: "IBM Plex Mono", monospace;
+    font-family: var(--font-family-base);
     font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
 }
 
 .cars-stats {
@@ -239,7 +258,7 @@ body.ea .resizer-handler {
 
 .cars-stats article,
 .cars-board {
-    border-radius: 1rem;
+    border-radius: 0;
 }
 
 .cars-stats article {
@@ -318,7 +337,7 @@ body.ea .resizer-handler {
     height: 100%;
     padding: 1.35rem 1.4rem 1.25rem;
     border: 1px solid var(--line);
-    border-radius: 1rem;
+    border-radius: 0;
     background: color-mix(in srgb, var(--panel) 96%, transparent);
 }
 
@@ -415,7 +434,7 @@ body.ea .resizer-handler {
 
 .cars-locale-field .form-check-label::after {
     color: var(--muted);
-    font-family: "IBM Plex Mono", monospace;
+    font-family: var(--font-family-base);
     font-size: 0.68rem;
     font-weight: 400;
     letter-spacing: 0.12em;
@@ -545,7 +564,7 @@ html[lang="en"] .cars-locale-field .form-check:has([value="en"]) .form-check-lab
 }
 
 .cars-toast--success .cars-toast-accent {
-    background: #0d9488;
+    background: var(--signal-strong);
 }
 
 .cars-toast--danger .cars-toast-accent {
@@ -573,8 +592,8 @@ html[lang="en"] .cars-locale-field .form-check:has([value="en"]) .form-check-lab
 }
 
 .cars-toast--success .cars-toast-icon {
-    background: color-mix(in srgb, #0d9488 18%, var(--panel));
-    color: #0d9488;
+    background: color-mix(in srgb, var(--signal) 18%, var(--panel));
+    color: var(--signal-strong);
 }
 
 .cars-toast--danger .cars-toast-icon {
@@ -595,7 +614,7 @@ html[lang="en"] .cars-locale-field .form-check:has([value="en"]) .form-check-lab
 .cars-toast-kicker {
     margin: 0 0 0.2rem;
     color: var(--muted);
-    font-family: "IBM Plex Mono", monospace;
+    font-family: var(--font-family-base);
     font-size: 0.62rem;
     letter-spacing: 0.14em;
     text-transform: uppercase;
@@ -649,7 +668,7 @@ html[lang="en"] .cars-locale-field .form-check:has([value="en"]) .form-check-lab
 }
 
 .cars-toast--success .cars-toast-progress {
-    background: linear-gradient(90deg, #0d9488, color-mix(in srgb, #0d9488 35%, transparent));
+    background: linear-gradient(90deg, var(--signal), color-mix(in srgb, var(--signal) 35%, transparent));
 }
 
 .cars-toast--danger .cars-toast-progress {
@@ -675,15 +694,12 @@ html[lang="en"] .cars-locale-field .form-check:has([value="en"]) .form-check-lab
     }
 }
 
-/* Popup menus (user menu, row actions, filters) — global EA radius is too round */
-.dropdown-menu {
-    --bs-dropdown-border-radius: 0.45rem;
-    --bs-dropdown-inner-border-radius: 0.4rem;
-    border-radius: 0.45rem;
-}
-
+/* Popup menus (user menu, row actions, filters) */
+.dropdown-menu,
 .filter-content.dropdown-menu {
-    border-radius: 0.45rem;
+    --bs-dropdown-border-radius: 0;
+    --bs-dropdown-inner-border-radius: 0;
+    border-radius: 0;
 }
 
 /* EasyAdmin Tom Select — vertically center the clear (×) control with the caret */
@@ -741,8 +757,8 @@ body.ea .plugin-clear_button .clear-button {
     width: 2.35rem;
     height: 2.35rem;
     border: 1px solid var(--line);
-    border-radius: 0.65rem;
-    background: var(--panel-soft);
+    border-radius: 0;
+    background: var(--panel);
     color: var(--ink);
 }
 
@@ -815,4 +831,25 @@ body.ea .plugin-clear_button .clear-button {
     display: block;
     color: var(--muted);
     margin-top: 0.15rem;
+}
+
+body.ea .content-header-title,
+body.ea .content-header-title h1 {
+    font-family: var(--font-display);
+    font-weight: 600;
+    letter-spacing: -0.04em;
+    text-transform: uppercase;
+}
+
+body.ea.ea-light-scheme .content {
+    background: var(--body-bg);
+}
+
+body.ea .cars-board a {
+    color: var(--signal);
+    font-weight: 500;
+}
+
+body.ea .cars-board a:hover {
+    color: var(--signal-strong);
 }

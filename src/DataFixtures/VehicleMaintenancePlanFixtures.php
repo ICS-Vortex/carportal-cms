@@ -21,8 +21,7 @@ final class VehicleMaintenancePlanFixtures extends Fixture implements DependentF
     {
         return [
             VehicleFixtures::class,
-            MaintenanceScheduleTemplateFixtures::class,
-            MaintenanceProcedureFixtures::class,
+            HondaHrvRu1MaintenanceFixture::class,
             ServiceLogFixtures::class,
         ];
     }
@@ -35,7 +34,7 @@ final class VehicleMaintenancePlanFixtures extends Fixture implements DependentF
     public function load(ObjectManager $manager): void
     {
         $faker = FixtureFaker::uk();
-        $template = $this->getReference(MaintenanceScheduleTemplateFixtures::HRV, MaintenanceScheduleTemplate::class);
+        $template = $this->getReference(HondaHrvRu1MaintenanceFixture::TEMPLATE_MKPP, MaintenanceScheduleTemplate::class);
         $serviceLog = $this->getReference(ServiceLogFixtures::HRV_OIL, ServiceLog::class);
         $vehicle = $this->getReference(VehicleFixtures::HRV, Vehicle::class);
 
@@ -49,7 +48,7 @@ final class VehicleMaintenancePlanFixtures extends Fixture implements DependentF
         $manager->persist($plan);
         $manager->persist($this->item(
             $plan,
-            MaintenanceProcedureFixtures::ENGINE_OIL,
+            HondaHrvRu1MaintenanceFixture::PROCEDURE_ENGINE_OIL,
             0,
             'done',
             $serviceLog,
@@ -58,7 +57,7 @@ final class VehicleMaintenancePlanFixtures extends Fixture implements DependentF
         ));
         $manager->persist($this->item(
             $plan,
-            MaintenanceProcedureFixtures::CABIN_FILTER,
+            HondaHrvRu1MaintenanceFixture::PROCEDURE_CABIN_FILTER,
             1,
             'pending',
             null,
@@ -67,7 +66,7 @@ final class VehicleMaintenancePlanFixtures extends Fixture implements DependentF
         ));
         $manager->persist($this->item(
             $plan,
-            MaintenanceProcedureFixtures::BRAKE_FLUID,
+            HondaHrvRu1MaintenanceFixture::PROCEDURE_BRAKE_FLUID,
             2,
             'pending',
             null,

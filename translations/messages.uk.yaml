@@ -10,9 +10,13 @@ menu:
     configurations: Комплектації
     vehicles: Автомобілі
     procedures: Роботи
-    templates: Шаблони
+    service_stations: СТО
+    station_labor_prices: Ціни СТО
+    templates: Шаблони регламенту
     reminders: Нагадування
     plan_requests: Запити на план
+    plan_imports: Журнал імпортів планів
+    schedule_items: Пункти шаблонів
     users: Користувачі
 
 account:
@@ -81,7 +85,117 @@ dashboard:
     no_plate: Номер не вказано
     no_vehicles: Ще немає автомобілів.
 
+enum:
+    fuel:
+        gas: Газ
+        benzin: Бензин
+        diezel: Дизель
+        hybrid: Гібрид
+    transmission:
+        manual: МКПП
+        cvt: CVT
+        auto: АКПП
+        ecvt: e-CVT
+        dct: DCT
+        amt: AMT
+
 entity:
+    field:
+        name: Назва
+        slug: Код (slug)
+        notes: Примітки
+        deleted: Видалено
+    brand:
+        singular: Марка
+        plural: Марки
+    model:
+        singular: Модель
+        plural: Моделі
+        brand: Марка
+    generation:
+        singular: Покоління
+        plural: Покоління
+        model: Модель
+        year_from: Рік з
+        year_to: Рік по
+    configuration:
+        singular: Комплектація
+        plural: Комплектації
+        generation: Покоління
+        engine: Двигун
+        transmission: Трансмісія
+        drivetrain: Привід
+        fuel: Паливо
+    vehicle:
+        singular: Автомобіль
+        plural: Автомобілі
+        generation: Покоління
+        configuration: Комплектація
+        vin: VIN
+        plate: Номерний знак
+        image: Фото (URL)
+    reminder:
+        singular: Нагадування
+        plural: Нагадування
+        due_date: Дата
+        due_mileage: Пробіг, км
+    procedure:
+        singular: Робота
+        plural: Роботи
+        title: Назва
+        category: Категорія
+        templates: Шаблони (авто)
+        templates_help: Через які регламенти ця робота привʼязана до поколінь/комплектацій.
+        interval_km: Інтервал, км
+        interval_months: Інтервал, міс
+        defaults_help: Значення за замовчуванням; у шаблоні можна перевизначити.
+        labor_price: Ціна робіт (грн)
+        labor_price_help: Базова орієнтовна ціна; у пункті шаблону — для конкретного авто.
+        description: Опис
+        schedule_items: У шаблонах
+    template:
+        singular: Шаблон регламенту
+        plural: Шаблони регламенту
+        name: Назва
+        vehicle: Автомобіль
+        vehicle_help: Покоління та комплектація, для яких діє цей регламент.
+        generation: Покоління
+        configuration: Комплектація
+        station: СТО
+        station_help: Порожньо — регламент для всіх СТО. Якщо обрано СТО — план лише для цієї станції.
+        notes: Примітки до шаблону
+        works: Що робити (регламент)
+        works_help: Інтервали та ціни для цього авто; якщо в пункті порожньо — береться з роботи.
+        works_count: Робіт
+        open_schedule: відкрити регламент
+        view_schedule: Регламент
+        index_help: 'Натисніть на рядок або «Регламент», щоб побачити повний список робіт для цього авто.'
+        manage_items: Редагувати пункти
+    service_station:
+        name: Назва СТО
+        city: Місто
+        address: Адреса
+        image: Фото
+        image_upload: Завантажити фото (JPG, PNG, WEBP)
+    station_labor_price:
+        singular: Ціна на СТО
+        plural: Ціни робіт на СТО
+        station: СТО
+        procedure: Робота
+        procedure_help: Або робота, або пункт шаблону — одне з двох.
+        schedule_item: Пункт шаблону
+        schedule_item_help: Для точкової ціни конкретного пункту регламенту.
+        price: Ціна, грн
+    schedule_item:
+        singular: Пункт шаблону
+        plural: Пункти шаблонів
+        template: Шаблон регламенту
+        procedure: Робота
+        interval_km: Інтервал, км
+        interval_months: Інтервал, міс
+        labor_price: Ціна робіт (грн)
+        labor_price_help: Ціна для цього шаблону (марка/модель/комплектація).
+        notes: Примітка
     plan_request:
         singular: Запит на план
         plural: Запити на план
@@ -90,6 +204,22 @@ entity:
         status_resolved: Опрацьований
         note: Коментар власника
         created_at: Створено
+        import_upload: Імпорт з файлу
+    plan_import:
+        singular: Імпорт плану
+        plural: Імпорти планів
+        filename: Файл
+        uploaded_by: Завантажив
+        rows_total: Рядків у файлі
+        rows_imported: Записано
+        error: Помилка
+        log: Журнал
+        started_at: Початок
+        finished_at: Завершено
     user:
         singular: Користувач
         plural: Користувачі
+        role: Роль
+        role_user: Користувач
+        role_admin: Адміністратор
+        blocked: Заблоковано

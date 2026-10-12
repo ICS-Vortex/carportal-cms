@@ -1,52 +1,26 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="uk">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Sign in · Car Portal</title>
+    <title>Вхід · Carmain</title>
     <link rel="icon" href="{{ asset('favicon.svg') }}">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Instrument+Sans:wght@420;520;640&display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&family=Rubik:wght@400;500;600;700&display=swap">
     <link rel="stylesheet" href="{{ asset('styles/login.css') }}">
 </head>
 <body>
-    <main class="gate">
-        <section class="stage" aria-hidden="true">
-            <div class="stage-top">
-                <span class="mark">CP</span>
-                <span class="live"><i></i> Service online</span>
-            </div>
-            <div class="stage-copy">
-                <p class="kicker">Car Portal</p>
-                <h1>Service console</h1>
-                <p>Maintenance intervals, diagnostics, and workshop schedules for every vehicle in the garage.</p>
-            </div>
-            <div class="bays">
-                <article>
-                    <span>01</span>
-                    <strong>Diagnostics</strong>
-                    <em>Live vehicle health</em>
-                </article>
-                <article>
-                    <span>02</span>
-                    <strong>Intervals</strong>
-                    <em>Mileage and time</em>
-                </article>
-                <article>
-                    <span>03</span>
-                    <strong>Workshop</strong>
-                    <em>Plans and reminders</em>
-                </article>
-                <article class="bay-wide">
-                    <span>SYS</span>
-                    <strong>Catalog, service logs, and owner records in one desk.</strong>
-                </article>
-            </div>
-        </section>
-        <section class="panel">
+    <header class="shop-header">
+        <div class="shop-header-inner">
+            <span class="display">Carmain</span>
+            <span class="tagline">Сервіс авто</span>
+        </div>
+    </header>
+    <main class="login-main">
+        <p class="shop-kicker">Адмін</p>
+        <h1>Вхід</h1>
+        <p class="login-lede">Доступ для редакторів каталогу та адміністраторів сервісу.</p>
+        <div class="login-panel">
             <form method="post" action="{{ path('app_login') }}">
-                <p class="kicker">Staff access</p>
-                <h2>Sign in</h2>
-                <p class="form-note">Workshop editors and administrators.</p>
                 {% if error %}
                     <p class="gate-error">{{ error.messageKey|trans(error.messageData, 'security') }}</p>
                 {% endif %}
@@ -55,13 +29,13 @@
                     <input type="email" name="_username" value="{{ last_username }}" autocomplete="username" required autofocus>
                 </label>
                 <label>
-                    Password
+                    Пароль
                     <input type="password" name="_password" autocomplete="current-password" required>
                 </label>
                 <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
-                <button type="submit">Continue</button>
+                <button type="submit">Увійти</button>
             </form>
-        </section>
+        </div>
     </main>
 </body>
 </html>

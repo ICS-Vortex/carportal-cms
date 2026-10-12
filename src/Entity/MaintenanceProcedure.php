@@ -6,6 +6,8 @@ namespace App\Entity;
 
 use App\Entity\Concern\Timestamps;
 use App\Entity\Concern\UuidId;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -45,6 +47,15 @@ class MaintenanceProcedure
 
     #[ORM\Column(type: Types::DATETIMETZ_IMMUTABLE, nullable: true)]
     private ?\DateTimeImmutable $deletedAt = null;
+
+    /** @var Collection<int, MaintenanceScheduleItem> */
+    #[ORM\OneToMany(mappedBy: 'procedure', targetEntity: MaintenanceScheduleItem::class)]
+    private Collection $scheduleItems;
+
+    public function __construct()
+    {
+        $this->scheduleItems = new ArrayCollection();
+    }
 
     public function __toString(): string
     {
@@ -157,5 +168,33 @@ class MaintenanceProcedure
         $this->deletedAt = $deletedAt;
 
         return $this;
+    }
+
+    /** @return Collection<int, MaintenanceScheduleItem> */
+    public function getScheduleItems(): Collection
+    {
+        return $this->scheduleItems;
+    }
+
+    /** Human-readable list of schedule templates (car variants) that use this procedure. */
+    public function getScheduleTemplatesLabel(): string
+    {
+        $labels = [];
+        foreach ($this->scheduleItems as $item) {
+            if ($item->isDeleted()) {
+                continue;
+            }
+            $template = $item->getTemplate();
+            if ($template === null || $template->isDeleted()) {
+                continue;
+            }
+            $labels[$template->getNameUk()] = $template->getNameUk();
+        }
+
+        if ($labels === []) {
+            return '—';
+        }
+
+        return implode(', ', array_values($labels));
     }
 }

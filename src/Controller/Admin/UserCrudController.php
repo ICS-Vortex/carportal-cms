@@ -13,13 +13,16 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\ChoiceField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
+use Symfony\Contracts\Translation\TranslatorInterface;
 use function Symfony\Component\Translation\t;
 
 /** @extends AbstractCrudController<User> */
 final class UserCrudController extends AbstractCrudController
 {
-    public function __construct(private UserPasswordHasherInterface $passwordHasher)
-    {
+    public function __construct(
+        private UserPasswordHasherInterface $passwordHasher,
+        private readonly TranslatorInterface $translator,
+    ) {
     }
 
     public static function getEntityFqcn(): string
@@ -30,24 +33,24 @@ final class UserCrudController extends AbstractCrudController
     public function configureCrud(Crud $crud): Crud
     {
         return $crud
-            ->setEntityLabelInSingular(t('entity.user.singular'))
-            ->setEntityLabelInPlural(t('entity.user.plural'))
+            ->setEntityLabelInSingular(t('entity.user.singular', domain: 'messages'))
+            ->setEntityLabelInPlural(t('entity.user.plural', domain: 'messages'))
             ->setDefaultSort(['fullName' => 'ASC'])
             ->setSearchFields(['email', 'fullName']);
     }
 
     public function configureFields(string $pageName): iterable
     {
-        yield TextField::new('fullName')->setLabel('Name');
-        yield TextField::new('email');
-        yield TextField::new('locale')->hideOnIndex();
-        yield ChoiceField::new('role')->setChoices([
-            'User' => 'user',
-            'Admin' => 'admin',
+        yield TextField::new('fullName', t('account.field.full_name', domain: 'messages'));
+        yield TextField::new('email', t('account.field.email', domain: 'messages'));
+        yield TextField::new('locale', t('account.field.language', domain: 'messages'))->hideOnIndex();
+        yield ChoiceField::new('role', t('entity.user.role', domain: 'messages'))->setChoices([
+            $this->translator->trans('entity.user.role_user', domain: 'messages') => 'user',
+            $this->translator->trans('entity.user.role_admin', domain: 'messages') => 'admin',
         ]);
-        yield BooleanField::new('isBlocked')->setLabel('Blocked');
+        yield BooleanField::new('isBlocked', t('entity.user.blocked', domain: 'messages'));
         yield BooleanField::new('deleted');
-        yield TextField::new('plainPassword', 'Password')
+        yield TextField::new('plainPassword', t('account.field.new_password', domain: 'messages'))
             ->setFormType(PasswordType::class)
             ->setRequired(Crud::PAGE_NEW === $pageName)
             ->onlyOnForms();

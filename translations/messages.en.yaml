@@ -10,9 +10,13 @@ menu:
     configurations: Configurations
     vehicles: Vehicles
     procedures: Procedures
-    templates: Templates
+    service_stations: Service stations
+    station_labor_prices: Station labor prices
+    templates: Schedule templates
     reminders: Reminders
     plan_requests: Plan requests
+    plan_imports: Plan import log
+    schedule_items: Template items
     users: Users
 
 account:
@@ -81,7 +85,115 @@ dashboard:
     no_plate: No plate yet
     no_vehicles: No vehicles yet.
 
+enum:
+    fuel:
+        gas: Gas
+        benzin: Petrol
+        diezel: Diesel
+        hybrid: Hybrid
+    transmission:
+        manual: Manual
+        cvt: CVT
+        auto: Automatic
+        ecvt: e-CVT
+        dct: DCT
+        amt: AMT
+
 entity:
+    field:
+        name: Name
+        slug: Slug
+        notes: Notes
+        deleted: Deleted
+    brand:
+        singular: Brand
+        plural: Brands
+    model:
+        singular: Model
+        plural: Models
+        brand: Brand
+    generation:
+        singular: Generation
+        plural: Generations
+        model: Model
+        year_from: Year from
+        year_to: Year to
+    configuration:
+        singular: Configuration
+        plural: Configurations
+        generation: Generation
+        engine: Engine
+        transmission: Transmission
+        drivetrain: Drivetrain
+        fuel: Fuel type
+    vehicle:
+        singular: Vehicle
+        plural: Vehicles
+        generation: Generation
+        configuration: Configuration
+        vin: VIN
+        plate: License plate
+        image: Image URL
+    reminder:
+        singular: Reminder
+        plural: Reminders
+        due_date: Due date
+        due_mileage: Due mileage (km)
+    procedure:
+        singular: Procedure
+        plural: Procedures
+        title: Title
+        category: Category
+        templates: Templates (vehicles)
+        templates_help: Schedule templates linking this procedure to generations/configurations.
+        interval_km: Interval km
+        interval_months: Interval months
+        defaults_help: Defaults; override per template item.
+        labor_price: Labor price (UAH)
+        labor_price_help: Base estimate; template item sets price per vehicle variant.
+        description: Description
+        schedule_items: In templates
+    template:
+        singular: Schedule template
+        plural: Schedule templates
+        name: Name
+        vehicle: Vehicle
+        vehicle_help: Generation and trim this schedule applies to.
+        generation: Generation
+        configuration: Configuration
+        notes: Template notes
+        works: Scheduled work
+        works_help: Intervals and prices for this vehicle; blank cells fall back to the procedure defaults.
+        works_count: Works
+        open_schedule: open schedule
+        view_schedule: Schedule
+        index_help: 'Click a row or “Schedule” to see the full list of jobs for that vehicle.'
+        manage_items: Edit line items
+    service_station:
+        name: Station name
+        city: City
+        address: Address
+        image: Photo
+        image_upload: Upload photo (JPG, PNG, WEBP)
+    station_labor_price:
+        singular: Station labor price
+        plural: Station labor prices
+        station: Station
+        procedure: Procedure
+        procedure_help: Set either a procedure or a template line item.
+        schedule_item: Template line item
+        schedule_item_help: Override price for one schedule line.
+        price: Price, UAH
+    schedule_item:
+        singular: Template item
+        plural: Template items
+        template: Schedule template
+        procedure: Procedure
+        interval_km: Interval km
+        interval_months: Interval months
+        labor_price: Labor price (UAH)
+        labor_price_help: Price for this template (make/model/trim).
+        notes: Notes
     plan_request:
         singular: Plan request
         plural: Plan requests
@@ -90,6 +202,22 @@ entity:
         status_resolved: Resolved
         note: Owner note
         created_at: Created
+        import_upload: Import from file
+    plan_import:
+        singular: Plan import
+        plural: Plan imports
+        filename: File
+        uploaded_by: Uploaded by
+        rows_total: Rows in file
+        rows_imported: Written
+        error: Error
+        log: Log
+        started_at: Started
+        finished_at: Finished
     user:
         singular: User
         plural: Users
+        role: Role
+        role_user: User
+        role_admin: Administrator
+        blocked: Blocked

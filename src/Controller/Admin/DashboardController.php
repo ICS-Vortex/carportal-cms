@@ -53,22 +53,22 @@ final class DashboardController extends AbstractDashboardController
     public function configureDashboard(): Dashboard
     {
         return Dashboard::new()
-            ->setTitle('<span class="cars-mark">CAR PORTAL</span><span class="cars-mark-sub">Service</span>')
+            ->setTitle('<span class="cars-mark">Carmain</span><span class="cars-mark-sub">Адмін</span>')
             ->setFaviconPath('favicon.svg')
-            ->setDefaultColorScheme(ColorScheme::DARK)
+            ->setDefaultColorScheme(ColorScheme::LIGHT)
             ->renderContentMaximized()
             ->setTheme(Theme::new()
-                ->primaryColor('#0f766e', dark: '#3ee0c5')
-                ->radius('0.7rem')
+                ->primaryColor('#c51b1b', dark: '#e03a3a')
+                ->radius('none')
                 ->spacing('md')
-                ->grays('slate', dark: 'slate'));
+                ->grays('neutral', dark: 'neutral'));
     }
 
     public function configureAssets(): Assets
     {
         return Assets::new()
-            ->addCssFile('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Instrument+Sans:wght@420;520;640&display=swap')
-            ->addCssFile('styles/atelier.css')
+            ->addCssFile('https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&family=Rubik:wght@400;500;600;700&display=swap')
+            ->addCssFile('styles/admin-theme.css')
             ->addJsFile('js/cars-toasts.js');
     }
 
@@ -82,8 +82,11 @@ final class DashboardController extends AbstractDashboardController
         yield MenuItem::linkTo(VehicleConfigurationCrudController::class, t('menu.configurations'), 'fa-solid fa-gears');
         yield MenuItem::linkTo(VehicleCrudController::class, t('menu.vehicles'), 'fa-solid fa-car-side');
         yield MenuItem::section(t('menu.section.maintenance'));
+        yield MenuItem::linkTo(ServiceStationCrudController::class, t('menu.service_stations'), 'fa-solid fa-warehouse');
+        yield MenuItem::linkTo(MaintenanceStationLaborPriceCrudController::class, t('menu.station_labor_prices'), 'fa-solid fa-tags');
         yield MenuItem::linkTo(MaintenanceProcedureCrudController::class, t('menu.procedures'), 'fa-solid fa-screwdriver-wrench');
         yield MenuItem::linkTo(MaintenanceScheduleTemplateCrudController::class, t('menu.templates'), 'fa-solid fa-clipboard-list');
+        yield MenuItem::linkTo(MaintenanceScheduleItemCrudController::class, t('menu.schedule_items'), 'fa-solid fa-link');
         yield MenuItem::linkTo(ReminderCrudController::class, t('menu.reminders'), 'fa-solid fa-bell');
         $openPlanRequests = $this->adminNotifications->unreadCountForType(MaintenancePlanRequestNotificationProvider::TYPE);
         $planRequestsItem = MenuItem::linkTo(MaintenancePlanRequestCrudController::class, t('menu.plan_requests'), 'fa-solid fa-inbox');
@@ -93,6 +96,7 @@ final class DashboardController extends AbstractDashboardController
         }
 
         yield $planRequestsItem;
+        yield MenuItem::linkTo(MaintenancePlanImportCrudController::class, t('menu.plan_imports'), 'fa-solid fa-file-import');
         yield MenuItem::section(t('menu.section.people'));
         yield MenuItem::linkTo(UserCrudController::class, t('menu.users'), 'fa-solid fa-user-tie');
     }

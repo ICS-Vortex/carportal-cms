@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace App\Controller\Admin;
 
 use App\Entity\MaintenancePlanRequest;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
@@ -35,6 +37,20 @@ final class MaintenancePlanRequestCrudController extends AbstractCrudController
             ->setDefaultSort(['createdAt' => 'DESC']);
     }
 
+    public function configureActions(Actions $actions): Actions
+    {
+        $import = Action::new('importPlan', t('entity.plan_request.import_upload', domain: 'messages'))
+            ->linkToRoute('admin_plan_request_import', static fn (MaintenancePlanRequest $entity): array => [
+                'id' => (string) $entity->getId(),
+            ])
+            ->setIcon('fa-solid fa-file-upload')
+            ->asSuccessAction();
+
+        return $actions
+            ->add(Crud::PAGE_EDIT, $import)
+            ->add(Crud::PAGE_DETAIL, $import);
+    }
+
     public function configureFields(string $pageName): iterable
     {
         yield AssociationField::new('user', t('dashboard.table_owner', domain: 'messages'));
@@ -45,5 +61,8 @@ final class MaintenancePlanRequestCrudController extends AbstractCrudController
         ]);
         yield DateTimeField::new('createdAt', t('entity.plan_request.created_at', domain: 'messages'))->hideOnForm();
         yield TextareaField::new('requestNote', t('entity.plan_request.note', domain: 'messages'))->hideOnIndex();
+        yield AssociationField::new('imports', t('entity.plan_import.plural', domain: 'messages'))
+            ->onlyOnDetail()
+            ->setCrudController(MaintenancePlanImportCrudController::class);
     }
 }
