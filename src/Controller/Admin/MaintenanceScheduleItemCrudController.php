@@ -6,6 +6,8 @@ namespace App\Controller\Admin;
 
 use App\Entity\MaintenanceScheduleItem;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Filters;
+use EasyCorp\Bundle\EasyAdminBundle\Filter\EntityFilter;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\BooleanField;
@@ -28,6 +30,11 @@ final class MaintenanceScheduleItemCrudController extends AbstractCrudController
             ->setEntityLabelInPlural(t('entity.schedule_item.plural', domain: 'messages'))
             ->setDefaultSort(['template' => 'ASC', 'procedure' => 'ASC'])
             ->setSearchFields(['notesUk']);
+    }
+
+    public function configureFilters(Filters $filters): Filters
+    {
+        return $filters->add(EntityFilter::new('template'));
     }
 
     public function configureFields(string $pageName): iterable

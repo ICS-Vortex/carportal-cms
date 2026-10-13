@@ -8,6 +8,7 @@ use App\Entity\MaintenanceScheduleTemplate;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
+use EasyCorp\Bundle\EasyAdminBundle\Config\KeyValueStore;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\BooleanField;
@@ -36,10 +37,44 @@ final class MaintenanceScheduleTemplateCrudController extends AbstractCrudContro
         return $crud
             ->setEntityLabelInSingular(t('entity.template.singular', domain: 'messages'))
             ->setEntityLabelInPlural(t('entity.template.plural', domain: 'messages'))
+            ->setPageTitle(Crud::PAGE_DETAIL, static fn (?MaintenanceScheduleTemplate $entity): string => $entity?->getNameUk() ?? '')
             ->setDefaultSort(['nameUk' => 'ASC'])
             ->setSearchFields(['nameUk'])
             ->setDefaultRowAction(Action::DETAIL)
-            ->setHelp(Crud::PAGE_INDEX, t('entity.template.index_help', domain: 'messages'));
+            ->setHelp(Crud::PAGE_INDEX, t('entity.template.index_help', domain: 'messages'))
+            ->overrideTemplate('crud/detail', 'admin/crud/maintenance_schedule_template_detail.html.twig');
+    }
+
+    public function configureResponseParameters(KeyValueStore $responseParameters): KeyValueStore
+    {
+        $responseParameters = parent::configureResponseParameters($responseParameters);
+
+        if ($responseParameters->get('pageName') !== Crud::PAGE_DETAIL) {
+            return $responseParameters;
+        }
+
+        $entityDto = $responseParameters->get('entity');
+        $instance = $entityDto?->getInstance();
+        if (!$instance instanceof MaintenanceScheduleTemplate) {
+            return $responseParameters;
+        }
+
+        $responseParameters->set(
+            'scheduleItemsIndexUrl',
+            $this->adminUrlGenerator
+                ->unsetAll()
+                ->setController(MaintenanceScheduleItemCrudController::class)
+                ->setAction(Action::INDEX)
+                ->set('filters', [
+                    'template' => [
+                        'comparison' => '=',
+                        'value' => $instance->getId(),
+                    ],
+                ])
+                ->generateUrl(),
+        );
+
+        return $responseParameters;
     }
 
     public function configureActions(Actions $actions): Actions
@@ -55,6 +90,10 @@ final class MaintenanceScheduleTemplateCrudController extends AbstractCrudContro
 
     public function configureFields(string $pageName): iterable
     {
+        if ($pageName === Crud::PAGE_DETAIL) {
+            return [];
+        }
+
         yield TextField::new('nameUk', t('entity.template.name', domain: 'messages'));
         yield TextField::new('vehicleContextLabel', t('entity.template.vehicle', domain: 'messages'))
             ->hideOnForm()
@@ -83,13 +122,6 @@ final class MaintenanceScheduleTemplateCrudController extends AbstractCrudContro
             ->hideOnIndex()
             ->setHelp(t('entity.template.station_help', domain: 'messages'));
         yield TextareaField::new('notesUk', t('entity.template.notes', domain: 'messages'))->hideOnIndex();
-        yield TextField::new('scheduleWorksHtml', t('entity.template.works', domain: 'messages'))
-            ->onlyOnDetail()
-            ->renderAsHtml()
-            ->setHelp(t('entity.template.works_help', domain: 'messages'));
-        yield AssociationField::new('scheduleItems', t('entity.template.manage_items', domain: 'messages'))
-            ->onlyOnDetail()
-            ->setCrudController(MaintenanceScheduleItemCrudController::class);
         yield BooleanField::new('deleted')->hideOnIndex();
     }
 

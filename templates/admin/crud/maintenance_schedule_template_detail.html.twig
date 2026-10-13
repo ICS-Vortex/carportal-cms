@@ -1,0 +1,63 @@
+{# @var ea \EasyCorp\Bundle\EasyAdminBundle\Context\AdminContext #}
+{# @var entity \EasyCorp\Bundle\EasyAdminBundle\Dto\EntityDto #}
+{% extends '@!EasyAdmin/crud/detail.html.twig' %}
+
+{% set template = entity.instance %}
+
+{% block body_class %}{{ parent() }} cars-template-detail-body{% endblock %}
+
+{% block main %}
+    <section class="cars-floor cars-template-detail">
+        <div class="cars-hero cars-template-detail-hero">
+            <div>
+                <p class="cars-kicker">{{ 'entity.template.singular'|trans({}, 'messages') }}</p>
+                <h1>{{ template.nameUk }}</h1>
+                <p class="cars-lede">{{ template.vehicleContextLabel }}</p>
+            </div>
+            <div class="hero-modules">
+                <div>
+                    <b>{{ 'entity.template.station'|trans({}, 'messages') }}</b>
+                    <span>
+                        {% if template.station %}
+                            {{ template.station.nameUk }}
+                        {% else %}
+                            {{ 'entity.template.station_all'|trans({}, 'messages') }}
+                        {% endif %}
+                    </span>
+                </div>
+                <div>
+                    <b>{{ 'entity.template.works_count'|trans({}, 'messages') }}</b>
+                    <span>{{ template.activeScheduleItemsCount }}</span>
+                </div>
+            </div>
+        </div>
+
+        {% if template.notesUk %}
+            <div class="cars-board cars-template-detail-notes">
+                <header>
+                    <h2>{{ 'entity.template.notes'|trans({}, 'messages') }}</h2>
+                </header>
+                <p class="cars-template-detail-notes-text">{{ template.notesUk }}</p>
+            </div>
+        {% endif %}
+
+        <div class="cars-board cars-template-detail-works">
+            <header>
+                <div>
+                    <h2>{{ 'entity.template.works'|trans({}, 'messages') }}</h2>
+                    <p>{{ 'entity.template.works_help'|trans({}, 'messages') }}</p>
+                </div>
+                {% if scheduleItemsIndexUrl is defined %}
+                    <a href="{{ scheduleItemsIndexUrl }}" class="btn btn-secondary cars-template-detail-manage">
+                        {{ 'entity.template.detail_manage_items'|trans({}, 'messages') }}
+                    </a>
+                {% endif %}
+            </header>
+            {{ template.scheduleWorksHtml|raw }}
+        </div>
+    </section>
+
+    {% block delete_form %}
+        {{ include('@EasyAdmin/crud/includes/_action_confirmation_modal.html.twig', with_context: false) }}
+    {% endblock delete_form %}
+{% endblock %}

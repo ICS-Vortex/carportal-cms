@@ -47,7 +47,26 @@ class MaintenanceScheduleItem
 
     public function __toString(): string
     {
-        return (string) $this->procedure;
+        $procedureTitle = $this->procedure?->getTitleUk() ?? 'робота';
+        $templateName = $this->template?->getNameUk();
+
+        $parts = [];
+
+        if ($templateName !== null && $templateName !== '') {
+            $parts[] = $templateName;
+        }
+
+        $parts[] = $procedureTitle;
+
+        if ($this->intervalKm !== null && $this->intervalKm > 0) {
+            $parts[] = sprintf('%s км', number_format($this->intervalKm, 0, '', ' '));
+        }
+
+        if ($this->intervalMonths !== null && $this->intervalMonths > 0) {
+            $parts[] = sprintf('%s міс', $this->intervalMonths);
+        }
+
+        return implode(' · ', $parts);
     }
 
     public function getTemplate(): ?MaintenanceScheduleTemplate

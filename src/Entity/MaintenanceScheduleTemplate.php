@@ -217,7 +217,7 @@ class MaintenanceScheduleTemplate
         });
 
         if ($items === []) {
-            return '<p class="text-muted mb-0">—</p>';
+            return '<p class="cars-template-works-empty">—</p>';
         }
 
         $rows = '';
@@ -231,10 +231,14 @@ class MaintenanceScheduleTemplate
             $price = $item->getLaborPriceUah() ?? $procedure->getLaborPriceUah();
             $notes = $item->getNotesUk() ?? $procedure->getDescriptionUk();
 
+            $categoryCell = $category !== ''
+                ? sprintf('<span class="cars-chip">%s</span>', $category)
+                : '—';
+
             $rows .= sprintf(
-                '<tr><td>%s</td><td><span class="text-muted">%s</span></td><td>%s</td><td>%s</td><td>%s</td><td>%s</td></tr>',
+                '<tr><td><b>%s</b></td><td>%s</td><td>%s</td><td>%s</td><td class="cars-template-works-price">%s</td><td class="cars-template-works-note">%s</td></tr>',
                 $title,
-                $category,
+                $categoryCell,
                 self::formatIntervalCell($km, 'км'),
                 self::formatIntervalCell($months, 'міс'),
                 $price !== null ? self::escapeHtml((string) $price) : '—',
@@ -243,8 +247,7 @@ class MaintenanceScheduleTemplate
         }
 
         return <<<HTML
-<div class="table-responsive">
-<table class="table table-striped table-sm align-middle mb-0">
+<table class="cars-template-works-table">
 <thead>
 <tr>
 <th>Робота</th>
@@ -259,7 +262,6 @@ class MaintenanceScheduleTemplate
 {$rows}
 </tbody>
 </table>
-</div>
 HTML;
     }
 

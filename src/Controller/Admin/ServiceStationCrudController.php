@@ -5,15 +5,24 @@ declare(strict_types=1);
 namespace App\Controller\Admin;
 
 use App\Entity\ServiceStation;
+use App\Entity\User;
 use App\Portal\PortalMediaClient;
+use App\Service\Admin\ServiceStationAccess;
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\QueryBuilder;
+use EasyCorp\Bundle\EasyAdminBundle\Collection\FieldCollection;
+use EasyCorp\Bundle\EasyAdminBundle\Collection\FilterCollection;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
+use EasyCorp\Bundle\EasyAdminBundle\Dto\EntityDto;
+use EasyCorp\Bundle\EasyAdminBundle\Dto\SearchDto;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Field\BooleanField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\Field;
 use EasyCorp\Bundle\EasyAdminBundle\Field\ImageField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\FormField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IntegerField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\TimeField;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use function Symfony\Component\Translation\t;
@@ -23,7 +32,20 @@ final class ServiceStationCrudController extends AbstractCrudController
 {
     public function __construct(
         private readonly PortalMediaClient $portalMediaClient,
+        private readonly ServiceStationAccess $stationAccess,
     ) {
+    }
+
+    public function createIndexQueryBuilder(SearchDto $searchDto, EntityDto $entityDto, FieldCollection $fields, FilterCollection $filters): QueryBuilder
+    {
+        $queryBuilder = parent::createIndexQueryBuilder($searchDto, $entityDto, $fields, $filters);
+        $user = $this->getUser();
+
+        if ($user instanceof User) {
+            $this->stationAccess->applyStationIdFilter($queryBuilder, $user, 'entity.id');
+        }
+
+        return $queryBuilder;
     }
 
     public static function getEntityFqcn(): string
@@ -54,6 +76,13 @@ final class ServiceStationCrudController extends AbstractCrudController
             ]);
         yield IntegerField::new('sortOrder');
         yield BooleanField::new('isActive');
+        yield FormField::addFieldset(t('entity.service_station.appointment_panel', domain: 'messages'));
+        yield IntegerField::new('appointmentSlotMinutes', t('entity.service_station.slot_minutes', domain: 'messages'))
+            ->setHelp(t('entity.service_station.slot_minutes_help', domain: 'messages'));
+        yield TimeField::new('appointmentDayStart', t('entity.service_station.day_start', domain: 'messages'));
+        yield TimeField::new('appointmentDayEnd', t('entity.service_station.day_end', domain: 'messages'));
+        yield IntegerField::new('appointmentSlotCapacity', t('entity.service_station.slot_capacity', domain: 'messages'))
+            ->setHelp(t('entity.service_station.slot_capacity_help', domain: 'messages'));
     }
 
     public function persistEntity(EntityManagerInterface $entityManager, $entityInstance): void

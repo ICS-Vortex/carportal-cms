@@ -853,3 +853,1029 @@ body.ea .cars-board a {
 body.ea .cars-board a:hover {
     color: var(--signal-strong);
 }
+
+/* Maintenance plan import (custom admin page) */
+.plan-import-page {
+    gap: 1.15rem;
+}
+
+.plan-import-hero {
+    grid-template-columns: minmax(0, 1.35fr) minmax(0, 0.85fr);
+    align-items: stretch;
+}
+
+.plan-import-hero-copy {
+    display: flex;
+    flex-direction: column;
+    gap: 0.15rem;
+    min-width: 0;
+}
+
+.plan-import-hero .cars-lede code {
+    padding: 0.08rem 0.35rem;
+    border-radius: 0.2rem;
+    background: color-mix(in srgb, var(--panel-soft) 88%, transparent);
+    font-size: 0.88em;
+}
+
+.plan-import-back {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    align-self: flex-start;
+    margin-top: 1.1rem;
+    padding: 0.55rem 0.9rem;
+    border: 1px solid var(--line);
+    background: var(--panel-soft);
+    color: var(--ink);
+    font-size: 0.88rem;
+    font-weight: 560;
+    text-decoration: none;
+    transition:
+        border-color 0.18s ease,
+        background-color 0.18s ease,
+        color 0.18s ease,
+        transform 0.18s ease;
+}
+
+.plan-import-back:hover {
+    border-color: color-mix(in srgb, var(--signal) 45%, var(--line));
+    background: color-mix(in srgb, var(--signal) 8%, var(--panel-soft));
+    color: var(--ink);
+    transform: translateY(-1px);
+}
+
+.plan-import-meta span {
+    text-align: right;
+    word-break: break-word;
+}
+
+.plan-import-layout {
+    display: grid;
+    grid-template-columns: minmax(0, 1.45fr) minmax(0, 0.75fr);
+    gap: 1rem;
+    align-items: start;
+}
+
+.plan-import-upload-panel {
+    margin: 0;
+}
+
+.plan-import-upload-panel .plan-import-schema {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.45rem;
+    margin-bottom: 1.15rem;
+}
+
+.plan-import-schema span {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    padding: 0.35rem 0.55rem;
+    border: 1px solid var(--line);
+    background: var(--panel-soft);
+    font-size: 0.78rem;
+}
+
+.plan-import-schema code {
+    color: var(--ink);
+    font-size: 0.95em;
+}
+
+.plan-import-schema-optional em {
+    color: var(--muted);
+    font-style: normal;
+    font-size: 0.72rem;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+}
+
+.plan-import-form {
+    display: block;
+    width: 100%;
+}
+
+.plan-import-form .flex-fill {
+    display: none !important;
+}
+
+.plan-import-dropzone {
+    position: relative;
+    margin-bottom: 1rem;
+}
+
+.plan-import-dropzone-label {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}
+
+.plan-import-file-input {
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    cursor: pointer;
+}
+
+.plan-import-dropzone-surface {
+    display: grid;
+    justify-items: center;
+    gap: 0.35rem;
+    padding: 1.65rem 1.25rem;
+    border: 1px dashed color-mix(in srgb, var(--muted) 45%, var(--line));
+    background:
+        linear-gradient(145deg, color-mix(in srgb, var(--panel-soft) 92%, transparent), transparent 55%),
+        color-mix(in srgb, var(--panel) 96%, transparent);
+    text-align: center;
+    transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease,
+        transform 0.2s ease,
+        background-color 0.2s ease;
+}
+
+.plan-import-dropzone-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.65rem;
+    height: 2.65rem;
+    border-radius: 999px;
+    background: color-mix(in srgb, var(--signal) 14%, var(--panel));
+    color: var(--signal);
+    font-size: 1.1rem;
+}
+
+.plan-import-dropzone-title {
+    color: var(--ink);
+    font-weight: 620;
+    font-size: 0.98rem;
+}
+
+.plan-import-dropzone-hint {
+    color: var(--muted);
+    font-size: 0.86rem;
+}
+
+.plan-import-dropzone.is-dragover .plan-import-dropzone-surface,
+.plan-import-dropzone.has-file .plan-import-dropzone-surface,
+.plan-import-dropzone:focus-within .plan-import-dropzone-surface {
+    border-color: color-mix(in srgb, var(--signal) 55%, var(--line));
+    box-shadow:
+        0 14px 32px color-mix(in srgb, var(--signal) 10%, transparent),
+        inset 0 0 0 1px color-mix(in srgb, var(--signal) 22%, transparent);
+    transform: translateY(-1px);
+}
+
+.plan-import-file-name {
+    margin: 0.55rem 0 0;
+    color: var(--muted);
+    font-size: 0.86rem;
+}
+
+.plan-import-dropzone.has-file .plan-import-file-name {
+    color: var(--ink);
+    font-weight: 560;
+}
+
+.plan-import-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.65rem;
+}
+
+.plan-import-submit {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding-inline: 1.15rem;
+    box-shadow: 0 10px 24px color-mix(in srgb, var(--signal) 22%, transparent);
+}
+
+.plan-import-aside {
+    display: grid;
+    gap: 0.75rem;
+}
+
+.plan-import-tip {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 0.75rem;
+    padding: 1rem 1.05rem;
+    border: 1px solid var(--line);
+    background: var(--panel);
+}
+
+.plan-import-tip-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.25rem;
+    height: 2.25rem;
+    background: color-mix(in srgb, var(--signal) 12%, var(--panel-soft));
+    color: var(--signal);
+}
+
+.plan-import-tip strong {
+    display: block;
+    margin-bottom: 0.25rem;
+    font-size: 0.92rem;
+}
+
+.plan-import-tip p {
+    margin: 0;
+    color: var(--muted);
+    font-size: 0.88rem;
+    line-height: 1.45;
+}
+
+.plan-import-log header {
+    align-items: center;
+}
+
+.plan-import-request-pill {
+    padding: 0.35rem 0.7rem;
+    border: 1px solid var(--line);
+    background: var(--panel-soft);
+    color: var(--muted);
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+}
+
+.plan-import-request-pill.is-open {
+    border-color: color-mix(in srgb, #0284c7 35%, var(--line));
+    background: color-mix(in srgb, #0284c7 10%, var(--panel));
+    color: color-mix(in srgb, #0284c7 80%, var(--ink));
+}
+
+.plan-import-request-pill.is-resolved {
+    border-color: color-mix(in srgb, #16a34a 35%, var(--line));
+    background: color-mix(in srgb, #16a34a 10%, var(--panel));
+    color: color-mix(in srgb, #16a34a 75%, var(--ink));
+}
+
+.plan-import-empty {
+    display: grid;
+    justify-items: center;
+    gap: 0.35rem;
+    padding: 2rem 1rem 2.35rem;
+    text-align: center;
+}
+
+.plan-import-empty-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.75rem;
+    height: 2.75rem;
+    border: 1px solid var(--line);
+    background: var(--panel-soft);
+    color: var(--muted);
+    font-size: 1.15rem;
+}
+
+.plan-import-empty p {
+    margin: 0.35rem 0 0;
+    font-weight: 600;
+}
+
+.plan-import-empty small {
+    max-width: 22rem;
+    color: var(--muted);
+    line-height: 1.45;
+}
+
+.plan-import-status {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.22rem 0.55rem;
+    border: 1px solid var(--line);
+    background: var(--panel-soft);
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+}
+
+.plan-import-status--pending {
+    border-color: color-mix(in srgb, #d97706 35%, var(--line));
+    background: color-mix(in srgb, #d97706 12%, var(--panel));
+    color: #b45309;
+}
+
+.plan-import-status--processing {
+    border-color: color-mix(in srgb, #0284c7 35%, var(--line));
+    background: color-mix(in srgb, #0284c7 12%, var(--panel));
+    color: #0369a1;
+}
+
+.plan-import-status--completed {
+    border-color: color-mix(in srgb, #16a34a 35%, var(--line));
+    background: color-mix(in srgb, #16a34a 12%, var(--panel));
+    color: #15803d;
+}
+
+.plan-import-status--failed {
+    border-color: color-mix(in srgb, #e11d48 35%, var(--line));
+    background: color-mix(in srgb, #e11d48 12%, var(--panel));
+    color: #be123c;
+}
+
+.plan-import-rows {
+    display: block;
+    font-weight: 600;
+    font-variant-numeric: tabular-nums;
+}
+
+.plan-import-rows-muted {
+    color: var(--muted);
+}
+
+.plan-import-progress {
+    display: block;
+    width: min(8rem, 100%);
+    height: 3px;
+    margin-top: 0.35rem;
+    background: color-mix(in srgb, var(--line) 75%, transparent);
+    overflow: hidden;
+}
+
+.plan-import-progress::after {
+    content: "";
+    display: block;
+    width: var(--progress, 0%);
+    height: 100%;
+    background: linear-gradient(90deg, var(--signal), color-mix(in srgb, var(--signal) 45%, transparent));
+}
+
+.plan-import-error {
+    color: #be123c !important;
+}
+
+@media (max-width: 1100px) {
+    .plan-import-layout {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 960px) {
+    .plan-import-hero {
+        grid-template-columns: 1fr;
+    }
+
+    .plan-import-meta span {
+        text-align: left;
+    }
+}
+
+.appt-calendar-page .appt-toolbar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.85rem 1.25rem;
+    align-items: center;
+    justify-content: space-between;
+    margin: 1.25rem 0 1rem;
+    padding: 0.85rem 1rem;
+    background: var(--panel);
+    border: 1px solid var(--line);
+}
+
+.appt-calendar-page .appt-toolbar-start {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.75rem;
+    min-width: 0;
+}
+
+.appt-calendar-page .appt-toolbar-actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 0.45rem;
+}
+
+.appt-calendar-page .appt-toolbar-field {
+    display: flex;
+    align-items: center;
+    gap: 0.65rem;
+    margin: 0;
+    max-width: 100%;
+}
+
+.appt-calendar-page .appt-toolbar-field--station {
+    flex: 0 1 auto;
+    width: min(100%, 17.5rem);
+}
+
+.appt-calendar-page .appt-toolbar-label {
+    flex: 0 0 auto;
+    color: var(--muted);
+    font-family: var(--font-family-base);
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    white-space: nowrap;
+}
+
+.appt-calendar-page .appt-toolbar-field--station .ts-wrapper {
+    flex: 1 1 auto;
+    min-width: 0;
+    max-width: 14rem;
+}
+
+.appt-calendar-page .appt-station-select {
+    appearance: none;
+    -webkit-appearance: none;
+    flex: 1 1 auto;
+    min-height: 2.5rem;
+    min-width: 0;
+    max-width: 14rem;
+    width: 100%;
+    padding: 0.5rem 2.35rem 0.5rem 0.9rem;
+    border: 1px solid var(--line);
+    border-radius: 0;
+    background-color: var(--panel);
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16' fill='none'%3E%3Cpath d='M4 6l4 4 4-4' stroke='%235c5c5c' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 0.75rem center;
+    background-size: 1rem;
+    color: var(--ink);
+    cursor: pointer;
+    font-family: var(--font-family-base);
+    font-size: 0.9rem;
+    font-weight: 500;
+    line-height: 1.3;
+    transition:
+        border-color 0.15s ease,
+        box-shadow 0.15s ease,
+        background-color 0.15s ease;
+}
+
+.appt-calendar-page .appt-station-select:hover {
+    border-color: color-mix(in srgb, var(--signal) 28%, var(--line));
+}
+
+.appt-calendar-page .appt-station-select:focus {
+    border-color: var(--signal);
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--signal) 16%, transparent);
+    outline: none;
+}
+
+.ea-dark-scheme .appt-calendar-page .appt-station-select {
+    background-color: var(--panel-soft);
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16' fill='none'%3E%3Cpath d='M4 6l4 4 4-4' stroke='%23a8a8a8' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+}
+
+.appt-calendar-page .appt-toolbar .btn {
+    min-height: 2.5rem;
+}
+
+.appt-week-nav {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.appt-station-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem 1.5rem;
+    margin-bottom: 1rem;
+    font-size: 0.92rem;
+    color: var(--muted);
+}
+
+.appt-station-meta a {
+    color: var(--signal);
+    font-weight: 600;
+}
+
+.appt-grid-wrap {
+    overflow-x: auto;
+    border: 1px solid var(--line);
+    border-radius: 0;
+    background: var(--panel);
+}
+
+.appt-grid {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 960px;
+    font-size: 0.82rem;
+}
+
+.appt-grid th,
+.appt-grid td {
+    border: 1px solid var(--line);
+    vertical-align: top;
+    padding: 0.45rem;
+}
+
+.appt-grid thead th {
+    background: var(--panel-soft);
+    text-align: center;
+    font-weight: 600;
+}
+
+.appt-day-name {
+    display: block;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    font-size: 0.7rem;
+    color: var(--muted);
+}
+
+.appt-cell-free {
+    background: rgba(76, 175, 80, 0.08);
+}
+
+.appt-cell-busy {
+    background: rgba(197, 27, 27, 0.06);
+}
+
+.appt-cell-off {
+    background: var(--panel-soft);
+    opacity: 0.55;
+}
+
+.appt-cell-meta {
+    font-size: 0.72rem;
+    color: var(--muted);
+    margin-bottom: 0.35rem;
+}
+
+.appt-booking {
+    background: var(--panel-soft);
+    border: 1px solid var(--line);
+    padding: 0.45rem;
+    margin-bottom: 0.35rem;
+}
+
+.appt-booking ul {
+    margin: 0.25rem 0 0;
+    padding-left: 1rem;
+}
+
+.appt-cancel {
+    border: 0;
+    background: transparent;
+    color: var(--signal);
+    font-size: 0.72rem;
+    padding: 0;
+    cursor: pointer;
+    text-decoration: underline;
+}
+
+.appt-prefill {
+    display: inline-flex;
+    margin-top: 0.25rem;
+    font-weight: 700;
+    color: var(--signal);
+    text-decoration: none;
+}
+
+.appt-booking-panel {
+    margin-top: 2rem;
+    padding: 1.25rem;
+    background: var(--panel);
+    border: 1px solid var(--line);
+}
+
+.appt-form-stack {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+
+.appt-form-row-2 {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1rem;
+    align-items: start;
+}
+
+.appt-field-full {
+    width: 100%;
+}
+
+.appt-booking-form .form-group,
+.appt-booking-form .field-group,
+.appt-booking-form .mb-3 {
+    margin-bottom: 0.85rem;
+}
+
+.appt-booking-form .ts-wrapper {
+    width: 100%;
+}
+
+.appt-booking-form .ts-control {
+    min-height: 42px;
+}
+
+@media (max-width: 640px) {
+    .appt-form-row-2 {
+        grid-template-columns: 1fr;
+    }
+}
+
+.appt-time-with-refresh {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+    min-width: 0;
+}
+
+.appt-slot-refresh-link {
+    align-self: flex-start;
+    color: var(--signal);
+    font-size: 0.78rem;
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.appt-slot-refresh-link:hover {
+    text-decoration: underline;
+}
+
+.appt-toolbar-station {
+    margin: 0;
+    font-size: 0.92rem;
+    color: var(--muted);
+}
+
+.appt-new-vehicle-panel {
+    padding: 0.85rem 1rem;
+    border: 1px dashed color-mix(in srgb, var(--signal) 35%, var(--line));
+    background: color-mix(in srgb, var(--signal) 5%, var(--panel-soft));
+}
+
+.appt-new-vehicle-hint {
+    margin: 0 0 0.75rem;
+    font-size: 0.85rem;
+    color: var(--muted);
+}
+
+.appt-fc-root {
+    --fc-small-font-size: 0.75rem;
+    --fc-page-bg-color: var(--panel);
+    --fc-neutral-bg-color: var(--panel-soft);
+    --fc-neutral-text-color: var(--muted);
+    --fc-border-color: var(--line);
+    --fc-button-text-color: var(--ink);
+    --fc-button-bg-color: var(--panel-soft);
+    --fc-button-border-color: var(--line);
+    --fc-button-hover-bg-color: color-mix(in srgb, var(--signal) 10%, var(--panel-soft));
+    --fc-button-hover-border-color: color-mix(in srgb, var(--signal) 28%, var(--line));
+    --fc-button-active-bg-color: var(--signal);
+    --fc-button-active-border-color: var(--signal-strong);
+    --fc-event-text-color: #ffffff;
+    --fc-more-link-bg-color: var(--panel-soft);
+    --fc-more-link-text-color: var(--signal);
+    --fc-non-business-color: color-mix(in srgb, var(--panel-soft) 65%, transparent);
+    --fc-bg-event-opacity: 0.85;
+    --fc-highlight-color: color-mix(in srgb, var(--signal) 14%, transparent);
+    --fc-today-bg-color: color-mix(in srgb, var(--signal) 7%, var(--panel));
+    --fc-now-indicator-color: var(--signal);
+
+    margin: 1rem 0 2rem;
+    padding: 1.25rem 1.35rem 1.5rem;
+    background: var(--panel);
+    border: 1px solid var(--line);
+    color: var(--ink);
+}
+
+.ea-dark-scheme .appt-fc-root {
+    --fc-border-color: color-mix(in srgb, var(--line) 90%, #000);
+    --fc-button-bg-color: color-mix(in srgb, var(--panel-soft) 88%, #000);
+    --fc-button-hover-bg-color: color-mix(in srgb, var(--signal) 16%, var(--panel-soft));
+    --fc-today-bg-color: color-mix(in srgb, var(--signal) 11%, var(--panel));
+    --fc-highlight-color: color-mix(in srgb, var(--signal) 22%, transparent);
+    --fc-non-business-color: color-mix(in srgb, var(--panel-soft) 55%, var(--panel));
+    box-shadow:
+        0 1px 0 color-mix(in srgb, #fff 4%, transparent) inset,
+        0 12px 40px rgba(0, 0, 0, 0.35);
+}
+
+.appt-fc-root .fc {
+    --fc-list-event-hover-bg-color: color-mix(in srgb, var(--signal) 8%, var(--panel));
+}
+
+.appt-fc-root .fc .fc-header-toolbar {
+    margin-bottom: 1.15rem;
+    gap: 0.65rem;
+    flex-wrap: wrap;
+}
+
+.appt-fc-root .fc .fc-toolbar-title {
+    margin: 0;
+    color: var(--ink);
+    font-family: var(--font-display);
+    font-size: clamp(1.15rem, 2.2vw, 1.65rem);
+    font-weight: 600;
+    letter-spacing: -0.03em;
+    line-height: 1.1;
+    text-transform: uppercase;
+}
+
+.appt-fc-root .fc .fc-button {
+    border-radius: 0;
+    box-shadow: none !important;
+    font-family: var(--font-family-base);
+    font-size: 0.78rem;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    padding: 0.42rem 0.8rem;
+    text-transform: none;
+    transition:
+        background-color 0.15s ease,
+        border-color 0.15s ease,
+        color 0.15s ease;
+}
+
+.appt-fc-root .fc .fc-button-primary:not(:disabled).fc-button-active,
+.appt-fc-root .fc .fc-button-primary:not(:disabled):active {
+    color: #ffffff;
+}
+
+.appt-fc-root .fc .fc-button-group > .fc-button {
+    border-radius: 0;
+}
+
+.appt-fc-root .fc a {
+    color: var(--ink);
+    text-decoration: none;
+}
+
+.appt-fc-root .fc a:hover {
+    color: var(--signal);
+}
+
+.appt-fc-root .fc .fc-col-header-cell {
+    background: var(--panel-soft);
+}
+
+.appt-fc-root .fc .fc-col-header-cell-cushion {
+    padding: 0.65rem 0.35rem;
+    color: var(--muted);
+    font-family: var(--font-family-base);
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+}
+
+.appt-fc-root .fc .fc-day-today .fc-col-header-cell-cushion {
+    color: var(--signal);
+}
+
+.appt-fc-root .fc .fc-timegrid-axis,
+.appt-fc-root .fc .fc-timegrid-axis-frame {
+    background: var(--panel-soft);
+}
+
+.appt-fc-root .fc .fc-timegrid-slot-label-cushion {
+    color: var(--muted);
+    font-size: 0.72rem;
+    font-variant-numeric: tabular-nums;
+    opacity: 0.9;
+}
+
+.appt-fc-root .fc .fc-timegrid-slot {
+    height: 2.35rem;
+}
+
+.appt-fc-root .fc .fc-scrollgrid {
+    border-color: var(--line);
+}
+
+.appt-fc-root .fc-theme-standard td,
+.appt-fc-root .fc-theme-standard th {
+    border-color: color-mix(in srgb, var(--line) 92%, transparent);
+}
+
+.ea-dark-scheme .appt-fc-root .fc-theme-standard td,
+.ea-dark-scheme .appt-fc-root .fc-theme-standard th {
+    border-color: color-mix(in srgb, var(--line) 75%, transparent);
+}
+
+.appt-fc-root .fc .fc-timegrid-now-indicator-line {
+    border-width: 2px;
+    border-color: var(--signal);
+    opacity: 0.95;
+}
+
+.appt-fc-root .fc .fc-timegrid-now-indicator-arrow {
+    border-top-color: var(--signal);
+    border-bottom-color: var(--signal);
+}
+
+.appt-fc-root .fc .fc-event {
+    border-radius: 2px;
+    border-width: 0 0 0 3px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.18);
+    font-size: 0.78rem;
+    font-weight: 500;
+    padding: 1px 2px;
+}
+
+.ea-dark-scheme .appt-fc-root .fc .fc-event {
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.45);
+}
+
+.appt-fc-root .fc .fc-bg-event {
+    opacity: var(--fc-bg-event-opacity);
+}
+
+.appt-fc-root .fc .fc-daygrid-day-number,
+.appt-fc-root .fc .fc-list-day-text,
+.appt-fc-root .fc .fc-list-day-side-text {
+    color: var(--ink);
+    font-weight: 600;
+}
+
+.appt-fc-root .fc .fc-day-today .fc-daygrid-day-number {
+    background: var(--signal);
+    border-radius: 2px;
+    color: #fff;
+    padding: 0.15rem 0.35rem;
+}
+
+.appt-fc-root .fc .fc-timegrid-divider {
+    background: var(--panel-soft);
+    padding: 0;
+}
+
+.appt-fc-root .fc .fc-scrollgrid-section-header > *,
+.appt-fc-root .fc .fc-scrollgrid-section-body > * {
+    border-color: var(--line);
+}
+
+.appt-calendar-body .appt-booking-form .form-widget,
+.appt-calendar-body .appt-booking-form .form-control,
+.appt-calendar-body .appt-booking-form select,
+.appt-calendar-body .appt-booking-form textarea {
+    max-width: 100%;
+}
+
+.appt-modal-lede {
+    font-size: 0.88rem;
+    color: var(--muted);
+    margin-top: 0.35rem;
+}
+
+.appt-modal-footer {
+    padding: 0;
+    margin-top: 1.25rem;
+    border: 0;
+    justify-content: flex-end;
+    gap: 0.5rem;
+}
+
+.datagrid-empty .no-results td {
+    vertical-align: middle;
+}
+
+.ea-empty-state {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.65rem;
+    padding: 0.25rem 1rem 0.75rem;
+    text-align: center;
+}
+
+.ea-empty-state-message {
+    margin: 0;
+    color: var(--muted);
+    font-size: 0.95rem;
+}
+
+.ea-empty-state .btn {
+    min-height: 2.5rem;
+    padding-inline: 1.15rem;
+    font-weight: 600;
+}
+
+#bookingModal .modal-body {
+    padding-top: 0.5rem;
+}
+
+/* Maintenance schedule template — detail */
+body.ea-detail-MaintenanceScheduleTemplate .content-header-title h1.title {
+    font-family: var(--font-display);
+    font-size: clamp(1.35rem, 2.5vw, 1.85rem);
+    font-weight: 600;
+    letter-spacing: -0.03em;
+    text-transform: none;
+}
+
+.cars-template-detail-works header {
+    align-items: center;
+}
+
+.cars-template-detail-works header p {
+    margin: 0.35rem 0 0;
+    max-width: 36rem;
+    color: var(--muted);
+    font-size: 0.92rem;
+    line-height: 1.45;
+    text-transform: none;
+    letter-spacing: normal;
+    font-weight: 400;
+}
+
+.cars-template-detail-manage {
+    flex-shrink: 0;
+    white-space: nowrap;
+}
+
+.cars-template-detail-notes-text {
+    margin: 0.5rem 0 0.25rem;
+    color: var(--ink);
+    font-size: 0.98rem;
+    line-height: 1.55;
+    white-space: pre-wrap;
+}
+
+.cars-template-works-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 0.35rem;
+}
+
+.cars-template-works-table th {
+    padding: 0.65rem 0.35rem 0.55rem;
+    color: var(--muted);
+    font-family: var(--font-family-base);
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    text-align: left;
+    border-bottom: 1px solid var(--line);
+}
+
+.cars-template-works-table td {
+    padding: 0.85rem 0.35rem;
+    border-top: 1px solid var(--line);
+    color: var(--ink);
+    vertical-align: top;
+    font-size: 0.95rem;
+}
+
+.cars-template-works-table td b {
+    font-weight: 600;
+}
+
+.cars-template-works-price {
+    font-variant-numeric: tabular-nums;
+    white-space: nowrap;
+}
+
+.cars-template-works-note {
+    color: var(--muted);
+    font-size: 0.9rem;
+    line-height: 1.45;
+    max-width: 22rem;
+}
+
+.cars-template-works-empty {
+    margin: 0.75rem 0 0.25rem;
+    color: var(--muted);
+}
+
+.cars-chip {
+    display: inline-block;
+    padding: 0.2rem 0.5rem;
+    border: 1px solid var(--line);
+    background: var(--panel-soft);
+    color: var(--muted);
+    font-size: 0.78rem;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: lowercase;
+}
+
+@media (max-width: 900px) {
+    .cars-template-detail-works header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.75rem;
+    }
+}

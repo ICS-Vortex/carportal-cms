@@ -2,60 +2,202 @@
 
 {% form_theme form with '@EasyAdmin/crud/form_theme.html.twig' %}
 
-{% block content_title %}Імпорт регламенту для авто{% endblock %}
-
-{% block page_actions %}
-    <a href="{{ backUrl }}" class="btn btn-secondary">
-        <i class="fa-solid fa-chevron-left"></i> Назад до запиту
-    </a>
-{% endblock %}
+{% block content_header_wrapper %}{% endblock %}
 
 {% block main %}
-    <div class="content-panel mb-4">
-        <p class="mb-1"><strong>Запит:</strong> {{ planRequest }}</p>
-        <p class="mb-0"><strong>Автомобіль:</strong> {{ vehicle }}</p>
-    </div>
+    {% set requestStatusLabel = planRequest.status == 'resolved' ? 'Вирішено' : 'Відкритий' %}
+    {% set requestStatusClass = planRequest.status == 'resolved' ? 'is-resolved' : 'is-open' %}
 
-    <div class="content-panel mb-4">
-        <h2 class="h5 mb-3">Завантажити файл</h2>
-        <p class="text-muted small">
-            CSV або XLSX з колонками: <code>title_uk</code>, <code>category</code>, <code>interval_km</code>,
-            <code>interval_months</code>, <code>labor_price_uah</code>, <code>notes_uk</code>, <code>procedure_code</code> (необовʼязково).
-            Перший рядок — заголовки. Обробка через RabbitMQ (cms-worker).
-        </p>
-        {{ form_start(form, { attr: { class: 'ea-form', enctype: 'multipart/form-data' } }) }}
-            {{ form_row(form.file) }}
-            <button type="submit" class="btn btn-primary">
-                <i class="fa-solid fa-upload"></i> Завантажити та імпортувати
-            </button>
-        {{ form_end(form) }}
-    </div>
+    <section class="cars-floor plan-import-page">
+        <div class="cars-hero plan-import-hero">
+            <div class="plan-import-hero-copy">
+                <p class="cars-kicker">Регламент ТО · імпорт</p>
+                <h1>Імпорт регламенту для авто</h1>
+                <p class="cars-lede">
+                    Завантажте CSV або XLSX з процедурами обслуговування. Файл ставиться в чергу RabbitMQ і обробляється
+                    воркером <code>cms-worker</code> у фоні — сторінку можна закрити після відправки.
+                </p>
+                <a href="{{ backUrl }}" class="plan-import-back">
+                    <i class="fa-solid fa-chevron-left" aria-hidden="true"></i>
+                    Назад до запиту
+                </a>
+            </div>
 
-    <div class="content-panel">
-        <h2 class="h5 mb-3">Журнал імпортів для цього запиту</h2>
-        {% if imports is empty %}
-            <p class="text-muted mb-0">Ще не було завантажень.</p>
-        {% else %}
-            <table class="table table-striped table-sm">
-                <thead>
-                <tr>
-                    <th>Файл</th>
-                    <th>Статус</th>
-                    <th>Рядків</th>
-                    <th>Створено</th>
-                </tr>
-                </thead>
-                <tbody>
-                {% for row in imports|sort((a, b) => b.createdAt <=> a.createdAt) %}
-                    <tr>
-                        <td>{{ row.originalFilename }}</td>
-                        <td>{{ row.statusLabel }}</td>
-                        <td>{{ row.rowsImported ?? '—' }} / {{ row.rowsTotal ?? '—' }}</td>
-                        <td>{{ row.createdAt|date('Y-m-d H:i') }}</td>
-                    </tr>
-                {% endfor %}
-                </tbody>
-            </table>
-        {% endif %}
-    </div>
+            <div class="hero-modules plan-import-meta">
+                <div>
+                    <b>Запит</b>
+                    <span>{{ planRequest.id }} · {{ requestStatusLabel }}</span>
+                </div>
+                <div>
+                    <b>Автомобіль</b>
+                    <span>{{ vehicle }}</span>
+                </div>
+                <div>
+                    <b>Імпортів</b>
+                    <span>{{ imports|length }}</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="plan-import-layout">
+            <div class="cars-account-panel plan-import-upload-panel">
+                <header>
+                    <h2>Завантажити файл</h2>
+                    <p>Перший рядок — заголовки колонок. Максимальний розмір файлу — 8&nbsp;МБ.</p>
+                </header>
+
+                <div class="plan-import-schema" aria-label="Очікувані колонки">
+                    <span><code>title_uk</code></span>
+                    <span><code>category</code></span>
+                    <span><code>interval_km</code></span>
+                    <span><code>interval_months</code></span>
+                    <span><code>labor_price_uah</code></span>
+                    <span><code>notes_uk</code></span>
+                    <span class="plan-import-schema-optional"><code>procedure_code</code> <em>необовʼязково</em></span>
+                </div>
+
+                {{ form_start(form, { attr: { class: 'ea-form plan-import-form', enctype: 'multipart/form-data' } }) }}
+                    <div class="plan-import-dropzone" data-plan-import-dropzone>
+                        {{ form_label(form.file, null, { label_attr: { class: 'plan-import-dropzone-label' } }) }}
+                        {{ form_widget(form.file, {
+                            attr: {
+                                class: 'plan-import-file-input',
+                                accept: '.csv,.xlsx,text/csv,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+                                'data-plan-import-input': true,
+                            },
+                        }) }}
+                        <div class="plan-import-dropzone-surface" aria-hidden="true">
+                            <span class="plan-import-dropzone-icon"><i class="fa-solid fa-cloud-arrow-up"></i></span>
+                            <span class="plan-import-dropzone-title">Перетягніть файл сюди</span>
+                            <span class="plan-import-dropzone-hint">або натисніть, щоб обрати .csv / .xlsx</span>
+                        </div>
+                        <p class="plan-import-file-name" data-plan-import-filename>Файл не обрано</p>
+                        {{ form_errors(form.file) }}
+                    </div>
+
+                    <div class="plan-import-actions">
+                        <button type="submit" class="btn btn-primary plan-import-submit">
+                            <i class="fa-solid fa-upload" aria-hidden="true"></i>
+                            <span>Завантажити та імпортувати</span>
+                        </button>
+                    </div>
+                {{ form_end(form) }}
+            </div>
+
+            <aside class="plan-import-aside" aria-label="Підказки">
+                <div class="plan-import-tip">
+                    <span class="plan-import-tip-icon"><i class="fa-solid fa-bolt"></i></span>
+                    <div>
+                        <strong>Фонова обробка</strong>
+                        <p>Після завантаження статус зʼявиться в журналі нижче. Оновіть сторінку, щоб побачити прогрес.</p>
+                    </div>
+                </div>
+                <div class="plan-import-tip">
+                    <span class="plan-import-tip-icon"><i class="fa-solid fa-table-columns"></i></span>
+                    <div>
+                        <strong>Формат даних</strong>
+                        <p>Інтервали в кілометрах і місяцях, вартість робіт — у гривнях. Категорія — довільний код групи процедур.</p>
+                    </div>
+                </div>
+            </aside>
+        </div>
+
+        <div class="cars-board plan-import-log">
+            <header>
+                <div>
+                    <h2>Журнал імпортів</h2>
+                    <p>Історія завантажень для цього запиту</p>
+                </div>
+                <span class="plan-import-request-pill {{ requestStatusClass }}">{{ requestStatusLabel }}</span>
+            </header>
+
+            {% if imports is empty %}
+                <div class="plan-import-empty">
+                    <span class="plan-import-empty-icon"><i class="fa-regular fa-folder-open"></i></span>
+                    <p>Ще не було завантажень.</p>
+                    <small>Після першого імпорту тут зʼявиться статус і кількість оброблених рядків.</small>
+                </div>
+            {% else %}
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Файл</th>
+                            <th>Статус</th>
+                            <th>Рядки</th>
+                            <th>Створено</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    {% for row in imports|sort((a, b) => b.createdAt <=> a.createdAt) %}
+                        {% set statusSlug = row.status %}
+                        <tr>
+                            <td>
+                                <b>{{ row.originalFilename }}</b>
+                                {% if row.errorMessage %}
+                                    <small class="plan-import-error">{{ row.errorMessage }}</small>
+                                {% endif %}
+                            </td>
+                            <td>
+                                <span class="plan-import-status plan-import-status--{{ statusSlug }}">{{ row.statusLabel }}</span>
+                            </td>
+                            <td>
+                                {% if row.rowsTotal %}
+                                    <span class="plan-import-rows">{{ row.rowsImported ?? 0 }} / {{ row.rowsTotal }}</span>
+                                    {% set progress = row.rowsTotal > 0 ? ((row.rowsImported ?? 0) / row.rowsTotal * 100)|round : 0 %}
+                                    <span class="plan-import-progress" style="--progress: {{ progress }}%;" role="presentation"></span>
+                                {% else %}
+                                    <span class="plan-import-rows-muted">—</span>
+                                {% endif %}
+                            </td>
+                            <td>
+                                <b>{{ row.createdAt|date('d.m.Y') }}</b>
+                                <small>{{ row.createdAt|date('H:i') }}</small>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            {% endif %}
+        </div>
+    </section>
+
+    <script>
+        (function () {
+            const root = document.querySelector('[data-plan-import-dropzone]');
+            if (!root) return;
+
+            const input = root.querySelector('[data-plan-import-input]');
+            const nameEl = root.querySelector('[data-plan-import-filename]');
+            if (!input || !nameEl) return;
+
+            const sync = () => {
+                const file = input.files && input.files[0];
+                nameEl.textContent = file ? file.name : 'Файл не обрано';
+                root.classList.toggle('has-file', Boolean(file));
+            };
+
+            input.addEventListener('change', sync);
+
+            ['dragenter', 'dragover'].forEach((eventName) => {
+                root.addEventListener(eventName, (event) => {
+                    event.preventDefault();
+                    root.classList.add('is-dragover');
+                });
+            });
+
+            ['dragleave', 'drop'].forEach((eventName) => {
+                root.addEventListener(eventName, (event) => {
+                    event.preventDefault();
+                    root.classList.remove('is-dragover');
+                });
+            });
+
+            root.addEventListener('drop', (event) => {
+                const files = event.dataTransfer?.files;
+                if (!files || !files.length) return;
+                input.files = files;
+                sync();
+            });
+        })();
+    </script>
 {% endblock %}

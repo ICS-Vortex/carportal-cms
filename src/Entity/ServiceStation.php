@@ -39,6 +39,18 @@ class ServiceStation
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $imageUrl = null;
 
+    #[ORM\Column(options: ['default' => 60])]
+    private int $appointmentSlotMinutes = 60;
+
+    #[ORM\Column(type: Types::TIME_IMMUTABLE, options: ['default' => '09:00:00'])]
+    private ?\DateTimeImmutable $appointmentDayStart = null;
+
+    #[ORM\Column(type: Types::TIME_IMMUTABLE, options: ['default' => '18:00:00'])]
+    private ?\DateTimeImmutable $appointmentDayEnd = null;
+
+    #[ORM\Column(options: ['default' => 2])]
+    private int $appointmentSlotCapacity = 2;
+
     public function __toString(): string
     {
         return $this->nameUk;
@@ -124,6 +136,54 @@ class ServiceStation
     public function setImageUrl(?string $imageUrl): self
     {
         $this->imageUrl = $imageUrl;
+
+        return $this;
+    }
+
+    public function getAppointmentSlotMinutes(): int
+    {
+        return $this->appointmentSlotMinutes;
+    }
+
+    public function setAppointmentSlotMinutes(int $appointmentSlotMinutes): self
+    {
+        $this->appointmentSlotMinutes = $appointmentSlotMinutes;
+
+        return $this;
+    }
+
+    public function getAppointmentDayStart(): ?\DateTimeImmutable
+    {
+        return $this->appointmentDayStart;
+    }
+
+    public function setAppointmentDayStart(?\DateTimeImmutable $appointmentDayStart): self
+    {
+        $this->appointmentDayStart = $appointmentDayStart;
+
+        return $this;
+    }
+
+    public function getAppointmentDayEnd(): ?\DateTimeImmutable
+    {
+        return $this->appointmentDayEnd;
+    }
+
+    public function setAppointmentDayEnd(?\DateTimeImmutable $appointmentDayEnd): self
+    {
+        $this->appointmentDayEnd = $appointmentDayEnd;
+
+        return $this;
+    }
+
+    public function getAppointmentSlotCapacity(): int
+    {
+        return $this->appointmentSlotCapacity;
+    }
+
+    public function setAppointmentSlotCapacity(int $appointmentSlotCapacity): self
+    {
+        $this->appointmentSlotCapacity = $appointmentSlotCapacity;
 
         return $this;
     }

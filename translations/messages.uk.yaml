@@ -9,14 +9,16 @@ menu:
     generations: Покоління
     configurations: Комплектації
     vehicles: Автомобілі
-    procedures: Роботи
+    procedures: Довідник робіт
     service_stations: СТО
+    appointments: Календар записів
+    schedule_blocks: Вихідні та блокування
     station_labor_prices: Ціни СТО
     templates: Шаблони регламенту
     reminders: Нагадування
     plan_requests: Запити на план
     plan_imports: Журнал імпортів планів
-    schedule_items: Пункти шаблонів
+    schedule_items: Рядки регламенту
     users: Користувачі
 
 account:
@@ -141,7 +143,14 @@ entity:
         due_mileage: Пробіг, км
     procedure:
         singular: Робота
-        plural: Роботи
+        plural: Довідник робіт
+        page_new: Нова робота
+        page_edit: Редагувати роботу
+        station: СТО
+        station_help: Обовʼязково для вашого СТО. Робота буде доступна лише на цьому сервісі та в записах цього СТО.
+        station_help_global: Залиште порожнім для загального довідника (усі СТО). Або оберіть СТО — робота лише для нього.
+        created_by: Додав у CMS
+        code_help: Код для системи. Можна лишити порожнім — згенерується з назви.
         title: Назва
         category: Категорія
         templates: Шаблони (авто)
@@ -150,9 +159,9 @@ entity:
         interval_months: Інтервал, міс
         defaults_help: Значення за замовчуванням; у шаблоні можна перевизначити.
         labor_price: Ціна робіт (грн)
-        labor_price_help: Базова орієнтовна ціна; у пункті шаблону — для конкретного авто.
+        labor_price_help: Базова орієнтовна ціна; у рядку регламенту — для конкретного авто.
         description: Опис
-        schedule_items: У шаблонах
+        schedule_items: Рядки регламенту
     template:
         singular: Шаблон регламенту
         plural: Шаблони регламенту
@@ -165,30 +174,55 @@ entity:
         station_help: Порожньо — регламент для всіх СТО. Якщо обрано СТО — план лише для цієї станції.
         notes: Примітки до шаблону
         works: Що робити (регламент)
-        works_help: Інтервали та ціни для цього авто; якщо в пункті порожньо — береться з роботи.
+        works_help: Інтервали та ціни для цього авто; якщо в рядку порожньо — береться з роботи.
         works_count: Робіт
         open_schedule: відкрити регламент
         view_schedule: Регламент
         index_help: 'Натисніть на рядок або «Регламент», щоб побачити повний список робіт для цього авто.'
-        manage_items: Редагувати пункти
+        manage_items: Редагувати рядки
+        station_all: Усі СТО
+        detail_manage_items: Редагувати рядки
     service_station:
         name: Назва СТО
         city: Місто
         address: Адреса
         image: Фото
         image_upload: Завантажити фото (JPG, PNG, WEBP)
-    station_labor_price:
-        singular: Ціна на СТО
-        plural: Ціни робіт на СТО
+        appointment_panel: Графік онлайн-запису
+        slot_minutes: Тривалість слота (хв)
+        slot_minutes_help: Крок сітки годин у кабінеті клієнта та в цьому календарі.
+        day_start: Початок робочого дня
+        day_end: Кінець робочого дня
+        slot_capacity: Паралельних записів на слот
+        slot_capacity_help: Скільки авто СТО може прийняти на один і той самий час (черга / пости).
+    schedule_block:
+        singular: Блокування графіку
+        plural: Вихідні та блокування
         station: СТО
-        procedure: Робота
-        procedure_help: Або робота, або пункт шаблону — одне з двох.
-        schedule_item: Пункт шаблону
-        schedule_item_help: Для точкової ціни конкретного пункту регламенту.
-        price: Ціна, грн
+        station_help: Порожньо — для всіх станцій мережі.
+        label: Назва / причина
+        start_date: Дата з
+        end_date: Дата по
+        date_help: Для одного дня вкажіть однакові дати.
+        start_time: Час з
+        end_time: Час по
+        time_help: Залиште час порожнім, щоб закрити весь день (вихідний).
+    station_labor_price:
+        singular: Ціна робіт на СТО
+        plural: Ціни робіт на СТО
+        page_new: Додати ціну робіт на СТО
+        page_edit: Редагувати ціну робіт на СТО
+        station: СТО
+        target_panel: Для якої роботи
+        target_panel_help: Оберіть лише одне поле нижче. «Загальна робота» — одна ціна для всіх клієнтів на цьому СТО. «Рядок регламенту» — окрема ціна для конкретного шаблону ТО (марка/модель).
+        procedure: Загальна робота (довідник)
+        procedure_help: Наприклад «Заміна моторної оливи» для будь-якого авто на цьому СТО. Не заповнюйте, якщо ціна лише для певного регламенту.
+        schedule_item: Рядок регламенту (марка / модель)
+        schedule_item_help: Рядок регламенту — у списку видно шаблон, роботу та інтервал. Використовуйте, коли ціна відрізняється від загальної.
+        price: Ціна робіт, грн
     schedule_item:
-        singular: Пункт шаблону
-        plural: Пункти шаблонів
+        singular: Рядок регламенту
+        plural: Рядки регламенту
         template: Шаблон регламенту
         procedure: Робота
         interval_km: Інтервал, км
@@ -216,6 +250,7 @@ entity:
         log: Журнал
         started_at: Початок
         finished_at: Завершено
+        empty_cta: Перейти до запитів на план
     user:
         singular: Користувач
         plural: Користувачі
@@ -223,3 +258,51 @@ entity:
         role_user: Користувач
         role_admin: Адміністратор
         blocked: Заблоковано
+        managed_stations: Доступні СТО
+        managed_stations_help: Якщо порожньо — адміністратор бачить усі СТО. Якщо обрано станції — лише їх записи, ціни та календар.
+
+appointments:
+    kicker: СТО
+    title: Календар записів
+    lede: Тижнева сітка вільних годин, черга по станції та ручний запис клієнта на візит.
+    no_stations: Додайте СТО в довіднику, щоб керувати записами.
+    station: СТО
+    today_week: Цей тиждень
+    slot_length: Слот
+    work_hours: Робочі години
+    parallel_capacity: Паралельних місць
+    edit_station_schedule: Змінити графік СТО
+    time: Час
+    free: Вільно
+    free_short: вільн.
+    full: Зайнято
+    new_booking: Новий запис
+    new_booking_hint: Оберіть авто клієнта, дату, вільний час і роботи. Запис одразу зʼявиться в кабінеті водія.
+    reload_slots: Оновити список годин
+    reload_slots_help: Після зміни дати в полі натисніть, щоб підвантажити вільні слоти.
+    submit: Зберегти запис
+    close_modal: Закрити
+    form:
+        vehicle: Автомобіль клієнта
+        vehicle_placeholder: Почніть вводити марку, номер або імʼя власника
+        service_date: Дата візиту
+        service_time: Час візиту
+        service_time_placeholder: Оберіть вільний час
+        procedures: Планові роботи
+        notes_uk: Коментар до запису
+        station: СТО
+        estimated_cost: Орієнтовна вартість (грн)
+        estimated_cost_help: Підрахунок за цінами СТО для обраних робіт. Можна змінити вручну.
+        register_new_vehicle: Автомобіля ще немає в базі
+        new_vehicle_hint: Створимо клієнта за email (якщо потрібно) і додамо авто до гаража перед записом.
+        new_owner_name: Імʼя власника
+        new_owner_email: Email власника
+        new_license_plate: Держномер
+        new_year: Рік випуску
+        new_mileage: Пробіг (км)
+        new_generation: Покоління / модель
+        new_generation_placeholder: Оберіть покоління з довідника
+    cancel: Скасувати запис
+    cancel_confirm: Скасувати цей запис на СТО?
+    manage_blocks: Вихідні та закриті години
+    calendar_hint: Клікніть на день або годину, щоб створити запис у вікні. Перетягніть подію, щоб перенести час. Вигляди день / тиждень / місяць — справа вгорі.

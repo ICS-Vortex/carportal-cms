@@ -6,6 +6,8 @@ namespace App\Entity;
 
 use App\Entity\Concern\Timestamps;
 use App\Entity\Concern\UuidId;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
@@ -55,7 +57,19 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToOne(mappedBy: 'user', cascade: ['persist', 'remove'])]
     private ?UserGoogleAccount $googleAccount = null;
 
+    /** @var Collection<int, ServiceStation> */
+    #[ORM\ManyToMany(targetEntity: ServiceStation::class)]
+    #[ORM\JoinTable(name: 'user_service_stations')]
+    #[ORM\JoinColumn(name: 'user_id', referencedColumnName: 'id', onDelete: 'CASCADE')]
+    #[ORM\InverseJoinColumn(name: 'service_station_id', referencedColumnName: 'id', onDelete: 'CASCADE')]
+    private Collection $managedServiceStations;
+
     private ?string $plainPassword = null;
+
+    public function __construct()
+    {
+        $this->managedServiceStations = new ArrayCollection();
+    }
 
     public function __toString(): string
     {
@@ -225,5 +239,32 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->plainPassword = $plainPassword;
 
         return $this;
+    }
+
+    /** @return Collection<int, ServiceStation> */
+    public function getManagedServiceStations(): Collection
+    {
+        return $this->managedServiceStations;
+    }
+
+    public function addManagedServiceStation(ServiceStation $station): self
+    {
+        if (!$this->managedServiceStations->contains($station)) {
+            $this->managedServiceStations->add($station);
+        }
+
+        return $this;
+    }
+
+    public function removeManagedServiceStation(ServiceStation $station): self
+    {
+        $this->managedServiceStations->removeElement($station);
+
+        return $this;
+    }
+
+    public function managesAnyServiceStation(): bool
+    {
+        return !$this->managedServiceStations->isEmpty();
     }
 }

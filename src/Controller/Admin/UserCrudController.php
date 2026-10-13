@@ -8,6 +8,7 @@ use App\Entity\User;
 use Doctrine\ORM\EntityManagerInterface;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
+use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\BooleanField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\ChoiceField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
@@ -48,6 +49,9 @@ final class UserCrudController extends AbstractCrudController
             $this->translator->trans('entity.user.role_user', domain: 'messages') => 'user',
             $this->translator->trans('entity.user.role_admin', domain: 'messages') => 'admin',
         ]);
+        yield AssociationField::new('managedServiceStations', t('entity.user.managed_stations', domain: 'messages'))
+            ->setHelp(t('entity.user.managed_stations_help', domain: 'messages'))
+            ->onlyOnForms();
         yield BooleanField::new('isBlocked', t('entity.user.blocked', domain: 'messages'));
         yield BooleanField::new('deleted');
         yield TextField::new('plainPassword', t('account.field.new_password', domain: 'messages'))

@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="uk">
+<body style="font-family: Rubik, Arial, sans-serif; color: #2b2b2b; line-height: 1.5;">
+    <p>Вітаємо, {{ ownerName }}!</p>
+    <p>Нагадуємо про запис на <strong>{{ stationName }}</strong>:</p>
+    <ul>
+        <li><strong>Авто:</strong> {{ vehicleLabel }}</li>
+        <li><strong>Дата:</strong> {{ serviceDate|date('d.m.Y') }}</li>
+        <li><strong>Час:</strong> {{ serviceTime|date('H:i') }}</li>
+    </ul>
+    {% if procedures|length > 0 %}
+        <p><strong>Планові роботи:</strong></p>
+        <ul>
+            {% for title in procedures %}
+                {% if title %}<li>{{ title }}</li>{% endif %}
+            {% endfor %}
+        </ul>
+    {% endif %}
+    <p>Якщо плани змінилися, перенесіть візит у кабінеті Carmain.</p>
+    <p style="color:#5c5c5c;font-size:12px;">Це автоматичне повідомлення, відповідати на нього не потрібно.</p>
+</body>
+</html>

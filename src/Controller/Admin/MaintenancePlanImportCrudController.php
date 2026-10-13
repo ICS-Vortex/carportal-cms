@@ -9,6 +9,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
+use EasyCorp\Bundle\EasyAdminBundle\Router\AdminUrlGenerator;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\DateTimeField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IntegerField;
@@ -19,6 +20,11 @@ use function Symfony\Component\Translation\t;
 /** @extends AbstractCrudController<MaintenancePlanImport> */
 final class MaintenancePlanImportCrudController extends AbstractCrudController
 {
+    public function __construct(
+        private readonly AdminUrlGenerator $adminUrlGenerator,
+    ) {
+    }
+
     public static function getEntityFqcn(): string
     {
         return MaintenancePlanImport::class;
@@ -35,8 +41,20 @@ final class MaintenancePlanImportCrudController extends AbstractCrudController
 
     public function configureActions(Actions $actions): Actions
     {
+        $planRequestsUrl = $this->adminUrlGenerator
+            ->setController(MaintenancePlanRequestCrudController::class)
+            ->setAction(Action::INDEX)
+            ->generateUrl();
+
+        $startImport = Action::new('startPlanImport', t('entity.plan_import.empty_cta', domain: 'messages'))
+            ->linkToUrl($planRequestsUrl)
+            ->setIcon('fa-solid fa-file-upload')
+            ->setCssClass('btn btn-primary')
+            ->createAsGlobalAction();
+
         return $actions
             ->disable(Action::NEW, Action::EDIT, Action::DELETE)
+            ->add(Crud::PAGE_INDEX, $startImport)
             ->add(Crud::PAGE_INDEX, Action::DETAIL);
     }
 

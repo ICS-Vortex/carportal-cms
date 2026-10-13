@@ -53,14 +53,20 @@ final class MaintenancePlanRequestCrudController extends AbstractCrudController
 
     public function configureFields(string $pageName): iterable
     {
-        yield AssociationField::new('user', t('dashboard.table_owner', domain: 'messages'));
-        yield AssociationField::new('vehicle', t('dashboard.table_vehicle', domain: 'messages'));
+        $lockClientFields = Crud::PAGE_EDIT === $pageName;
+
+        yield AssociationField::new('user', t('dashboard.table_owner', domain: 'messages'))
+            ->setFormTypeOption('disabled', $lockClientFields);
+        yield AssociationField::new('vehicle', t('dashboard.table_vehicle', domain: 'messages'))
+            ->setFormTypeOption('disabled', $lockClientFields);
         yield ChoiceField::new('status', t('entity.plan_request.status', domain: 'messages'))->setChoices([
             $this->translator->trans('entity.plan_request.status_open', domain: 'messages') => 'open',
             $this->translator->trans('entity.plan_request.status_resolved', domain: 'messages') => 'resolved',
         ]);
         yield DateTimeField::new('createdAt', t('entity.plan_request.created_at', domain: 'messages'))->hideOnForm();
-        yield TextareaField::new('requestNote', t('entity.plan_request.note', domain: 'messages'))->hideOnIndex();
+        yield TextareaField::new('requestNote', t('entity.plan_request.note', domain: 'messages'))
+            ->hideOnIndex()
+            ->setFormTypeOption('disabled', $lockClientFields);
         yield AssociationField::new('imports', t('entity.plan_import.plural', domain: 'messages'))
             ->onlyOnDetail()
             ->setCrudController(MaintenancePlanImportCrudController::class);

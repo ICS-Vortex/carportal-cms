@@ -43,7 +43,11 @@ final class ServiceStationFixtures extends Fixture implements FixtureGroupInterf
             ->setCityUk($city)
             ->setAddressUk($address)
             ->setSortOrder($sortOrder)
-            ->setIsActive(true);
+            ->setIsActive(true)
+            ->setAppointmentSlotMinutes($slug === 'lviv-center' ? 45 : 60)
+            ->setAppointmentDayStart(new \DateTimeImmutable('09:00:00'))
+            ->setAppointmentDayEnd(new \DateTimeImmutable('18:00:00'))
+            ->setAppointmentSlotCapacity($slug === 'kyiv-center' ? 3 : 1);
 
         return $station;
     }

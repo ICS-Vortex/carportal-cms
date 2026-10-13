@@ -9,14 +9,16 @@ menu:
     generations: Generations
     configurations: Configurations
     vehicles: Vehicles
-    procedures: Procedures
+    procedures: Work catalog
     service_stations: Service stations
+    appointments: Appointment calendar
+    schedule_blocks: Closures & blocks
     station_labor_prices: Station labor prices
     templates: Schedule templates
     reminders: Reminders
     plan_requests: Plan requests
     plan_imports: Plan import log
-    schedule_items: Template items
+    schedule_items: Schedule lines
     users: Users
 
 account:
@@ -141,7 +143,14 @@ entity:
         due_mileage: Due mileage (km)
     procedure:
         singular: Procedure
-        plural: Procedures
+        plural: Work catalog
+        page_new: New procedure
+        page_edit: Edit procedure
+        station: Service station
+        station_help: Required for your station. The procedure is only used at this station and in its bookings.
+        station_help_global: Leave empty for the global catalog (all stations), or pick a station to scope it.
+        created_by: Added in CMS by
+        code_help: System code. Leave blank to generate from the title.
         title: Title
         category: Category
         templates: Templates (vehicles)
@@ -152,7 +161,7 @@ entity:
         labor_price: Labor price (UAH)
         labor_price_help: Base estimate; template item sets price per vehicle variant.
         description: Description
-        schedule_items: In templates
+        schedule_items: Schedule lines
     template:
         singular: Schedule template
         plural: Schedule templates
@@ -168,25 +177,52 @@ entity:
         open_schedule: open schedule
         view_schedule: Schedule
         index_help: 'Click a row or “Schedule” to see the full list of jobs for that vehicle.'
-        manage_items: Edit line items
+        manage_items: Edit schedule lines
+        station: Service station
+        station_help: Leave empty for all stations; pick one to scope this schedule.
+        station_all: All service stations
+        detail_manage_items: Edit schedule lines
     service_station:
         name: Station name
         city: City
         address: Address
         image: Photo
         image_upload: Upload photo (JPG, PNG, WEBP)
+        appointment_panel: Online booking schedule
+        slot_minutes: Slot length (min)
+        slot_minutes_help: Grid step in the driver app and this calendar.
+        day_start: Workday start
+        day_end: Workday end
+        slot_capacity: Parallel bookings per slot
+        slot_capacity_help: How many vehicles the station can accept at the same time.
+    schedule_block:
+        singular: Schedule block
+        plural: Closures & blocks
+        station: Station
+        station_help: Empty — applies to all stations.
+        label: Label / reason
+        start_date: From date
+        end_date: To date
+        date_help: Use the same date for a single day.
+        start_time: From time
+        end_time: To time
+        time_help: Leave times empty to close the entire day (holiday).
     station_labor_price:
         singular: Station labor price
         plural: Station labor prices
+        page_new: Add station labor price
+        page_edit: Edit station labor price
         station: Station
-        procedure: Procedure
-        procedure_help: Set either a procedure or a template line item.
-        schedule_item: Template line item
-        schedule_item_help: Override price for one schedule line.
-        price: Price, UAH
+        target_panel: Which work item
+        target_panel_help: Fill only one field below. General procedure — one price for all customers at this station. Schedule line — a price tied to a specific maintenance template (make/model).
+        procedure: General procedure (catalog)
+        procedure_help: e.g. “Engine oil change” for any vehicle at this station. Leave empty if the price applies only to a specific schedule template.
+        schedule_item: Schedule template line (make / model)
+        schedule_item_help: A line from a maintenance template — the list shows template name, work, and interval. Use when the price differs from the general procedure price.
+        price: Labor price, UAH
     schedule_item:
-        singular: Template item
-        plural: Template items
+        singular: Schedule line
+        plural: Schedule lines
         template: Schedule template
         procedure: Procedure
         interval_km: Interval km
@@ -214,6 +250,7 @@ entity:
         log: Log
         started_at: Started
         finished_at: Finished
+        empty_cta: Go to plan requests
     user:
         singular: User
         plural: Users
@@ -221,3 +258,51 @@ entity:
         role_user: User
         role_admin: Administrator
         blocked: Blocked
+        managed_stations: Assigned stations
+        managed_stations_help: Leave empty for full access. When stations are selected, the admin only sees their calendar, prices, and bookings.
+
+appointments:
+    kicker: Service stations
+    title: Appointment calendar
+    lede: Weekly grid of open hours, per-station queue, and manual booking for a visit.
+    no_stations: Add a service station before managing appointments.
+    station: Station
+    today_week: This week
+    slot_length: Slot
+    work_hours: Working hours
+    parallel_capacity: Parallel slots
+    edit_station_schedule: Edit station schedule
+    time: Time
+    free: Free
+    free_short: free
+    full: Full
+    new_booking: New booking
+    new_booking_hint: Pick the customer vehicle, date, open time, and jobs. The booking appears in the driver app immediately.
+    reload_slots: Refresh time list
+    reload_slots_help: After changing the date field, click to reload open slots.
+    submit: Save booking
+    close_modal: Close
+    form:
+        vehicle: Customer vehicle
+        vehicle_placeholder: Type make, plate, or owner name
+        service_date: Visit date
+        service_time: Visit time
+        service_time_placeholder: Pick an open slot
+        procedures: Planned work
+        notes_uk: Booking notes
+        station: Service station
+        estimated_cost: Estimated cost (UAH)
+        estimated_cost_help: Sum of station labor prices for selected work. You can override it.
+        register_new_vehicle: Vehicle is not in the database yet
+        new_vehicle_hint: We will create the client by email if needed and add the car before booking.
+        new_owner_name: Owner name
+        new_owner_email: Owner email
+        new_license_plate: License plate
+        new_year: Model year
+        new_mileage: Mileage (km)
+        new_generation: Generation / model
+        new_generation_placeholder: Pick a generation from the catalog
+    cancel: Cancel booking
+    cancel_confirm: Cancel this service appointment?
+    manage_blocks: Holidays & closed hours
+    calendar_hint: Drag events to reschedule. Gray background — whole day off; amber — blocked hours. Switch day / week / month in the top-right.

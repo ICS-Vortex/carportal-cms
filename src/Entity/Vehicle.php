@@ -55,6 +55,14 @@ class Vehicle
     #[ORM\Column(type: Types::DATETIMETZ_IMMUTABLE, nullable: true)]
     private ?\DateTimeImmutable $deletedAt = null;
 
+    #[ORM\ManyToOne]
+    #[ORM\JoinColumn(name: 'registered_by_user_id', nullable: true, onDelete: 'SET NULL')]
+    private ?User $registeredBy = null;
+
+    #[ORM\ManyToOne]
+    #[ORM\JoinColumn(name: 'registered_at_station_id', nullable: true, onDelete: 'SET NULL')]
+    private ?ServiceStation $registeredAtStation = null;
+
     public function __toString(): string
     {
         return $this->vin ?? trim(sprintf('%s %d', $this->generation?->getName(), $this->year));
@@ -176,6 +184,30 @@ class Vehicle
     public function setDeletedAt(?\DateTimeImmutable $deletedAt): self
     {
         $this->deletedAt = $deletedAt;
+
+        return $this;
+    }
+
+    public function getRegisteredBy(): ?User
+    {
+        return $this->registeredBy;
+    }
+
+    public function setRegisteredBy(?User $registeredBy): self
+    {
+        $this->registeredBy = $registeredBy;
+
+        return $this;
+    }
+
+    public function getRegisteredAtStation(): ?ServiceStation
+    {
+        return $this->registeredAtStation;
+    }
+
+    public function setRegisteredAtStation(?ServiceStation $registeredAtStation): self
+    {
+        $this->registeredAtStation = $registeredAtStation;
 
         return $this;
     }

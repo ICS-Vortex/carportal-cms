@@ -83,6 +83,8 @@ final class DashboardController extends AbstractDashboardController
         yield MenuItem::linkTo(VehicleCrudController::class, t('menu.vehicles'), 'fa-solid fa-car-side');
         yield MenuItem::section(t('menu.section.maintenance'));
         yield MenuItem::linkTo(ServiceStationCrudController::class, t('menu.service_stations'), 'fa-solid fa-warehouse');
+        yield MenuItem::linkToRoute(t('menu.appointments'), 'fa-solid fa-calendar-days', 'admin_appointments_calendar');
+        yield MenuItem::linkTo(ServiceStationScheduleBlockCrudController::class, t('menu.schedule_blocks'), 'fa-solid fa-ban');
         yield MenuItem::linkTo(MaintenanceStationLaborPriceCrudController::class, t('menu.station_labor_prices'), 'fa-solid fa-tags');
         yield MenuItem::linkTo(MaintenanceProcedureCrudController::class, t('menu.procedures'), 'fa-solid fa-screwdriver-wrench');
         yield MenuItem::linkTo(MaintenanceScheduleTemplateCrudController::class, t('menu.templates'), 'fa-solid fa-clipboard-list');

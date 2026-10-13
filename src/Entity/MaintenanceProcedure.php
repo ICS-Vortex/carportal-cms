@@ -11,7 +11,7 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity]
+#[ORM\Entity(repositoryClass: \App\Repository\MaintenanceProcedureRepository::class)]
 #[ORM\Table(name: 'maintenance_procedures')]
 #[ORM\Index(name: 'idx_maintenance_procedures_deleted', columns: ['deleted'])]
 #[ORM\HasLifecycleCallbacks]
@@ -20,7 +20,7 @@ class MaintenanceProcedure
     use UuidId;
     use Timestamps;
 
-    #[ORM\Column(type: Types::TEXT, unique: true)]
+    #[ORM\Column(type: Types::TEXT)]
     private string $code = '';
 
     #[ORM\Column(type: Types::TEXT)]
@@ -47,6 +47,14 @@ class MaintenanceProcedure
 
     #[ORM\Column(type: Types::DATETIMETZ_IMMUTABLE, nullable: true)]
     private ?\DateTimeImmutable $deletedAt = null;
+
+    #[ORM\ManyToOne]
+    #[ORM\JoinColumn(name: 'created_by_user_id', nullable: true, onDelete: 'SET NULL')]
+    private ?User $createdBy = null;
+
+    #[ORM\ManyToOne]
+    #[ORM\JoinColumn(name: 'service_station_id', nullable: true, onDelete: 'CASCADE')]
+    private ?ServiceStation $serviceStation = null;
 
     /** @var Collection<int, MaintenanceScheduleItem> */
     #[ORM\OneToMany(mappedBy: 'procedure', targetEntity: MaintenanceScheduleItem::class)]
@@ -196,5 +204,34 @@ class MaintenanceProcedure
         }
 
         return implode(', ', array_values($labels));
+    }
+
+    public function getCreatedBy(): ?User
+    {
+        return $this->createdBy;
+    }
+
+    public function setCreatedBy(?User $createdBy): self
+    {
+        $this->createdBy = $createdBy;
+
+        return $this;
+    }
+
+    public function getServiceStation(): ?ServiceStation
+    {
+        return $this->serviceStation;
+    }
+
+    public function setServiceStation(?ServiceStation $serviceStation): self
+    {
+        $this->serviceStation = $serviceStation;
+
+        return $this;
+    }
+
+    public function isGlobalCatalog(): bool
+    {
+        return $this->serviceStation === null;
     }
 }

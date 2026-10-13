@@ -8,6 +8,8 @@
 # https://symfony.com/doc/current/best_practices.html#use-parameters-for-application-configuration
 parameters:
     app.plan_import_storage_dir: '%kernel.project_dir%/var/plan-imports'
+    app.mailer_from: '%env(default:app.default_mailer_from:MAILER_FROM)%'
+    app.default_mailer_from: 'noreply@carmain.local'
 
 services:
     # default configuration for services in *this* file
@@ -35,6 +37,10 @@ services:
     App\MessageHandler\ProcessMaintenancePlanImportHandler:
         arguments:
             $planImportStorageDir: '%app.plan_import_storage_dir%'
+
+    App\Service\Appointment\AppointmentReminderMailer:
+        arguments:
+            $mailerFrom: '%app.mailer_from%'
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones

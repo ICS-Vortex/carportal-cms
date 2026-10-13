@@ -1,0 +1,156 @@
+{% extends '@EasyAdmin/layout.html.twig' %}
+
+{% block head_stylesheets %}
+    {{ parent() }}
+    <link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.15/index.global.min.css" rel="stylesheet">
+{% endblock %}
+
+{% block body_class %}ea-edit appt-calendar-body{% endblock %}
+
+{% block main %}
+    <section class="cars-floor appt-calendar-page">
+        <div class="cars-hero appt-calendar-hero">
+            <div>
+                <p class="cars-kicker">{{ 'appointments.kicker'|trans({}, 'messages') }}</p>
+                <h1>{{ 'appointments.title'|trans({}, 'messages') }}</h1>
+                <p class="cars-lede">{{ 'appointments.lede'|trans({}, 'messages') }}</p>
+            </div>
+        </div>
+
+        {% if station is null %}
+            <div class="appt-empty">{{ 'appointments.no_stations'|trans({}, 'messages') }}</div>
+        {% else %}
+            <form method="get" class="appt-toolbar">
+                <div class="appt-toolbar-start">
+                    {% if showStationToolbar|default(true) %}
+                        <label class="appt-toolbar-field appt-toolbar-field--station">
+                            <span class="appt-toolbar-label">{{ 'appointments.station'|trans({}, 'messages') }}</span>
+                            <select
+                                name="station"
+                                class="appt-station-select"
+                                data-ea-widget="ea-autocomplete"
+                                data-appt-station-picker="1"
+                                title="{{ 'appointments.station'|trans({}, 'messages') }}"
+                            >
+                                {% for item in stations %}
+                                    <option value="{{ item.id }}" {% if item.id == station.id %}selected{% endif %}>{{ item.nameUk }}{% if item.cityUk %} · {{ item.cityUk }}{% endif %}</option>
+                                {% endfor %}
+                            </select>
+                        </label>
+                    {% else %}
+                        <p class="appt-toolbar-station">{{ 'appointments.station'|trans({}, 'messages') }}: <strong>{{ station.nameUk }}{% if station.cityUk %} · {{ station.cityUk }}{% endif %}</strong></p>
+                    {% endif %}
+                </div>
+                <div class="appt-toolbar-actions">
+                    <button type="button" class="btn btn-primary" id="open-booking-modal" data-action="open-booking">
+                        {{ 'appointments.new_booking'|trans({}, 'messages') }}
+                    </button>
+                    <a class="btn btn-secondary" href="{{ editStationUrl }}">{{ 'appointments.edit_station_schedule'|trans({}, 'messages') }}</a>
+                    <a class="btn btn-secondary" href="{{ blocksUrl }}">{{ 'appointments.manage_blocks'|trans({}, 'messages') }}</a>
+                </div>
+            </form>
+
+            <div id="appointments-calendar" class="appt-fc-root"></div>
+
+            {% if form %}
+                {% form_theme form with '@EasyAdmin/crud/form_theme.html.twig' %}
+
+                <div class="modal fade" id="bookingModal" tabindex="-1" aria-labelledby="bookingModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-lg modal-dialog-scrollable">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <div>
+                                    <h5 class="modal-title" id="bookingModalLabel">{{ 'appointments.new_booking'|trans({}, 'messages') }}</h5>
+                                    <p class="appt-modal-lede mb-0">{{ 'appointments.new_booking_hint'|trans({}, 'messages') }}</p>
+                                </div>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                {{ form_start(form, { attr: { class: 'ea-form appt-booking-form', id: 'appt-booking-form' } }) }}
+                                    <div class="appt-form-stack">
+                                        <div class="appt-field-full">
+                                            {{ form_row(form.station) }}
+                                        </div>
+                                        <div class="appt-field-full">
+                                            {{ form_row(form.vehicle) }}
+                                        </div>
+                                        <div class="appt-field-full appt-new-vehicle-toggle">
+                                            {{ form_row(form.registerNewVehicle) }}
+                                        </div>
+                                        <div class="appt-new-vehicle-panel" id="appt-new-vehicle-panel" hidden>
+                                            <p class="appt-new-vehicle-hint">{{ 'appointments.form.new_vehicle_hint'|trans({}, 'messages') }}</p>
+                                            <div class="appt-form-row-2">
+                                                {{ form_row(form.newOwnerName) }}
+                                                {{ form_row(form.newOwnerEmail) }}
+                                            </div>
+                                            <div class="appt-form-row-2">
+                                                {{ form_row(form.newLicensePlate) }}
+                                                {{ form_row(form.newYear) }}
+                                            </div>
+                                            <div class="appt-form-row-2">
+                                                {{ form_row(form.newGeneration) }}
+                                                {{ form_row(form.newMileageKm) }}
+                                            </div>
+                                        </div>
+                                        <div class="appt-form-row-2 appt-form-row-2--time">
+                                            {{ form_row(form.serviceDate) }}
+                                            <div class="appt-time-with-refresh">
+                                                {{ form_row(form.serviceTime) }}
+                                                <a
+                                                    id="appt-reload-slots"
+                                                    class="appt-slot-refresh-link"
+                                                    href="{{ path('admin_appointments_calendar', { station: formStationId, prefill_date: formServiceDate, open_booking: 1 }) }}"
+                                                    title="{{ 'appointments.reload_slots_help'|trans({}, 'messages') }}"
+                                                >{{ 'appointments.reload_slots'|trans({}, 'messages') }}</a>
+                                            </div>
+                                        </div>
+                                        <div class="appt-field-full">
+                                            {{ form_row(form.procedures) }}
+                                        </div>
+                                        <div class="appt-field-full">
+                                            {{ form_row(form.estimatedCostUah) }}
+                                        </div>
+                                        <div class="appt-field-full">
+                                            {{ form_row(form.notesUk) }}
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer appt-modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{{ 'appointments.close_modal'|trans({}, 'messages') }}</button>
+                                        <button type="submit" class="btn btn-primary action-save">{{ 'appointments.submit'|trans({}, 'messages') }}</button>
+                                    </div>
+                                {{ form_end(form) }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
+        {% endif %}
+    </section>
+{% endblock %}
+
+{% block body_javascript %}
+    {{ parent() }}
+    {% if station and form %}
+        <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.15/index.global.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/@fullcalendar/core@6.1.15/locales/uk.global.min.js"></script>
+        <script>
+            window.carmainAppointmentsCalendar = {
+                stationId: '{{ station.id }}',
+                eventsUrl: '{{ eventsUrl|e('js') }}',
+                rescheduleUrlTemplate: '{{ rescheduleUrlTemplate|e('js') }}',
+                csrfToken: '{{ calendarCsrf|e('js') }}',
+                initialDate: '{{ initialDate }}',
+                slotMinutes: {{ slotMinutes }},
+                locale: '{{ app.request.locale }}',
+                openBookingModal: {{ openBookingModal ? 'true' : 'false' }},
+                formDateId: '{{ form.serviceDate.vars.id }}',
+                formTimeId: '{{ form.serviceTime.vars.id }}',
+                prefillTime: '{{ prefillTime|e('js') }}'
+            };
+        </script>
+        <script src="{{ asset('js/appointments-calendar.js') }}"></script>
+        <script src="{{ asset('js/appointments-booking-form.js') }}"></script>
+    {% elseif station %}
+        <script src="{{ asset('js/appointments-booking-form.js') }}"></script>
+    {% endif %}
+{% endblock %}

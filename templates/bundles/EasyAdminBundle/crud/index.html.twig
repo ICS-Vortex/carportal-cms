@@ -1,0 +1,42 @@
+{% extends '@!EasyAdmin/crud/index.html.twig' %}
+
+{% block table_body_empty %}
+    {% set empty_cta = null %}
+    {% for item in global_actions|reverse %}
+        {% if empty_cta is null and not item.isActionGroup|default(false) and item.name == 'new' %}
+            {% set empty_cta = item %}
+        {% endif %}
+    {% endfor %}
+    {% if empty_cta is null %}
+        {% for item in global_actions|reverse %}
+            {% if empty_cta is null and not item.isActionGroup|default(false) %}
+                {% set empty_cta = item %}
+            {% endif %}
+        {% endfor %}
+    {% endif %}
+
+    {% for i in 1..14 %}
+        <tr class="empty-row">
+            <td><span></span></td>
+            <td><span></span></td>
+            <td><span></span></td>
+            <td><span></span></td>
+            <td><span></span></td>
+            <td><span></span></td>
+        </tr>
+
+        {% if 3 == loop.index %}
+            <tr class="no-results">
+                <td colspan="100">
+                    <div class="ea-empty-state">
+                        {% if empty_cta %}
+                            {{ include(empty_cta.templatePath, {action: empty_cta}, with_context: false) }}
+                        {% else %}
+                            <p class="ea-empty-state-message">{{ t('datagrid.no_results', ea.i18n.translationParameters, 'EasyAdminBundle')|trans }}</p>
+                        {% endif %}
+                    </div>
+                </td>
+            </tr>
+        {% endif %}
+    {% endfor %}
+{% endblock %}
